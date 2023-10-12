@@ -1,4 +1,4 @@
-package com.example.demo;
+package pl.mateusz_semklo.automationshoprest.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

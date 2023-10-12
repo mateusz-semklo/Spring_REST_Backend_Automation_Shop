@@ -1,4 +1,4 @@
-package com.example.demo;
+package pl.mateusz_semklo.automationshoprest.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
