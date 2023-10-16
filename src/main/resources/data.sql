@@ -28,9 +28,9 @@ create table users(
 );
 
 create table authorities (
-                             authority_id int not null primary key,
                              username varchar(50) not null,
                              authority varchar(100) not null,
+                             constraint pk_authorities primary key (authority,username),
                              constraint fk_authorities_users foreign key(username) references users(username)
                                  ON DELETE CASCADE ON UPDATE CASCADE
 );

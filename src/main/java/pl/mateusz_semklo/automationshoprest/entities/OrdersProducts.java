@@ -16,7 +16,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ORDERS_PRODUCTS")
-@Immutable
 public class OrdersProducts implements Serializable {
 
     private static final long serialVersionUID = 1234567L;

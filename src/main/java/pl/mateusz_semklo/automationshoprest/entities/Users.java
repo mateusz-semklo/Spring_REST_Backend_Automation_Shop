@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CollectionId;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class Users implements Serializable{
 
     @Basic
     @Column(name = "USER_LASTNAME")
-    private Object userLastname;
+    private String userLastname;
 
     @Basic
     @Column(name = "USER_STREET")
