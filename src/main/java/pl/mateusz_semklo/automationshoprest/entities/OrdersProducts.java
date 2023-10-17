@@ -18,27 +18,29 @@ import java.util.Objects;
 @Table(name = "ORDERS_PRODUCTS")
 public class OrdersProducts implements Serializable {
 
-    private static final long serialVersionUID = 1234567L;
+    private static final long serialVersionUID = 123459167L;
 
     @Getter
     @Setter
     @Embeddable
-    public static class Id implements Serializable{
+    public static class Id implements Serializable {
 
-        @Basic
-        @Column(name="ORDER_ID")
-        private Integer orderId;
+        private static final long serialVersionUID = 12367L;
 
-        @Basic
-        @Column(name="PRODUCT_ID")
-        private Integer productId;
+        @Column(name = "ORDER_ID")
+        public Integer orderId;
 
-        public Id(){}
+        @Column(name = "PRODUCT_ID")
+        public Integer productId;
+
+        public Id() {
+        }
 
         public Id(Integer orderId, Integer productId) {
             this.orderId = orderId;
             this.productId = productId;
         }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -46,44 +48,35 @@ public class OrdersProducts implements Serializable {
             Id id = (Id) o;
             return orderId.equals(id.orderId) && productId.equals(id.productId);
         }
+
         @Override
         public int hashCode() {
             return Objects.hash(orderId, productId);
         }
     }
+
     @EmbeddedId
-    protected Id id=new Id();
+    public Id id = new Id();
+
+    public OrdersProducts(Products product, Orders order) {
+
+        this.id.orderId = order.getOrderId();
+        this.id.productId = product.getProductId();
+
+        this.order = order;
+        this.product = product;
+
+        product.getOrdersProductsList().add(this);
+        order.getOrdersProductsList().add(this);
+
+    }
 
     @ManyToOne
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID", nullable = false,insertable = false,updatable = false)
+    @MapsId("id.orderId")
     private Orders order;
 
     @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", nullable = false,insertable = false,updatable = false)
+    @MapsId("id.productId")
     private Products product;
 
-    public OrdersProducts(Products product,Orders order){
-        this.order=order;
-        this.product=product;
-
-        this.id.setProductId(product.getProductId());
-        this.id.setOrderId(order.getOrderId());
-        
-        product.getOrdersProducts().add(this);
-        order.getOrdersProducts().add(this);
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrdersProducts that = (OrdersProducts) o;
-        return getId().equals(that.getId()) && Objects.equals(getOrder(), that.getOrder()) && Objects.equals(getProduct(), that.getProduct());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getOrder(), getProduct());
-    }
 }

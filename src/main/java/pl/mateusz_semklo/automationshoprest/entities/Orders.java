@@ -20,7 +20,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="ORDERS")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderId",scope = Orders.class)
 public class Orders implements Serializable {
     private static final long serialVersionUID = 1234567L;
 
@@ -52,22 +51,27 @@ public class Orders implements Serializable {
 
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME", nullable = false,updatable = false,insertable = false)
+    @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME", nullable = false)
     private Users user;
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<OrdersProducts> ordersProducts=new ArrayList<>();
+    private List<OrdersProducts> ordersProductsList=new ArrayList<>();
+
+    public List<OrdersProducts> addProducts(List<Products> productsList){
+        productsList.forEach((products -> this.ordersProductsList.add(new OrdersProducts(products,this))));
+        return this.ordersProductsList;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Orders orders = (Orders) o;
-        return Objects.equals(getOrderId(), orders.getOrderId()) && Objects.equals(getOrderDate(), orders.getOrderDate()) && Objects.equals(getOrderStreet(), orders.getOrderStreet()) && Objects.equals(getOrderCity(), orders.getOrderCity()) && Objects.equals(getOrderCountry(), orders.getOrderCountry()) && Objects.equals(getOrdesPostCode(), orders.getOrdesPostCode()) && Objects.equals(getUser(), orders.getUser()) && Objects.equals(getOrdersProducts(), orders.getOrdersProducts());
+        return Objects.equals(getOrderId(), orders.getOrderId()) && Objects.equals(getOrderDate(), orders.getOrderDate()) && Objects.equals(getOrderStreet(), orders.getOrderStreet()) && Objects.equals(getOrderCity(), orders.getOrderCity()) && Objects.equals(getOrderCountry(), orders.getOrderCountry()) && Objects.equals(getOrdesPostCode(), orders.getOrdesPostCode()) && Objects.equals(getUser(), orders.getUser()) && Objects.equals(getOrdersProductsList(), orders.getOrdersProductsList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOrderId(), getOrderDate(), getOrderStreet(), getOrderCity(), getOrderCountry(), getOrdesPostCode(), getUser(), getOrdersProducts());
+        return Objects.hash(getOrderId(), getOrderDate(), getOrderStreet(), getOrderCity(), getOrderCountry(), getOrdesPostCode(), getUser(), getOrdersProductsList());
     }
 }

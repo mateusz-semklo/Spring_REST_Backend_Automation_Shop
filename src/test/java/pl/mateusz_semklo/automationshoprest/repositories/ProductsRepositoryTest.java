@@ -42,7 +42,7 @@ class ProductsRepositoryTest {
     }
 
     @Test
-    public void saveNewProductWithCategoryMikrokontoler(){
+    public void saveNewProductWithCategoryId1001(){
 
         Products products=new Products();
         products.setProductName("nowy product");
@@ -50,53 +50,50 @@ class ProductsRepositoryTest {
         products.setProductImageUrl("/products/new");
         products.setProductPrice(34);
 
-        Optional<Categories> optionalCategories=categoriesRepository.findById("Mikrokontrolery");
+        Optional<Categories> optionalCategories=categoriesRepository.findById(1001);
         Categories category=optionalCategories.get();
         products.setCategory(category);
 
         assertThat(category,notNullValue());
-        assertThat(category.getCategoryNameId(),equalTo("Mikrokontrolery"));
+        assertThat(category.getCategoryId(),equalTo(1001));
 
         Products result=productsRepository.save(products);
 
         assertThat(result,notNullValue());
         assertThat(result,isA(Products.class));
         assertThat(result,hasProperty("productName"));
-        assertThat(result.getCategory(),hasProperty("categoryNameId",equalTo("Mikrokontrolery")));
-        System.out.println("ZAPISANY PRODUKT Z KAREGORIĄ MIKROKONTROLER");
-        System.out.println(products.getProductName());
-        System.out.println("KATEGORIA");
-        System.out.println(products.getCategory().getCategoryNameId());
+        assertThat(result.getCategory().getCategoryId(),equalTo(1001));
+
 
     }
     @Test
-    public void updateCategoryForProduct1020withCategoryCzujniki(){
-        Optional<Products> optionalProduct=productsRepository.findById(1020);
+    public void updateCategoryForProduct1014withCategoryIdTo1005(){
+        Optional<Products> optionalProduct=productsRepository.findById(1014);
         Products product=optionalProduct.get();
 
-        Optional<Categories> optionalCategories=categoriesRepository.findById("Czujniki");
+        Optional<Categories> optionalCategories=categoriesRepository.findById(1005);
         Categories category=optionalCategories.get();
         assertThat(category,notNullValue());
-        assertThat(category.getCategoryNameId(),equalTo("Czujniki"));
+        assertThat(category.getCategoryId(),equalTo(1005));
 
         product.setCategory(category);
         Products result=productsRepository.save(product);
 
         assertThat(product,notNullValue());
-        assertThat(product.getProductId(),equalTo(1020));
+        assertThat(product.getProductId(),equalTo(1014));
         assertThat(result,notNullValue());
-        assertThat(result.getProductId(),equalTo(1020));
-        assertThat(result.getCategory().getCategoryNameId(),equalTo("Czujniki"));
+        assertThat(result.getProductId(),equalTo(1014));
+        assertThat(result.getCategory().getCategoryId(),equalTo(1005));
 
-        System.out.println("KATEGORIA DLA PRODUKTU O ID 1020");
-        System.out.println(result.getCategory().getCategoryNameId());
+        System.out.println("KATEGORIA DLA PRODUKTU");
+        System.out.println(result.getCategory().getCategoryName());
 
     }
     @Test
-    public void deleteProductId1010(){
+    public void deleteProductId1020(){
 
-        productsRepository.deleteById(1023);
-        Optional<Products> productsOptional=productsRepository.findById(1023);
+        productsRepository.deleteById(1020);
+        Optional<Products> productsOptional=productsRepository.findById(1020);
         assertThat(productsOptional.isEmpty(),is(true));
     }
 
