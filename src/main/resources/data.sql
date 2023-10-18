@@ -57,7 +57,7 @@ create table orders (
                         order_street varchar(50) not null,
                         order_city varchar(50) not null,
                         order_country varchar(50) not null,
-                        ordes_post_code varchar(50) not null,
+                        order_post_code varchar(50) not null,
                         username varchar(50) not null,
                         constraint fk_orders_users foreign key(username) references users(username)
                             ON DELETE CASCADE ON UPDATE CASCADE

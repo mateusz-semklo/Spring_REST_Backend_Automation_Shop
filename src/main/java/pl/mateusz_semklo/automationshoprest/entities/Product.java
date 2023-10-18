@@ -19,7 +19,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="PRODUCTS")
-public class Products implements Serializable {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "productId",scope = Product.class)
+public class Product implements Serializable {
 
     private static final long serialVersionUID = 1234567L;
 
@@ -47,21 +48,21 @@ public class Products implements Serializable {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "CATEGORY_ID", nullable = false)
-    private Categories category;
+    private Category category;
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<OrdersProducts> ordersProductsList=new ArrayList<>();
+    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
+    private List<OrderProduct> ordersProductsList=new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Products products = (Products) o;
-        return getProductPrice() == products.getProductPrice() && Objects.equals(getProductId(), products.getProductId()) && Objects.equals(getProductName(), products.getProductName()) && Objects.equals(getProductDescription(), products.getProductDescription()) && Objects.equals(getProductImageUrl(), products.getProductImageUrl()) && Objects.equals(getCategory(), products.getCategory()) && Objects.equals(getOrdersProductsList(), products.getOrdersProductsList());
+        Product product = (Product) o;
+        return getProductPrice() == product.getProductPrice() && Objects.equals(getProductId(), product.getProductId()) && Objects.equals(getProductName(), product.getProductName()) && Objects.equals(getProductDescription(), product.getProductDescription()) && Objects.equals(getProductImageUrl(), product.getProductImageUrl()) && Objects.equals(getCategory(), product.getCategory());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getProductId(), getProductName(), getProductDescription(), getProductImageUrl(), getProductPrice(), getCategory(), getOrdersProductsList());
+        return Objects.hash(getProductId(), getProductName(), getProductDescription(), getProductImageUrl(), getProductPrice(), getCategory());
     }
 }

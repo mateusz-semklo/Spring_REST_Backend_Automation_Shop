@@ -19,8 +19,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="CATEGORIES")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "categoryId",scope = Categories.class)
-public class Categories implements Serializable {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "categoryId",scope = Category.class)
+public class Category implements Serializable {
 
     private static final long serialVersionUID = 1234567L;
 
@@ -35,18 +35,18 @@ public class Categories implements Serializable {
     String categoryName;
 
     @OneToMany(mappedBy = "category")
-    private List<Products> products=new ArrayList<>();
+    private List<Product> products=new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Categories that = (Categories) o;
-        return Objects.equals(getCategoryId(), that.getCategoryId()) && Objects.equals(getCategoryName(), that.getCategoryName()) && Objects.equals(getProducts(), that.getProducts());
+        Category category = (Category) o;
+        return Objects.equals(getCategoryId(), category.getCategoryId()) && Objects.equals(getCategoryName(), category.getCategoryName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCategoryId(), getCategoryName(), getProducts());
+        return Objects.hash(getCategoryId(), getCategoryName());
     }
 }

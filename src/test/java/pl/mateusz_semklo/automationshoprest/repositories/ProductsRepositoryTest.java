@@ -3,17 +3,14 @@ package pl.mateusz_semklo.automationshoprest.repositories;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import pl.mateusz_semklo.automationshoprest.entities.Categories;
-import pl.mateusz_semklo.automationshoprest.entities.Products;
-import pl.mateusz_semklo.automationshoprest.entities.Users;
+import pl.mateusz_semklo.automationshoprest.entities.Category;
+import pl.mateusz_semklo.automationshoprest.entities.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ProductsRepositoryTest {
@@ -24,7 +21,7 @@ class ProductsRepositoryTest {
 
     @Test
     void findProductsAll(){
-        List<Products> listProducts=productsRepository.findAll();
+        List<Product> listProducts=productsRepository.findAll();
         System.out.println("LISTA WSZYSTKICH PRODUCTS");
         listProducts.forEach((products -> System.out.println(products.getProductName())));
         assertThat(listProducts,notNullValue());
@@ -32,35 +29,35 @@ class ProductsRepositoryTest {
     }
     @Test
     void findProductsById1010(){
-        Optional<Products> productOptional=productsRepository.findById(1010);
-        Products product=productOptional.get();
+        Optional<Product> productOptional=productsRepository.findById(1010);
+        Product product=productOptional.get();
         System.out.println("PRODCUCT ID 1010");
         System.out.println(product.getProductId()+" Product name: "+product.getProductName());
         assertThat(product,notNullValue());
-        assertThat(product,isA(Products.class));
+        assertThat(product,isA(Product.class));
         assertThat(product.getProductId(),equalTo(1010));
     }
 
     @Test
     public void saveNewProductWithCategoryId1001(){
 
-        Products products=new Products();
+        Product products=new Product();
         products.setProductName("nowy product");
         products.setProductDescription("product description");
         products.setProductImageUrl("/products/new");
         products.setProductPrice(34);
 
-        Optional<Categories> optionalCategories=categoriesRepository.findById(1001);
-        Categories category=optionalCategories.get();
+        Optional<Category> optionalCategories=categoriesRepository.findById(1001);
+        Category category=optionalCategories.get();
         products.setCategory(category);
 
         assertThat(category,notNullValue());
         assertThat(category.getCategoryId(),equalTo(1001));
 
-        Products result=productsRepository.save(products);
+        Product result=productsRepository.save(products);
 
         assertThat(result,notNullValue());
-        assertThat(result,isA(Products.class));
+        assertThat(result,isA(Product.class));
         assertThat(result,hasProperty("productName"));
         assertThat(result.getCategory().getCategoryId(),equalTo(1001));
 
@@ -68,16 +65,16 @@ class ProductsRepositoryTest {
     }
     @Test
     public void updateCategoryForProduct1014withCategoryIdTo1005(){
-        Optional<Products> optionalProduct=productsRepository.findById(1014);
-        Products product=optionalProduct.get();
+        Optional<Product> optionalProduct=productsRepository.findById(1014);
+        Product product=optionalProduct.get();
 
-        Optional<Categories> optionalCategories=categoriesRepository.findById(1005);
-        Categories category=optionalCategories.get();
+        Optional<Category> optionalCategories=categoriesRepository.findById(1005);
+        Category category=optionalCategories.get();
         assertThat(category,notNullValue());
         assertThat(category.getCategoryId(),equalTo(1005));
 
         product.setCategory(category);
-        Products result=productsRepository.save(product);
+        Product result=productsRepository.save(product);
 
         assertThat(product,notNullValue());
         assertThat(product.getProductId(),equalTo(1014));
@@ -93,7 +90,7 @@ class ProductsRepositoryTest {
     public void deleteProductId1020(){
 
         productsRepository.deleteById(1020);
-        Optional<Products> productsOptional=productsRepository.findById(1020);
+        Optional<Product> productsOptional=productsRepository.findById(1020);
         assertThat(productsOptional.isEmpty(),is(true));
     }
 

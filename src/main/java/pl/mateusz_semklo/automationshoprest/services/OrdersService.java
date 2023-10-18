@@ -1,14 +1,17 @@
 package pl.mateusz_semklo.automationshoprest.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.mateusz_semklo.automationshoprest.repositories.OrdersRepository;
+import pl.mateusz_semklo.automationshoprest.entities.Order;
+
+import java.util.List;
 
 @Transactional
 @Service
-public class OrdersService {
+public interface OrdersService {
+    Order findById(Integer id);
+    List<Order> findAll();
+    Order save(Order orders);
+    void delete(Integer id);
 
-    @Autowired
-    OrdersRepository ordersRepository;
 }

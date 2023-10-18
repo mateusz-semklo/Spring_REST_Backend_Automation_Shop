@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import pl.mateusz_semklo.automationshoprest.entities.Categories;
-import pl.mateusz_semklo.automationshoprest.entities.Products;
+import pl.mateusz_semklo.automationshoprest.entities.Category;
+import pl.mateusz_semklo.automationshoprest.entities.Product;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -23,7 +23,7 @@ class CategoriesRepositoryTest {
 
     @Test
     void findCategoriesAll(){
-        List<Categories> categoriesList=categoriesRepository.findAll();
+        List<Category> categoriesList=categoriesRepository.findAll();
 
         assertThat(categoriesList,notNullValue());
         assertThat(categoriesList.size(),is(greaterThan(0)));
@@ -32,32 +32,32 @@ class CategoriesRepositoryTest {
     }
     @Test
     void findCategoriesById1005(){
-        Optional<Categories> optionalCategory=categoriesRepository.findById(1005);
+        Optional<Category> optionalCategory=categoriesRepository.findById(1005);
 
         assertThat(optionalCategory.isPresent(),notNullValue());
         assertThat(optionalCategory.get().getCategoryName(),equalTo("Mikrokontrolery"));
     }
     @Test
     void saveNewCategories(){
-        Categories category=new Categories();
+        Category category=new Category();
         category.setCategoryName("nowa_kategoria");
-        Categories result=categoriesRepository.save(category);
+        Category result=categoriesRepository.save(category);
         assertThat(result,notNullValue());
         assertThat(result.getCategoryName(),equalTo("nowa_kategoria"));
 
     }
     @Test
     void deleteCategoriesWithNoProducts(){
-        List<Categories> categoriesList=categoriesRepository.findCategoriesByCategoryNames("nowa_kategoria");
+        List<Category> categoriesList=categoriesRepository.findCategoriesByCategoryName("nowa_kategoria");
         categoriesRepository.deleteById(categoriesList.get(0).getCategoryId());
-        Optional<Categories> optionalCategory=categoriesRepository.findById(categoriesList.get(0).getCategoryId());
+        Optional<Category> optionalCategory=categoriesRepository.findById(categoriesList.get(0).getCategoryId());
         assertThat(optionalCategory.isEmpty(),equalTo(true));
 
     }
     @Test
     void deleteCategoriesMikrokontroleryWithProducts(){
 
-        List<Categories> categoriesList=categoriesRepository.findCategoriesByCategoryNames("Mikrokontrolery");
+        List<Category> categoriesList=categoriesRepository.findCategoriesByCategoryName("Mikrokontrolery");
 
         assertThrows(DataIntegrityViolationException.class,
                 ()->categoriesRepository.deleteById(categoriesList.get(0).getCategoryId()));
@@ -65,12 +65,12 @@ class CategoriesRepositoryTest {
     @Test
     void editCategoriesWithProducts(){
 
-        List<Categories> categoriesList=categoriesRepository.findCategoriesByCategoryNames("Mikrokontrolery");
-        Categories categories=categoriesList.get(0);
+        List<Category> categoriesList=categoriesRepository.findCategoriesByCategoryName("Mikrokontrolery");
+        Category categories=categoriesList.get(0);
         categories.setCategoryName("Microkontrolery");
-        Categories result=categoriesRepository.save(categories);
+        Category result=categoriesRepository.save(categories);
 
-        List<Products> productsList=productsRepository.findProductByCategoryName("Microkontrolery");
+        List<Product> productsList=productsRepository.findProductsByCategoryName("Microkontrolery");
 
         assertThat(result,notNullValue());
         assertThat(result.getCategoryName(),equalTo("Microkontrolery"));

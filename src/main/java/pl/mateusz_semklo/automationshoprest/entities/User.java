@@ -3,11 +3,7 @@ package pl.mateusz_semklo.automationshoprest.entities;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.CollectionId;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,8 +16,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="USERS")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username",scope = Users.class)
-public class Users implements Serializable{
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username",scope = User.class)
+public class User implements Serializable{
 
     private static final long serialVersionUID = 1234567L;
 
@@ -67,23 +63,22 @@ public class Users implements Serializable{
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="AUTHORITIES",joinColumns = @JoinColumn(name="USERNAME"))
-    @Column(name = "AUTHORITY")
+    @Column(name = "AUTHORITY",nullable = false)
     public List<String> authorities=new ArrayList<>();
 
-
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Orders> orders=new ArrayList<>();
+    private List<Order> orders=new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
-        return isEnabled() == users.isEnabled() && Objects.equals(getUsername(), users.getUsername()) && Objects.equals(getPassword(), users.getPassword()) && Objects.equals(getUserEmail(), users.getUserEmail()) && Objects.equals(getUserFirstname(), users.getUserFirstname()) && Objects.equals(getUserLastname(), users.getUserLastname()) && Objects.equals(getUserStreet(), users.getUserStreet()) && Objects.equals(getUserCity(), users.getUserCity()) && Objects.equals(getUserCountry(), users.getUserCountry()) && Objects.equals(getUserPostCode(), users.getUserPostCode()) && Objects.equals(getAuthorities(), users.getAuthorities()) && Objects.equals(getOrders(), users.getOrders());
+        User user = (User) o;
+        return isEnabled() == user.isEnabled() && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getUserEmail(), user.getUserEmail()) && Objects.equals(getUserFirstname(), user.getUserFirstname()) && Objects.equals(getUserLastname(), user.getUserLastname()) && Objects.equals(getUserStreet(), user.getUserStreet()) && Objects.equals(getUserCity(), user.getUserCity()) && Objects.equals(getUserCountry(), user.getUserCountry()) && Objects.equals(getUserPostCode(), user.getUserPostCode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUsername(), getPassword(), isEnabled(), getUserEmail(), getUserFirstname(), getUserLastname(), getUserStreet(), getUserCity(), getUserCountry(), getUserPostCode(), getAuthorities(), getOrders());
+        return Objects.hash(getUsername(), getPassword(), isEnabled(), getUserEmail(), getUserFirstname(), getUserLastname(), getUserStreet(), getUserCity(), getUserCountry(), getUserPostCode());
     }
 }

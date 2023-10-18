@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Immutable;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,7 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ORDERS_PRODUCTS")
-public class OrdersProducts implements Serializable {
+public class OrderProduct implements Serializable {
 
     private static final long serialVersionUID = 123459167L;
 
@@ -58,7 +57,16 @@ public class OrdersProducts implements Serializable {
     @EmbeddedId
     public Id id = new Id();
 
-    public OrdersProducts(Products product, Orders order) {
+
+    @ManyToOne
+    @JoinColumn(name="ORDER_ID",insertable = false,updatable = false)
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name="PRODUCT_ID",insertable = false,updatable = false)
+    private Product product;
+
+    public OrderProduct(Product product, Order order) {
 
         this.id.orderId = order.getOrderId();
         this.id.productId = product.getProductId();
@@ -71,12 +79,16 @@ public class OrdersProducts implements Serializable {
 
     }
 
-    @ManyToOne
-    @MapsId("id.orderId")
-    private Orders order;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderProduct that = (OrderProduct) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getOrder(), that.getOrder()) && Objects.equals(getProduct(), that.getProduct());
+    }
 
-    @ManyToOne
-    @MapsId("id.productId")
-    private Products product;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getOrder(), getProduct());
+    }
 }

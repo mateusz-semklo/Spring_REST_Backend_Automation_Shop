@@ -1,15 +1,20 @@
 package pl.mateusz_semklo.automationshoprest.services;
 
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.mateusz_semklo.automationshoprest.repositories.CategoriesRepository;
+import pl.mateusz_semklo.automationshoprest.entities.Category;
+
+import java.util.List;
 
 @Transactional
 @Service
-public class CategoriesService {
+public interface CategoriesService {
+    Category findById(Integer id);
+    List<Category> findByName(String name);
+    List<Category> findAll();
+    Category save(Category category);
+    void delete(Integer id);
 
-    @Autowired
-    CategoriesRepository categoriesRepository;
+
+
 }
