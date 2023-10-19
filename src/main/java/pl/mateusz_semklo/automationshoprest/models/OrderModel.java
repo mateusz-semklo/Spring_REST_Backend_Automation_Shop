@@ -27,6 +27,6 @@ public class OrderModel extends RepresentationModel<OrderModel> {
     private String ordesPostCode;
     private User user;
     private List<Product> products;
-    //private List<OrderProduct> ordersProductsList;
+
 
 }
