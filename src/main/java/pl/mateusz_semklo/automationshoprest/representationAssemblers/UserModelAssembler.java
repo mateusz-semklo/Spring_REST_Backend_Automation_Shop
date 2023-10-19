@@ -1,6 +1,7 @@
 package pl.mateusz_semklo.automationshoprest.representationAssemblers;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class UserModelAssembler implements RepresentationModelAssembler<User, UserModel> {
 
-    ModelMapper modelMapper=new ModelMapper();
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public UserModel toModel(User entity) {

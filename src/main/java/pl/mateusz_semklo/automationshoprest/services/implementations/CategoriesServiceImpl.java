@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
+import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.repositories.CategoriesRepository;
 import pl.mateusz_semklo.automationshoprest.services.CategoriesService;
 
@@ -46,4 +47,5 @@ public class CategoriesServiceImpl implements CategoriesService {
     public void delete(Integer id) {
         categoriesRepository.deleteById(id);
     }
+
 }

@@ -3,6 +3,7 @@ package pl.mateusz_semklo.automationshoprest.services;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
+import pl.mateusz_semklo.automationshoprest.entities.Product;
 
 import java.util.List;
 
@@ -14,7 +15,6 @@ public interface CategoriesService {
     List<Category> findAll();
     Category save(Category category);
     void delete(Integer id);
-
 
 
 }

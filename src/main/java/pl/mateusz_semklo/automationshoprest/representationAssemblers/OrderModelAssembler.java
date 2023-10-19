@@ -1,10 +1,11 @@
 package pl.mateusz_semklo.automationshoprest.representationAssemblers;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
-import pl.mateusz_semklo.automationshoprest.RestControllers.OrdersController;
+import pl.mateusz_semklo.automationshoprest.restControllers.OrdersController;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
 
@@ -14,7 +15,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class OrderModelAssembler implements RepresentationModelAssembler<Order, OrderModel> {
 
-    ModelMapper modelMapper=new ModelMapper();
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public OrderModel toModel(Order entity) {

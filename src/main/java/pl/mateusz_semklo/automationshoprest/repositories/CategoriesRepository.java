@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
+import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.repositories.extensions.CategoriesRepositoryExtension;
 
 import java.util.List;
@@ -16,6 +17,5 @@ public interface CategoriesRepository extends JpaRepository<Category,Integer>, C
 
     @Query("SELECT c FROM Category c WHERE c.categoryName=:categoryName")
     public List<Category> findCategoriesByCategoryName(@Param("categoryName") String categoryName);
-
 
 }

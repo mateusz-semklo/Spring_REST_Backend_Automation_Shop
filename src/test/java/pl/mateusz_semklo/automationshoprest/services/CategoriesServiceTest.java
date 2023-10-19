@@ -82,4 +82,5 @@ class CategoriesServiceTest {
         assertThat(result,notNullValue());
         assertThat(result.getCategoryName(),equalTo("Microkontrolery"));
     }
+
 }
