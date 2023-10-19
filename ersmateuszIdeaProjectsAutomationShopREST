@@ -1,0 +1,59 @@
+[33mcommit d7379a033143aef533fbebcfe7bd7842fcefb0bc[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;33mtag: base[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: mateusz-semklo <glazewo@gmail.com>
+Date:   Thu Oct 19 13:06:06 2023 +0200
+
+    base
+
+[33mcommit c21ef2531c05319db7cf514cfc1fdfdcda8188cb[m[33m ([m[1;33mtag: service1[m[33m)[m
+Author: mateusz-semklo <glazewo@gmail.com>
+Date:   Wed Oct 18 22:40:21 2023 +0200
+
+    build services layer
+
+[33mcommit b2141e0d322241af751bd76eac50193970f62bd0[m[33m ([m[1;33mtag: repositories2[m[33m)[m
+Author: mateusz-semklo <glazewo@gmail.com>
+Date:   Tue Oct 17 12:33:43 2023 +0200
+
+    build repositories layer 2
+
+[33mcommit 358c9354e301795248c5ccc8314fda05048125af[m[33m ([m[1;33mtag: repositories[m[33m)[m
+Author: mateusz-semklo <glazewo@gmail.com>
+Date:   Mon Oct 16 10:01:12 2023 +0200
+
+    build repositories layer
+
+[33mcommit b214a4e15064f33ae0ee813ccb0326288c3c3588[m[33m ([m[1;33mtag: h2update3[m[33m)[m
+Author: mateusz-semklo <glazewo@gmail.com>
+Date:   Sat Oct 14 17:51:22 2023 +0200
+
+    config H2 database, schema sql and fill data update 3
+
+[33mcommit 0eea51735c670026ad7dcb9af8c14c1224f4f88e[m[33m ([m[1;33mtag: h2update2[m[33m)[m
+Author: mateusz-semklo <glazewo@gmail.com>
+Date:   Sat Oct 14 12:46:55 2023 +0200
+
+    config H2 database, schema sql and fill data update 2
+
+[33mcommit 807ff26bcf637eef8e57ceb750a84b7fb20aeab6[m[33m ([m[1;33mtag: h2update[m[33m, [m[1;33mtag: h2[m[33m)[m
+Author: mateusz-semklo <glazewo@gmail.com>
+Date:   Sat Oct 14 12:42:06 2023 +0200
+
+    config H2 database, schema sql and fill data
+
+[33mcommit f7bd3f9b72fb2c97d58076a6f2db91714ad20721[m[33m ([m[1;33mtag: jwt2[m[33m)[m
+Author: mateusz-semklo <glazewo@gmail.com>
+Date:   Thu Oct 12 18:38:51 2023 +0200
+
+    jwt2
+
+[33mcommit 8ea5e406bd1e1a7b0544cb70fefab54dc2971fa2[m[33m ([m[1;33mtag: jwt[m[33m)[m
+Author: mateusz-semklo <glazewo@gmail.com>
+Date:   Thu Oct 12 18:36:40 2023 +0200
+
+    jwt
+
+[33mcommit abed8dafd93a0771bfdf6a33436e335af9114c34[m[33m ([m[1;33mtag: init[m[33m)[m
+Author: mateusz-semklo <glazewo@gmail.com>
+Date:   Thu Oct 12 12:06:56 2023 +0200
+
+    init

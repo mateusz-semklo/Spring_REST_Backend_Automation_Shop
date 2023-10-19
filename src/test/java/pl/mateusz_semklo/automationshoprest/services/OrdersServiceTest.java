@@ -89,7 +89,8 @@ class OrdersServiceTest {
         List<Product> productList=productsService.findAll().subList(17,20);
         int count=productList.size();
 
-        order.addProducts(productList);
+        productList.forEach((product -> order.getProducts().add(product)));
+
         Order result=ordersService.save(order);
 
         assertThat(result,notNullValue());
@@ -97,26 +98,26 @@ class OrdersServiceTest {
     }
 
     @Test
-    void removeAllProductFromOrder(){
-        Order order=ordersService.findById(1056);
-        order.removeAllProducts();
-        Order result=ordersService.save(order);
-
-        assertThat(result,notNullValue());
-        assertThat(result.getProducts().size(),equalTo(0));
-    }
-    @Test
     void removeProductByIdFromOrder(){
 
         Order order=ordersService.findById(1056);
         Optional<Product> optionalProduct=order.getProducts().stream().findFirst();
         int count=order.getProducts().size();
 
-        order.removeProductById(optionalProduct.get().getProductId());
+        order.getProducts().remove(0);
 
         Order result=ordersService.save(order);
         assertThat(result,notNullValue());
         assertThat(result.getProducts().size(),equalTo(count-1));
+    }
+    @Test
+    void removeAllProductFromOrder(){
+        Order order=ordersService.findById(1056);
+        order.getProducts().clear();
+        Order result=ordersService.save(order);
+
+        assertThat(result,notNullValue());
+        assertThat(result.getProducts().size(),equalTo(0));
     }
 
 

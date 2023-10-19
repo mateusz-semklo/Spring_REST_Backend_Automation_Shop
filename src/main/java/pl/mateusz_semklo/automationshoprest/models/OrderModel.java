@@ -2,15 +2,12 @@ package pl.mateusz_semklo.automationshoprest.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
-import pl.mateusz_semklo.automationshoprest.entities.OrderProduct;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.entities.User;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter

@@ -3,10 +3,7 @@ package pl.mateusz_semklo.automationshoprest.entities;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -20,6 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="ORDERS")
+@EqualsAndHashCode(callSuper = false)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderId",scope = Order.class)
 public class Order implements Serializable {
     private static final long serialVersionUID = 1234567L;
@@ -55,36 +53,12 @@ public class Order implements Serializable {
     private User user;
 
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
-    private List<OrderProduct> ordersProductsList=new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(name="ORDERS_PRODUCTS",
+            joinColumns = @JoinColumn(name="ORDER_ID"),
+            inverseJoinColumns = @JoinColumn(name="PRODUCT_ID"))
+    List<Product> products =new ArrayList<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return Objects.equals(getOrderId(), order.getOrderId()) && Objects.equals(getOrderDate(), order.getOrderDate()) && Objects.equals(getOrderStreet(), order.getOrderStreet()) && Objects.equals(getOrderCity(), order.getOrderCity()) && Objects.equals(getOrderCountry(), order.getOrderCountry()) && Objects.equals(getOrdesPostCode(), order.getOrdesPostCode()) && Objects.equals(getUser(), order.getUser());
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getOrderId(), getOrderDate(), getOrderStreet(), getOrderCity(), getOrderCountry(), getOrdesPostCode(), getUser());
-    }
-
-    public List<Product> addProducts(List<Product> productsList){
-        productsList.forEach((products -> this.ordersProductsList.add(new OrderProduct(products,this))));
-        return this.getOrdersProductsList().stream().map((orderProduct -> orderProduct.getProduct())).toList();
-    }
-    public List<Product> getProducts(){
-        return this.getOrdersProductsList().stream().map((orderProduct -> orderProduct.getProduct())).toList();
-    }
-    public void removeAllProducts(){
-        this.ordersProductsList.clear();
-    }
-    public void removeProductById(Integer product_id){
-         OrderProduct orderProductx=this.ordersProductsList.stream().filter((orderProduct -> orderProduct.getId().equals(new OrderProduct.Id(this.orderId,product_id))))
-                .toList().get(0);
-        this.ordersProductsList.remove(orderProductx);
-    }
 
 }

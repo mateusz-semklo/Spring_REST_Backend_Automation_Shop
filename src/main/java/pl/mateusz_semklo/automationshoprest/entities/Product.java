@@ -3,10 +3,7 @@ package pl.mateusz_semklo.automationshoprest.entities;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="PRODUCTS")
+@EqualsAndHashCode(callSuper = false)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "productId",scope = Product.class)
 public class Product implements Serializable {
 
@@ -50,19 +48,7 @@ public class Product implements Serializable {
     @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "CATEGORY_ID", nullable = false)
     private Category category;
 
-    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
-    private List<OrderProduct> ordersProductsList=new ArrayList<>();
+    @ManyToMany(mappedBy = "products",fetch = FetchType.EAGER)
+    List<Order> orders=new ArrayList<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return getProductPrice() == product.getProductPrice() && Objects.equals(getProductId(), product.getProductId()) && Objects.equals(getProductName(), product.getProductName()) && Objects.equals(getProductDescription(), product.getProductDescription()) && Objects.equals(getProductImageUrl(), product.getProductImageUrl()) && Objects.equals(getCategory(), product.getCategory());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getProductId(), getProductName(), getProductDescription(), getProductImageUrl(), getProductPrice(), getCategory());
-    }
 }

@@ -3,10 +3,7 @@ package pl.mateusz_semklo.automationshoprest.entities;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="CATEGORIES")
+@EqualsAndHashCode(callSuper = false)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "categoryId",scope = Category.class)
 public class Category implements Serializable {
 
@@ -37,16 +35,4 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category")
     private List<Product> products=new ArrayList<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(getCategoryId(), category.getCategoryId()) && Objects.equals(getCategoryName(), category.getCategoryName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getCategoryId(), getCategoryName());
-    }
 }

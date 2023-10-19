@@ -16,6 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="USERS")
+@EqualsAndHashCode(callSuper = false)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username",scope = User.class)
 public class User implements Serializable{
 
@@ -69,16 +70,4 @@ public class User implements Serializable{
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Order> orders=new ArrayList<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return isEnabled() == user.isEnabled() && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getUserEmail(), user.getUserEmail()) && Objects.equals(getUserFirstname(), user.getUserFirstname()) && Objects.equals(getUserLastname(), user.getUserLastname()) && Objects.equals(getUserStreet(), user.getUserStreet()) && Objects.equals(getUserCity(), user.getUserCity()) && Objects.equals(getUserCountry(), user.getUserCountry()) && Objects.equals(getUserPostCode(), user.getUserPostCode());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUsername(), getPassword(), isEnabled(), getUserEmail(), getUserFirstname(), getUserLastname(), getUserStreet(), getUserCity(), getUserCountry(), getUserPostCode());
-    }
 }
