@@ -29,11 +29,11 @@ class OrdersServiceTest {
     ProductsService productsService;
 
     @Test
-    void findOrderById1055() {
-        Order order =ordersService.findById(1055);
+    void findOrderById1056() {
+        Order order =ordersService.findById(1056);
         assertThat(order,notNullValue());
         assertThat(order,isA(Order.class));
-        assertThat(order.getOrderId(),equalTo(1055));
+        assertThat(order.getOrderId(),equalTo(1056));
     }
 
     @Test

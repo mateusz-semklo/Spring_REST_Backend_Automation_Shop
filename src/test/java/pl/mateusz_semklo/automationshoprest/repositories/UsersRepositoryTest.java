@@ -80,7 +80,13 @@ class UsersRepositoryTest {
     @Test
     public void updateAuthoritiesForUserAlicja(){
         Optional<User> optionalUsers=usersRepository.findById("alicja1234");
-        User user=optionalUsers.get();
+        User user;
+        if(optionalUsers.isPresent()) {
+             user = optionalUsers.get();
+        }
+        else {
+            user=null;
+        }
 
         List<String> authorities=new ArrayList<>();
         authorities.add("ROLE_MAIN");

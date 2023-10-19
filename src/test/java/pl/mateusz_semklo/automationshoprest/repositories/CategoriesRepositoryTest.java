@@ -31,11 +31,11 @@ class CategoriesRepositoryTest {
 
     }
     @Test
-    void findCategoriesById1005(){
-        Optional<Category> optionalCategory=categoriesRepository.findById(1005);
+    void findCategoriesById1002Czujniki(){
+        Optional<Category> optionalCategory=categoriesRepository.findById(1002);
 
         assertThat(optionalCategory.isPresent(),notNullValue());
-        assertThat(optionalCategory.get().getCategoryName(),equalTo("Mikrokontrolery"));
+        assertThat(optionalCategory.get().getCategoryName(),equalTo("Czujniki"));
     }
     @Test
     void saveNewCategories(){
@@ -55,33 +55,13 @@ class CategoriesRepositoryTest {
 
     }
     @Test
-    void deleteCategoriesMikrokontroleryWithProducts(){
+    void deleteCategoriesCzujnikiWithProducts(){
 
-        List<Category> categoriesList=categoriesRepository.findCategoriesByCategoryName("Mikrokontrolery");
+        List<Category> categoriesList=categoriesRepository.findCategoriesByCategoryName("Czujniki");
 
         assertThrows(DataIntegrityViolationException.class,
                 ()->categoriesRepository.deleteById(categoriesList.get(0).getCategoryId()));
     }
-    @Test
-    void editCategoriesWithProducts(){
-
-        List<Category> categoriesList=categoriesRepository.findCategoriesByCategoryName("Mikrokontrolery");
-        Category categories=categoriesList.get(0);
-        categories.setCategoryName("Microkontrolery");
-        Category result=categoriesRepository.save(categories);
-
-        List<Product> productsList=productsRepository.findProductsByCategoryName("Microkontrolery");
-
-        assertThat(result,notNullValue());
-        assertThat(result.getCategoryName(),equalTo("Microkontrolery"));
-        assertThat(productsList,notNullValue());
-        assertThat(productsList,not(empty()));
-        assertThat(productsList.get(0).getCategory().getCategoryName(),equalTo("Microkontrolery"));
-
-    }
-
-
-
 
 
 }

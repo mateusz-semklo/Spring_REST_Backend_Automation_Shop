@@ -55,10 +55,11 @@ class CategoriesServiceTest {
     @Test
     void deleteCategoryNowaCategoriaWithNullProducts() {
 
-        Integer id=categoriesService.findByName("nowaKategoria").get(0).getCategoryId();
-        categoriesService.delete(id);
+        List<Category> categories=categoriesService.findByName("nowaKategoria");
+        Category category=categories.get(0);
+        categoriesService.delete(category.getCategoryId());
 
-        Category result=categoriesService.findById(id);
+        Category result=categoriesService.findById(category.getCategoryId());
         assertThat(result,nullValue());
 
     }
