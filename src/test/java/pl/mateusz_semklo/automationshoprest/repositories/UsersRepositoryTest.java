@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
@@ -99,9 +99,37 @@ class UsersRepositoryTest {
         usersAlicja.getAuthorities().forEach((auth)-> System.out.println(auth));
     }
     @Test
-    public void deleteUserAlicja(){
-        usersRepository.deleteById("alicja1234");
-        Optional<User> optionalUsers=usersRepository.findById("alicja1234");
+    public void deleteUserAga(){
+
+        User user=new User();
+        user.setUsername("aga1234");
+        user.setPassword(passwordEncoder.encode("aga1234"));
+        user.setEnabled(true);
+        user.setUserEmail("aga1234@wp.pl");
+        user.setUserFirstname("aga");
+        user.setUserLastname("olszewska");
+        user.setUserStreet("wiosenna 23/2");
+        user.setUserCity("Swrzędz");
+        user.setUserCountry("Poland");
+        user.setUserPostCode("64-120");
+
+        List<String> authorities=new ArrayList<>();
+        authorities.add("ROLE_USER");
+        authorities.add("ROLE_USER_EXTRA");
+        authorities.add("ROLE_ADMIN");
+        user.setAuthorities(authorities);
+
+        User usersAlicja=usersRepository.save(user);
+        assertThat(usersAlicja,notNullValue());
+        assertThat(usersAlicja,isA(User.class));
+        System.out.println("ZAPISANY USER ALICJA");
+        System.out.println(usersAlicja.getUsername());
+        System.out.println("KOLEKCJA AUTHORITIES DLA ALICJI");
+        usersAlicja.getAuthorities().forEach((auth)-> System.out.println(auth));
+
+
+        usersRepository.deleteById("aga1234");
+        Optional<User> optionalUsers=usersRepository.findById("aga1234");
         assertThat(optionalUsers.isEmpty(),is(true));
 
     }

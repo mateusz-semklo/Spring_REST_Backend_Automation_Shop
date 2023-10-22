@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import pl.mateusz_semklo.automationshoprest.config.Mapper;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
@@ -32,7 +33,7 @@ public class CategoriesController {
     CategoryModelAssembler categoryModelAssembler;
 
     @Autowired
-    ModelMapper modelMapper;
+    Mapper mapper;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CategoryModel> getCategories(){
@@ -71,30 +72,25 @@ public class CategoriesController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveCategory(@RequestBody CategoryModel categoryModel){
-        Category category=this.convertToEntity(categoryModel);
+        Category category=this.mapper.convertToEntity(categoryModel);
         categoriesService.save(category);
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void putCategory(@RequestBody CategoryModel categoryModel,@PathVariable("id") Integer id){
-        Category category=convertToEntity(categoryModel);
+        Category category=mapper.convertToEntity(categoryModel);
         category.setCategoryId(id);
         categoriesService.save(category);
     }
 
     @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void patchCategory(@RequestBody CategoryModel categoryModel,@PathVariable("id") Integer id){
-        Category category=convertToEntity(categoryModel);
+        Category category=mapper.convertToEntity(categoryModel);
         category.setCategoryId(id);
         categoriesService.save(category);
     }
 
-    private CategoryModel convertToDTO(Category category){
-        return modelMapper.map(category,CategoryModel.class);
-    }
-    private Category convertToEntity(CategoryModel categoryModel){
-        return modelMapper.map(categoryModel,Category.class);
-    }
+
 
 
 }

@@ -46,7 +46,7 @@ public class Order implements Serializable {
 
     @Basic
     @Column(name = "ORDER_POST_CODE")
-    private String ordesPostCode;
+    private String orderPostCode;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME", nullable = false)

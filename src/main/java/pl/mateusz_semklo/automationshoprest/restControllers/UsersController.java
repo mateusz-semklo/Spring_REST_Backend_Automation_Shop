@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import pl.mateusz_semklo.automationshoprest.config.Mapper;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.entities.User;
@@ -32,7 +33,7 @@ public class UsersController {
     UserModelAssembler userModelAssembler;
 
     @Autowired
-    ModelMapper modelMapper;
+    Mapper mapper;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserModel> getUsers(){
@@ -73,28 +74,22 @@ public class UsersController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveUser(@RequestBody UserModel userModel){
-        User user=convertToEntity(userModel);
+        User user=mapper.convertToEntity(userModel);
         usersService.save(user);
     }
 
     @PutMapping(value = "/{username}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void putUser(@RequestBody UserModel userModel,@PathVariable("username") String username){
-        User user=convertToEntity(userModel);
+        User user=mapper.convertToEntity(userModel);
         user.setUsername(username);
         usersService.save(user);
     }
 
     @PatchMapping(value = "/{username}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void patchUser(@RequestBody UserModel userModel,@PathVariable("username") String username){
-        User user=convertToEntity(userModel);
+        User user=mapper.convertToEntity(userModel);
         user.setUsername(username);
         usersService.save(user);
     }
 
-    private UserModel convertToDTO(User user){
-        return modelMapper.map(user,UserModel.class);
-    }
-    private User convertToEntity(UserModel userModel){
-        return modelMapper.map(userModel,User.class);
-    }
 }

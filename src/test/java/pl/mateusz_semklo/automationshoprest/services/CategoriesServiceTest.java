@@ -5,13 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
-import pl.mateusz_semklo.automationshoprest.entities.Product;
 
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 class CategoriesServiceTest {
 
@@ -54,33 +53,44 @@ class CategoriesServiceTest {
 
     @Test
     void deleteCategoryNowaCategoriaWithNullProducts() {
+        Category category=new Category();
+        category.setCategoryName("nowaKategoriax");
+        Category result=categoriesService.save(category);
 
-        List<Category> categories=categoriesService.findByName("nowaKategoria");
-        Category category=categories.get(0);
-        categoriesService.delete(category.getCategoryId());
+        assertThat(result,notNullValue());
+        assertThat(result.getCategoryName(),equalTo("nowaKategoriax"));
 
-        Category result=categoriesService.findById(category.getCategoryId());
-        assertThat(result,nullValue());
+        List<Category> categories=categoriesService.findByName("nowaKategoriax");
+        Category categoryx=categories.get(0);
+
+        boolean del=categoriesService.delete(categoryx.getCategoryId());
+
+        Category resultx=categoriesService.findById(categoryx.getCategoryId());
+        assertThat(resultx,nullValue());
+        assertThat(del,is(true));
 
     }
     @Test
     void deleteCategoriesCzujnikiWithProducts(){
 
         Category category=categoriesService.findByName("Czujniki").get(0);
-
         assertThrows(DataIntegrityViolationException.class,
                 ()->categoriesService.delete(category.getCategoryId()));
     }
     @Test
     void editCategoriesWithProducts(){
 
-        List<Category> categoriesList=categoriesService.findByName("Mikrokontrolery");
-        Category categories=categoriesList.get(0);
-        categories.setCategoryName("Microkontrolery");
-        Category result=categoriesService.save(categories);
+        Category category=categoriesService.findById(1001);
+        category.setCategoryName("Microkontrolery!!!");
+        Category result=categoriesService.save(category);
 
         assertThat(result,notNullValue());
-        assertThat(result.getCategoryName(),equalTo("Microkontrolery"));
+        assertThat(result.getCategoryName(),equalTo("Microkontrolery!!!"));
+
+        Category categoryx=categoriesService.findById(1001);
+        categoryx.setCategoryName("Mikrokontrolery");
+        categoriesService.save(categoryx);
     }
+
 
 }

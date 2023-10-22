@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
-import pl.mateusz_semklo.automationshoprest.RestControllers.UsersController;
+
 import pl.mateusz_semklo.automationshoprest.entities.User;
 import pl.mateusz_semklo.automationshoprest.models.UserModel;
+import pl.mateusz_semklo.automationshoprest.restControllers.UsersController;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;

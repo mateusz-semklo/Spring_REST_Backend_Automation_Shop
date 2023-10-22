@@ -37,7 +37,12 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void delete(String username) {
-        usersRepository.deleteById(username);
+    public boolean delete(String username) {
+        if(usersRepository.existsById(username)) {
+            usersRepository.deleteById(username);
+            return true;
+        }
+        else
+            return false;
     }
 }

@@ -52,7 +52,7 @@ class OrdersServiceTest {
         orders.setOrderDate(new Date(System.currentTimeMillis()));
         orders.setOrderCountry(user.getUserCountry());
         orders.setOrderCity(user.getUserCity());
-        orders.setOrdesPostCode(user.getUserPostCode());
+        orders.setOrderPostCode(user.getUserPostCode());
         orders.setUser(user);
         orders.setOrderStreet(user.getUserStreet());
 
@@ -70,7 +70,7 @@ class OrdersServiceTest {
         orders.setOrderDate(new Date(System.currentTimeMillis()));
         orders.setOrderCountry("poland");
         orders.setOrderCity("wawa");
-        orders.setOrdesPostCode("65-609");
+        orders.setOrderPostCode("65-609");
         orders.setOrderStreet("lesna 5");
 
         assertThrows(DataIntegrityViolationException.class,()->ordersService.save(orders));
@@ -78,9 +78,10 @@ class OrdersServiceTest {
 
     @Test
     void deleteOrderById1055() {
-        ordersService.delete(1055);
-        Order order=ordersService.findById(1055);
+        boolean del=ordersService.delete(1060);
+        Order order=ordersService.findById(1060);
         assertThat(order,nullValue());
+        assertThat(del,is(true));
     }
 
     @Test

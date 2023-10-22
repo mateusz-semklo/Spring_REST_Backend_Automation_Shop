@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
-import pl.mateusz_semklo.automationshoprest.entities.Product;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
 import java.util.List;
 import java.util.Optional;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @SpringBootTest
@@ -48,7 +48,13 @@ class CategoriesRepositoryTest {
     }
     @Test
     void deleteCategoriesWithNoProducts(){
-        List<Category> categoriesList=categoriesRepository.findCategoriesByCategoryName("nowa_kategoria");
+        Category category=new Category();
+        category.setCategoryName("nowa_kategoriax");
+        Category result=categoriesRepository.save(category);
+        assertThat(result,notNullValue());
+        assertThat(result.getCategoryName(),equalTo("nowa_kategoriax"));
+
+        List<Category> categoriesList=categoriesRepository.findCategoriesByCategoryName("nowa_kategoriax");
         categoriesRepository.deleteById(categoriesList.get(0).getCategoryId());
         Optional<Category> optionalCategory=categoriesRepository.findById(categoriesList.get(0).getCategoryId());
         assertThat(optionalCategory.isEmpty(),equalTo(true));

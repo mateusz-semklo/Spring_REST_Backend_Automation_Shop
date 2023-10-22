@@ -44,8 +44,14 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
-    public void delete(Integer id) {
-        categoriesRepository.deleteById(id);
+    public boolean delete(Integer id) {
+
+        if(categoriesRepository.existsById(id)) {
+            categoriesRepository.deleteById(id);
+            return true;
+        }
+        else
+            return false;
     }
 
 }

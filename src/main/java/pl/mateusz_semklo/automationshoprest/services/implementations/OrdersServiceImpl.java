@@ -37,8 +37,13 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public void delete(Integer id) {
-        ordersRepository.deleteById(id);
+    public boolean delete(Integer id) {
+        if(ordersRepository.existsById(id)) {
+            ordersRepository.deleteById(id);
+            return true;
+        }
+        else
+            return false;
 
     }
 }

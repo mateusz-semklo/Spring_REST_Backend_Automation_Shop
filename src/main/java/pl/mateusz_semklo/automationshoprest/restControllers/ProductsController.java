@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import pl.mateusz_semklo.automationshoprest.config.Mapper;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
@@ -25,7 +26,7 @@ public class ProductsController {
     OrdersService ordersService;
 
     @Autowired
-    ModelMapper modelMapper;
+    Mapper mapper;
 
     @Autowired
     ProductModelAssembler productModelAssembler;
@@ -65,29 +66,22 @@ public class ProductsController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveProduct(@RequestBody ProductModel productModel){
-        Product product=convertToEntity(productModel);
+        Product product=mapper.convertToEntity(productModel);
         productsService.save(product);
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void putProduct(@RequestBody ProductModel productModel,@PathVariable("id") Integer id){
-        Product product=convertToEntity(productModel);
+        Product product=mapper.convertToEntity(productModel);
         product.setProductId(id);
         productsService.save(product);
     }
 
     @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void patchProduct(@RequestBody ProductModel productModel,@PathVariable("id") Integer id){
-        Product product=convertToEntity(productModel);
+        Product product=mapper.convertToEntity(productModel);
         product.setProductId(id);
         productsService.save(product);
     }
 
-    private ProductModel convertToDTO(Product product){
-        return modelMapper.map(product,ProductModel.class);
-    }
-
-    private Product convertToEntity(ProductModel productModel){
-        return modelMapper.map(productModel,Product.class);
-    }
 }

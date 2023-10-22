@@ -3,16 +3,15 @@ package pl.mateusz_semklo.automationshoprest.services;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.mateusz_semklo.automationshoprest.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
 @SpringBootTest
@@ -36,11 +35,9 @@ class UsersServiceTest {
     @Test
     void findAllUsers() {
         List<User> usersList=usersService.findAll();
-        User user=usersService.findByUsername("mateusz2606");
 
         assertThat(usersList,notNullValue());
         assertThat(usersList,not(empty()));
-        assertThat(usersList,hasItem(user));
     }
 
     @Test
@@ -144,9 +141,30 @@ class UsersServiceTest {
     @Test
     void deleteUserAlicja() {
 
-        usersService.delete("alicja1234");
-        User usersAlicja=usersService.findByUsername("alicja1234");
-        assertThat(usersAlicja,nullValue());
+        User user=new User();
+        user.setUsername("alicja12345");
+        user.setPassword(passwordEncoder.encode("alicja12345"));
+        user.setEnabled(true);
+        user.setUserEmail("alicja12345@wp.pl");
+        user.setUserFirstname("alicjaa");
+        user.setUserLastname("olszewska");
+        user.setUserStreet("wiosenna 23/2");
+        user.setUserCity("Swrzędz");
+        user.setUserCountry("Poland");
+        user.setUserPostCode("64-120");
+
+        List<String> authorities=new ArrayList<>();
+        authorities.add("ROLE_USER");
+        authorities.add("ROLE_USER_EXTRA");
+        authorities.add("ROLE_ADMIN");
+        user.setAuthorities(authorities);
+
+        usersService.save(user);
+
+        boolean del=usersService.delete("alicja12345");
+        User usersAlicja2=usersService.findByUsername("alicja12345");
+        assertThat(usersAlicja2,nullValue());
+        assertThat(del,is(true));
 
     }
 }

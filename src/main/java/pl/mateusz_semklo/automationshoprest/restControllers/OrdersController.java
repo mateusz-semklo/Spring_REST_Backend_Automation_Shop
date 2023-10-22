@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import pl.mateusz_semklo.automationshoprest.config.Mapper;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
@@ -26,7 +27,7 @@ public class OrdersController {
     ProductsService productsService;
 
     @Autowired
-    ModelMapper modelMapper;
+    Mapper mapper;
 
     @Autowired
     OrderModelAssembler orderModelAssembler;
@@ -66,28 +67,22 @@ public class OrdersController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveOrder(@RequestBody OrderModel orderModel){
-        Order order=convertToEntity(orderModel);
+        Order order=mapper.convertToEntity(orderModel);
         ordersService.save(order);
     }
     
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void putOrder(@RequestBody OrderModel orderModel,@PathVariable("id") Integer id){
-        Order order=convertToEntity(orderModel);
+        Order order=mapper.convertToEntity(orderModel);
         order.setOrderId(id);
         ordersService.save(order);
     }
     
     @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void patchOrder(@RequestBody OrderModel orderModel,@PathVariable("id") Integer id){
-        Order order=convertToEntity(orderModel);
+        Order order=mapper.convertToEntity(orderModel);
         order.setOrderId(id);
         ordersService.save(order);
     }
 
-    private OrderModel convertToDTO(Order order){
-        return modelMapper.map(order,OrderModel.class);
-    }
-    private Order convertToEntity(OrderModel orderModel){
-        return modelMapper.map(orderModel,Order.class);
-    }
 }

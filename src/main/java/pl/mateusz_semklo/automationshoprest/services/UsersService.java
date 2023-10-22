@@ -13,6 +13,6 @@ public interface UsersService {
     User findByUsername(String username);
     List<User> findAll();
     User save(User users);
-    void delete(String username);
+    boolean delete(String username);
 
 }

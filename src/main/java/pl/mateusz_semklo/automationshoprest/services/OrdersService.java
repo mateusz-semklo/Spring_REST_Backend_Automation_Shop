@@ -12,6 +12,6 @@ public interface OrdersService {
     Order findById(Integer id);
     List<Order> findAll();
     Order save(Order orders);
-    void delete(Integer id);
+    boolean delete(Integer id);
 
 }

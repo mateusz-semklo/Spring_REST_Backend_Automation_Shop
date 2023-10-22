@@ -12,6 +12,6 @@ public interface ProductsService {
     Product findById(Integer id);
     List<Product> findAll();
     Product save(Product products);
-    void delete(Integer id);
+    boolean delete(Integer id);
 
 }

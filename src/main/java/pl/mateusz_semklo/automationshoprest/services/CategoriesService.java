@@ -14,7 +14,7 @@ public interface CategoriesService {
     List<Category> findByName(String name);
     List<Category> findAll();
     Category save(Category category);
-    void delete(Integer id);
+    boolean delete(Integer id);
 
 
 }
