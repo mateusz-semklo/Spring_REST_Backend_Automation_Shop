@@ -78,8 +78,8 @@ class OrdersServiceTest {
 
     @Test
     void deleteOrderById1055() {
-        boolean del=ordersService.delete(1060);
-        Order order=ordersService.findById(1060);
+        boolean del=ordersService.delete(1056);
+        Order order=ordersService.findById(1056);
         assertThat(order,nullValue());
         assertThat(del,is(true));
     }

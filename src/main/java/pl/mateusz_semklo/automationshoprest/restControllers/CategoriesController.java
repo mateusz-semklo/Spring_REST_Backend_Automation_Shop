@@ -2,7 +2,9 @@ package pl.mateusz_semklo.automationshoprest.restControllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.mateusz_semklo.automationshoprest.config.Mapper;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
@@ -47,12 +49,6 @@ public class CategoriesController {
         return categoryModelAssembler.toModel(category);
     }
 
-    @GetMapping(value = "/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CategoryModel> getCategoriesByName(@PathVariable("name") String name){
-        List<Category> categories=categoriesService.findByName(name);
-        return categoryModelAssembler.toCollectionModel(categories).getContent().stream().toList();
-    }
-
     @GetMapping(value = "/{id}/products",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductModel> getProducts(@PathVariable("id") Integer id){
         Category category=categoriesService.findById(id);
@@ -71,23 +67,21 @@ public class CategoriesController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveCategory(@RequestBody CategoryModel categoryModel){
+    public ResponseEntity<CategoryModel> saveCategory(@RequestBody CategoryModel categoryModel){
         Category category=this.mapper.convertToEntity(categoryModel);
-        categoriesService.save(category);
+        Category result=categoriesService.save(category);
+        ResponseEntity<CategoryModel> response=new ResponseEntity<>(mapper.convertToDTO(result),HttpStatus.CREATED);
+        return response;
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void putCategory(@RequestBody CategoryModel categoryModel,@PathVariable("id") Integer id){
-        Category category=mapper.convertToEntity(categoryModel);
-        category.setCategoryId(id);
-        categoriesService.save(category);
+
     }
 
     @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void patchCategory(@RequestBody CategoryModel categoryModel,@PathVariable("id") Integer id){
-        Category category=mapper.convertToEntity(categoryModel);
-        category.setCategoryId(id);
-        categoriesService.save(category);
+
     }
 
 

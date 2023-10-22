@@ -2,12 +2,15 @@ package pl.mateusz_semklo.automationshoprest.restControllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.mateusz_semklo.automationshoprest.config.Mapper;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.entities.User;
+import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
 import pl.mateusz_semklo.automationshoprest.models.UserModel;
 import pl.mateusz_semklo.automationshoprest.representationAssemblers.OrderModelAssembler;
@@ -73,23 +76,21 @@ public class UsersController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveUser(@RequestBody UserModel userModel){
+    public ResponseEntity<UserModel> saveUser(@RequestBody UserModel userModel){
         User user=mapper.convertToEntity(userModel);
-        usersService.save(user);
+        User result=usersService.save(user);
+        ResponseEntity<UserModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.CREATED);
+        return response;
     }
 
     @PutMapping(value = "/{username}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void putUser(@RequestBody UserModel userModel,@PathVariable("username") String username){
-        User user=mapper.convertToEntity(userModel);
-        user.setUsername(username);
-        usersService.save(user);
+
     }
 
     @PatchMapping(value = "/{username}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void patchUser(@RequestBody UserModel userModel,@PathVariable("username") String username){
-        User user=mapper.convertToEntity(userModel);
-        user.setUsername(username);
-        usersService.save(user);
+
     }
 
 }

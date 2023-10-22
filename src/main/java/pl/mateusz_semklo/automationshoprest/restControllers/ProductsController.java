@@ -2,11 +2,14 @@ package pl.mateusz_semklo.automationshoprest.restControllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.mateusz_semklo.automationshoprest.config.Mapper;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
+import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
 import pl.mateusz_semklo.automationshoprest.representationAssemblers.OrderModelAssembler;
@@ -65,23 +68,21 @@ public class ProductsController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveProduct(@RequestBody ProductModel productModel){
+    public ResponseEntity<ProductModel> saveProduct(@RequestBody ProductModel productModel){
         Product product=mapper.convertToEntity(productModel);
-        productsService.save(product);
+        Product result=productsService.save(product);
+        ResponseEntity<ProductModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.CREATED);
+        return response;
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void putProduct(@RequestBody ProductModel productModel,@PathVariable("id") Integer id){
-        Product product=mapper.convertToEntity(productModel);
-        product.setProductId(id);
-        productsService.save(product);
+
     }
 
     @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void patchProduct(@RequestBody ProductModel productModel,@PathVariable("id") Integer id){
-        Product product=mapper.convertToEntity(productModel);
-        product.setProductId(id);
-        productsService.save(product);
+
     }
 
 }
