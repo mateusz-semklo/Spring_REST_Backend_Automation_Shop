@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class OrdersServiceTest {
@@ -78,8 +78,8 @@ class OrdersServiceTest {
 
     @Test
     void deleteOrderById1055() {
-        boolean del=ordersService.delete(1056);
-        Order order=ordersService.findById(1056);
+        boolean del=ordersService.delete(1055);
+        Order order=ordersService.findById(1055);
         assertThat(order,nullValue());
         assertThat(del,is(true));
     }

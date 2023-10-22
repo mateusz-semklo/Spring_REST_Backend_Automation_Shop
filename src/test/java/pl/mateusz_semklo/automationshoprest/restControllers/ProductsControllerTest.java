@@ -14,18 +14,16 @@ import pl.mateusz_semklo.automationshoprest.config.ConfigProperties;
 import pl.mateusz_semklo.automationshoprest.config.Mapper;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
-import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
 import pl.mateusz_semklo.automationshoprest.services.CategoriesService;
 import pl.mateusz_semklo.automationshoprest.services.ProductsService;
-import pl.mateusz_semklo.automationshoprest.services.UsersService;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 class ProductsControllerTest {
 
@@ -106,53 +104,54 @@ class ProductsControllerTest {
         product.setProductDescription("product description");
         product.setProductImageUrl("/products/new");
         product.setProductPrice(34);
-
         Category category=categoriesService.findById(1001);
         product.setCategory(category);
+        ProductModel productModel=modelMapper.convertToDTO(product);
         /////////////////////////////////////////////
 
         System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(product));
+        System.out.println(objectMapper.writeValueAsString(productModel));
 
-        Product result=webTestClient.post().uri("/products")
+        ProductModel result=webTestClient.post().uri("/products")
                 .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(product)
+                .bodyValue(productModel)
                 .exchange()
                 .expectStatus().isCreated()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(Product.class)
+                .expectBody(ProductModel.class)
                 .returnResult().getResponseBody();
 
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(result));
+
+        assertThat(result,notNullValue());
+        assertThat(productModel.getProductId(),equalTo(result.getProductId()));
 
     }
     @Test
     void saveProductJSON() throws JsonProcessingException {
         //////////PRODUCT////////////////////////////
-        String productJSON="{\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}";
-        Product product=objectMapper.readValue(productJSON,Product.class);
+        String productJSON="{\"productName\":\"nowy PPP\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}";
+        ProductModel productModel=objectMapper.readValue(productJSON,ProductModel.class);
         /////////////////////////////////////////////
 
         System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(product));
+        System.out.println(objectMapper.writeValueAsString(productModel));
 
-        Product result=webTestClient.post().uri("/products")
+        ProductModel result=webTestClient.post().uri("/products")
                 .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(product)
+                .bodyValue(productModel)
                 .exchange()
                 .expectStatus().isCreated()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(Product.class)
+                .expectBody(ProductModel.class)
                 .returnResult().getResponseBody();
 
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(result));
 
-        Product productx=productsService.findById(result.getProductId());
-        System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(productx));
-
+        assertThat(result,notNullValue());
+        assertThat(productModel.getProductId(),equalTo(result.getProductId()));
 
     }
 
@@ -165,7 +164,34 @@ class ProductsControllerTest {
     }
 
     @Test
-    void deleteProduct() {
+    void deleteProduct() throws JsonProcessingException {
+
+        String productJSON="{\"productName\":\"nowy PPP\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}";
+        ProductModel productModel=objectMapper.readValue(productJSON,ProductModel.class);
+        /////////////////////////////////////////////
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(productModel));
+
+        ProductModel result=webTestClient.post().uri("/products")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(productModel)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(ProductModel.class)
+                .returnResult().getResponseBody();
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(result));
+
+        assertThat(result,notNullValue());
+        assertThat(productModel.getProductId(),equalTo(result.getProductId()));
+
+        webTestClient.delete().uri(configProperties.getServerUrl()+"/products/{id}",result.getProductId())
+                .exchange()
+                .expectStatus().isOk();
+
     }
 
 }

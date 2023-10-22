@@ -2,23 +2,18 @@ package pl.mateusz_semklo.automationshoprest.restControllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcConfigurer;
+import org.springframework.test.web.servlet.client.MockMvcWebTestClient;
 import org.springframework.web.context.WebApplicationContext;
 import pl.mateusz_semklo.automationshoprest.config.ConfigProperties;
 import pl.mateusz_semklo.automationshoprest.config.Mapper;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
 import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
-import org.springframework.test.web.servlet.client.MockMvcWebTestClient;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
 import pl.mateusz_semklo.automationshoprest.repositories.CategoriesRepository;
 import pl.mateusz_semklo.automationshoprest.services.CategoriesService;
@@ -27,7 +22,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CategoriesControllerTest {
@@ -139,30 +133,32 @@ class CategoriesControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(result));
 
+        assertThat(result,notNullValue());
         assertThat(category.getCategoryName(),equalTo(result.getCategoryName()));
     }
     @Test
     void saveNewCategoryJSON() throws JsonProcessingException {
         //////////CATEGORY////////////////////////////
-        String categoryJSON="{\"categoryName\":\"kaaa\",\"products\":[],\"links\":[]}";
-        Category category=objectMapper.readValue(categoryJSON,Category.class);
+        String categoryJSON="{\"categoryName\":\"kaaa\",\"products\":[]}";
+        CategoryModel category=objectMapper.readValue(categoryJSON,CategoryModel.class);
         /////////////////////////////////////////////
 
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(category));
 
-        Category result=webTestClient.post().uri("/categories")
+        CategoryModel result=webTestClient.post().uri("/categories")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(category)
                 .exchange()
                 .expectStatus().isCreated()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(Category.class)
+                .expectBody(CategoryModel.class)
                 .returnResult().getResponseBody();
 
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(result));
 
+        assertThat(result,notNullValue());
         assertThat(category.getCategoryName(),equalTo(result.getCategoryName()));
     }
     @Test
@@ -170,23 +166,25 @@ class CategoriesControllerTest {
         //////////CATEGORY////////////////////////////
         Category category=categoriesService.findById(1004);
         category.setCategoryName("Technika napedowa");
+        CategoryModel categoryModel=mapper.convertToDTO(category);
         /////////////////////////////////////////////
 
         System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(category));
+        System.out.println(objectMapper.writeValueAsString(categoryModel));
 
-        Category result=webTestClient.post().uri("/categories")
+        CategoryModel result=webTestClient.post().uri("/categories")
                 .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(category)
+                .bodyValue(categoryModel)
                 .exchange()
                 .expectStatus().isCreated()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(Category.class)
+                .expectBody(CategoryModel.class)
                 .returnResult().getResponseBody();
 
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(result));
 
+        assertThat(result,notNullValue());
         assertThat(category.getCategoryName(),equalTo(result.getCategoryName()));
     }
 
@@ -203,22 +201,24 @@ class CategoriesControllerTest {
         Category category=new Category();
         String categoryName="kategoria";
         category.setCategoryName(categoryName);
+        CategoryModel categoryModel=mapper.convertToDTO(category);
 
         System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(category));
+        System.out.println(objectMapper.writeValueAsString(categoryModel));
 
-        Category result=webTestClient.post().uri("/categories")
+        CategoryModel result=webTestClient.post().uri("/categories")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(category)
                 .exchange()
                 .expectStatus().isCreated()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(Category.class)
+                .expectBody(CategoryModel.class)
                 .returnResult().getResponseBody();
 
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(result));
 
+        assertThat(result,notNullValue());
         assertThat(category.getCategoryName(),equalTo(result.getCategoryName()));
 
         webTestClient.delete().uri("/categories/{id}",result.getCategoryId())
