@@ -11,7 +11,8 @@ import java.util.List;
 public interface OrdersService {
     Order findById(Integer id);
     List<Order> findAll();
-    Order save(Order orders);
+    Order save(Order order);
+    Order saveOrder(Order order);
     boolean delete(Integer id);
 
 }

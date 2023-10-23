@@ -8,6 +8,7 @@ import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.entities.User;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter

@@ -49,18 +49,18 @@ public class ProductsController {
         return productModelAssembler.toModel(product);
     }
 
-    @GetMapping(value = "/{id}/orders",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<OrderModel> getOrders(@PathVariable("id") Integer id){
-        Product product=productsService.findById(id);
-        List<Order> orders=product.getOrders();
-        return orderModelAssembler.toCollectionModel(orders).getContent().stream().toList();
-    }
+ //   @GetMapping(value = "/{id}/orders",produces = MediaType.APPLICATION_JSON_VALUE)
+  //  public List<OrderModel> getOrders(@PathVariable("id") Integer id){
+   //     Product product=productsService.findById(id);
+   //     List<Order> orders=product.getOrders();
+  //      return orderModelAssembler.toCollectionModel(orders).getContent().stream().toList();
+  //  }
 
-    @GetMapping(value = "/{id}/orders/{order_id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public OrderModel getOrderById(@PathVariable("id") Integer id,@PathVariable("order_id") Integer order_id){
-        Order order=ordersService.findById(order_id);
-        return orderModelAssembler.toModel(order);
-    }
+  //  @GetMapping(value = "/{id}/orders/{order_id}",produces = MediaType.APPLICATION_JSON_VALUE)
+  //  public OrderModel getOrderById(@PathVariable("id") Integer id,@PathVariable("order_id") Integer order_id){
+  //      Order order=ordersService.findById(order_id);
+   //     return orderModelAssembler.toModel(order);
+  //  }
 
     @DeleteMapping(value = "/{id}")
     public void deleteProduct(@PathVariable("id") Integer id){

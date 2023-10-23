@@ -19,9 +19,11 @@ import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
 import pl.mateusz_semklo.automationshoprest.repositories.CategoriesRepository;
+import pl.mateusz_semklo.automationshoprest.repositories.OrdersRepository;
 import pl.mateusz_semklo.automationshoprest.services.OrdersService;
 import pl.mateusz_semklo.automationshoprest.services.ProductsService;
 import pl.mateusz_semklo.automationshoprest.services.UsersService;
+import reactor.core.publisher.Flux;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -57,6 +59,8 @@ class OrdersControllerTest {
     WebTestClient webTestClient;
     @Autowired
     private CategoriesRepository categoriesRepository;
+    @Autowired
+    private OrdersRepository ordersRepository;
 
     @BeforeEach
     void init(){
@@ -178,7 +182,6 @@ class OrdersControllerTest {
 
         List<Product> products=new ArrayList<>();
         products.add(productsService.findById(1014));
-        products.add(productsService.findById(1015));
 
         order.setProducts(products);
 
@@ -188,8 +191,8 @@ class OrdersControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(orderModel));
 
-        OrderModel result=webTestClient.post().uri("/orders")
-                .accept(MediaType.ALL)
+        webTestClient.post().uri(configProperties.serverUrl+"/orders")
+                .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(orderModel)
                 .exchange()
                 .expectStatus().isCreated()
@@ -198,7 +201,77 @@ class OrdersControllerTest {
                 .returnResult().getResponseBody();
 
         System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(result));
+       // System.out.println(objectMapper.writeValueAsString(result));
+    }
+    @Test
+    void saveNewOrderWithExistsProducts2() throws JsonProcessingException {
+        //////////ORDER////////////////////////////
+        User user=usersService.findByUsername("jankowalski");
+        Order order=new Order();
+        order.setOrderCountry(user.getUserCountry());
+        order.setOrderCity(user.getUserCity());
+        order.setOrderPostCode(user.getUserPostCode());
+        order.setUser(user);
+        order.setOrderStreet(user.getUserStreet());
+
+        List<Product> products=new ArrayList<>();
+        Product product=productsService.findById(1014);
+
+        products.add(product);
+        order.getProducts().addAll(products);
+
+
+        /////////////////////////////////////////////
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(order));
+
+        webTestClient.post().uri(configProperties.serverUrl+"/orders/post")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(order)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(OrderModel.class)
+                .returnResult().getResponseBody();
+
+        System.out.println("-----------------------------------------------------------------");
+        // System.out.println(objectMapper.writeValueAsString(result));
+    }
+    @Test
+    void saveNewOrderWithExistsProducts3() throws JsonProcessingException {
+        //////////ORDER////////////////////////////
+        User user=usersService.findByUsername("jankowalski");
+        Order order=new Order();
+        order.setOrderCountry(user.getUserCountry());
+        order.setOrderCity(user.getUserCity());
+        order.setOrderPostCode(user.getUserPostCode());
+        order.setUser(user);
+        order.setOrderStreet(user.getUserStreet());
+
+        List<Product> products=new ArrayList<>();
+        Product product=productsService.findById(1030);
+        products.add(product);
+
+        order.setProducts(products);
+        String tekst=objectMapper.writeValueAsString(order);
+
+
+
+        /////////////////////////////////////////////
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(order));
+
+
+
+        webTestClient.post().uri(configProperties.serverUrl+"/orders/post2")
+                .accept(MediaType.TEXT_PLAIN)
+                .bodyValue(tekst)
+                .exchange()
+                .expectStatus().isOk();
+
+
+        System.out.println("-----------------------------------------------------------------");
+        // System.out.println(objectMapper.writeValueAsString(result));
     }
 
 
@@ -221,7 +294,7 @@ class OrdersControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(orderModel));
 
-        OrderModel result=webTestClient.post().uri("/orders")
+        OrderModel result=webTestClient.post().uri(configProperties.serverUrl+"/orders")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(orderModel)
                 .exchange()
@@ -243,7 +316,7 @@ class OrdersControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(orderModel));
 
-        OrderModel result=webTestClient.post().uri("/orders")
+        OrderModel result=webTestClient.post().uri(configProperties.serverUrl+"/orders")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(orderModel)
                 .exchange()

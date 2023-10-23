@@ -1,5 +1,7 @@
 package pl.mateusz_semklo.automationshoprest.restControllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,9 @@ public class OrdersController {
 
     @Autowired
     Mapper mapper;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Autowired
     OrderModelAssembler orderModelAssembler;
@@ -83,6 +88,22 @@ public class OrdersController {
     
     @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void patchOrder(@RequestBody OrderModel orderModel,@PathVariable("id") Integer id){
+
+    }
+
+    @PostMapping(value = "/post",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderModel> saveOrder2(@RequestBody Order order){
+        Order result=ordersService.save(order);
+        ResponseEntity<OrderModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.CREATED);
+        return response;
+
+    }
+
+    @PostMapping(value = "/post2",consumes = MediaType.TEXT_PLAIN_VALUE)
+    public void saveOrder3(@RequestBody String order) throws JsonProcessingException {
+        System.out.println(order);
+        Order order1=objectMapper.readValue(order, Order.class);
+        ordersService.save(order1);
 
     }
 

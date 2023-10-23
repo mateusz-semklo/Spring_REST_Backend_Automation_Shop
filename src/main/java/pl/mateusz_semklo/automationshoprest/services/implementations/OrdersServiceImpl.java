@@ -37,6 +37,11 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
+    public Order saveOrder(Order order) {
+        return null;
+    }
+
+    @Override
     public boolean delete(Integer id) {
         if(ordersRepository.existsById(id)) {
             Order order=ordersRepository.findById(id).get();

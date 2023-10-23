@@ -121,7 +121,7 @@ class CategoriesControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(categoryModel));
 
-        Category result=webTestClient.post().uri("/categories")
+        Category result=webTestClient.post().uri(configProperties.serverUrl+"/categories")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(category)
                 .exchange()
@@ -146,7 +146,7 @@ class CategoriesControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(category));
 
-        CategoryModel result=webTestClient.post().uri("/categories")
+        CategoryModel result=webTestClient.post().uri(configProperties.serverUrl+"/categories")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(category)
                 .exchange()
@@ -172,7 +172,7 @@ class CategoriesControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(categoryModel));
 
-        CategoryModel result=webTestClient.post().uri("/categories")
+        CategoryModel result=webTestClient.post().uri(configProperties.serverUrl+"/categories")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(categoryModel)
                 .exchange()
@@ -206,7 +206,7 @@ class CategoriesControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(categoryModel));
 
-        CategoryModel result=webTestClient.post().uri("/categories")
+        CategoryModel result=webTestClient.post().uri(configProperties.serverUrl+"/categories")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(category)
                 .exchange()
@@ -221,7 +221,7 @@ class CategoriesControllerTest {
         assertThat(result,notNullValue());
         assertThat(category.getCategoryName(),equalTo(result.getCategoryName()));
 
-        webTestClient.delete().uri("/categories/{id}",result.getCategoryId())
+        webTestClient.delete().uri(configProperties.serverUrl+"/categories/{id}",result.getCategoryId())
                 .exchange()
                 .expectStatus().isOk();
 

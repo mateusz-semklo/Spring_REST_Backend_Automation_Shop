@@ -21,6 +21,5 @@ public class ProductModel extends RepresentationModel<ProductModel> {
     private String productImageUrl;
     private int productPrice;
     private Category category;
-    //private List<OrderProduct> ordersProductsList;
 
 }

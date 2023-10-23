@@ -101,17 +101,26 @@ class OrdersServiceTest {
     }
 
     @Test
-    void saveOrderWithAddProducts(){
+    void saveNewOrderWithADDProducts(){
         Order order=ordersService.findById(1056);
         List<Product> productList=productsService.findAll().subList(17,20);
-        int count=productList.size();
 
         productList.forEach((product -> order.getProducts().add(product)));
-
         Order result=ordersService.save(order);
 
         assertThat(result,notNullValue());
-       // assertThat(result.getProducts().size(),equalTo(order.getProducts().size()+count));
+
+    }
+    @Test
+    void saveNewOrderWithREPLACEProducts(){
+        Order order=ordersService.findById(1056);
+        List<Product> productList=productsService.findAll().subList(17,20);
+
+        order.setProducts(productList);
+        Order result=ordersService.save(order);
+
+        assertThat(result,notNullValue());
+        // assertThat(result.getProducts().size(),equalTo(order.getProducts().size()+count));
     }
 
     @Test

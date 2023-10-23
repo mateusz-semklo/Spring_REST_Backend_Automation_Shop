@@ -152,7 +152,7 @@ class UsersControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(userModel));
 
-        UserModel result=webTestClient.post().uri("/users")
+        UserModel result=webTestClient.post().uri(configProperties.serverUrl+"/users")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(userModel)
                 .exchange()
@@ -178,7 +178,7 @@ class UsersControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(userModel));
 
-        UserModel result=webTestClient.post().uri("/users")
+        UserModel result=webTestClient.post().uri(configProperties.serverUrl+"/users")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(userModel)
                 .exchange()
@@ -225,7 +225,7 @@ class UsersControllerTest {
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(userModel));
 
-        UserModel result=webTestClient.post().uri("/users")
+        UserModel result=webTestClient.post().uri(configProperties.serverUrl+"/users")
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(userModel)
                 .exchange()
@@ -240,7 +240,7 @@ class UsersControllerTest {
         assertThat(result,notNullValue());
         assertThat(userModel.getUsername(),equalTo(result.getUsername()));
 
-        webTestClient.delete().uri("/users/{id}",userModel.getUsername())
+        webTestClient.delete().uri(configProperties.serverUrl+"/users/{id}",userModel.getUsername())
                 .exchange()
                 .expectStatus().isOk();
 

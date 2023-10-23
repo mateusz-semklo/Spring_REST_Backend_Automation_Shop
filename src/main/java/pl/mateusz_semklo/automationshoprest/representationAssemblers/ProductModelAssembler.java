@@ -22,7 +22,7 @@ public class ProductModelAssembler implements RepresentationModelAssembler<Produ
     public ProductModel toModel(Product entity) {
         ProductModel productModel= modelMapper.map(entity, ProductModel.class);
         productModel.add(linkTo(methodOn(ProductsController.class).getProductById(productModel.getProductId())).withSelfRel());
-        productModel.add(linkTo(methodOn(ProductsController.class).getOrders(productModel.getProductId())).withRel("/orders"));
+       // productModel.add(linkTo(methodOn(ProductsController.class).getOrders(productModel.getProductId())).withRel("/orders"));
         return productModel;
     }
 
