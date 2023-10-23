@@ -63,6 +63,29 @@ class OrdersServiceTest {
         assertThat(result.getOrderId(),notNullValue());
 
     }
+
+    @Test
+    void saveNewOrderWithExistsProduct() {
+        User user=usersService.findByUsername("jankowalski");
+
+        Order orders=new Order();
+        orders.setOrderDate(new Date(System.currentTimeMillis()));
+        orders.setOrderCountry(user.getUserCountry());
+        orders.setOrderCity(user.getUserCity());
+        orders.setOrderPostCode(user.getUserPostCode());
+        orders.setUser(user);
+        orders.setOrderStreet(user.getUserStreet());
+
+        Product product=productsService.findById(1015);
+        Product product1=productsService.findById(1016);
+        orders.getProducts().add(product);
+        orders.getProducts().add(product1);
+
+        Order result= ordersService.save(orders);
+
+    }
+
+
     @Test
     void saveNewOrderWithoutUser() {
 
@@ -101,9 +124,9 @@ class OrdersServiceTest {
     }
 
     @Test
-    void saveNewOrderWithADDProducts(){
+    void editOrderWithADDProducts(){
         Order order=ordersService.findById(1056);
-        List<Product> productList=productsService.findAll().subList(17,20);
+        List<Product> productList=productsService.findAll().subList(26,28);
 
         productList.forEach((product -> order.getProducts().add(product)));
         Order result=ordersService.save(order);
@@ -112,9 +135,9 @@ class OrdersServiceTest {
 
     }
     @Test
-    void saveNewOrderWithREPLACEProducts(){
+    void editOrderWithREPLACEProducts(){
         Order order=ordersService.findById(1056);
-        List<Product> productList=productsService.findAll().subList(17,20);
+        List<Product> productList=productsService.findAll().subList(10,14);
 
         order.setProducts(productList);
         Order result=ordersService.save(order);

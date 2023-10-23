@@ -170,6 +170,76 @@ class OrdersControllerTest {
     }
 
     @Test
+    void saveNewOrderWithNewProductsJSON() throws JsonProcessingException {
+        //////////ORDER////////////////////////////
+        String orderJSON="{\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
+        OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
+        /////////////////////////////////////////////
+        ///Cascade jest wyłączone dlatego nie zapisze nowych produktów w kolekcji w order
+
+    }
+    @Test
+    void saveNewOrderWithExistsProductsJSON() throws JsonProcessingException {
+        //////////ORDER////////////////////////////
+        String orderJSON="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
+        OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
+        /////////////////////////////////////////////
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(orderModel));
+
+        OrderModel result=webTestClient.post().uri(configProperties.serverUrl+"/orders")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(orderModel)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(OrderModel.class)
+                .returnResult().getResponseBody();
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(result));
+    }
+    @Test
+    void editOrderWithExistsProductsJSON() throws JsonProcessingException {
+        //////////ORDER////////////////////////////
+        String orderJSON="{\"orderId\":1056,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
+        OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
+        /////////////////////////////////////////////
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(orderModel));
+
+        OrderModel result=webTestClient.post().uri(configProperties.serverUrl+"/orders")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(orderModel)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(OrderModel.class)
+                .returnResult().getResponseBody();
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(result));
+    }
+
+    @Test
+    void putOrder() {
+    }
+
+    @Test
+    void patchOrder() {
+    }
+
+    @Test
+    void deleteOrder() throws JsonProcessingException {
+
+        webTestClient.delete().uri(configProperties.serverUrl+"/orders/{id}",1070)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
     void saveNewOrderWithExistsProducts() throws JsonProcessingException {
         //////////ORDER////////////////////////////
         User user=usersService.findByUsername("jankowalski");
@@ -181,7 +251,7 @@ class OrdersControllerTest {
         order.setOrderStreet(user.getUserStreet());
 
         List<Product> products=new ArrayList<>();
-        products.add(productsService.findById(1014));
+        products.add(productsService.findById(1033));
 
         order.setProducts(products);
 
@@ -275,73 +345,4 @@ class OrdersControllerTest {
     }
 
 
-    @Test
-    void saveNewOrderWithNewProductsJSON() throws JsonProcessingException {
-        //////////ORDER////////////////////////////
-        String orderJSON="{\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
-        OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
-        /////////////////////////////////////////////
-        ///Cascade jest wyłączone dlatego nie zapisze nowych produktów w kolekcji w order
-
-    }
-    @Test
-    void saveNewOrderWithExistsProductsJSON() throws JsonProcessingException {
-        //////////ORDER////////////////////////////
-        String orderJSON="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
-        OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
-        /////////////////////////////////////////////
-
-        System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(orderModel));
-
-        OrderModel result=webTestClient.post().uri(configProperties.serverUrl+"/orders")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(orderModel)
-                .exchange()
-                .expectStatus().isCreated()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(OrderModel.class)
-                .returnResult().getResponseBody();
-
-        System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(result));
-    }
-    @Test
-    void editOrderWithExistsProductsJSON() throws JsonProcessingException {
-        //////////ORDER////////////////////////////
-        String orderJSON="{\"orderId\":1070,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
-        OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
-        /////////////////////////////////////////////
-
-        System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(orderModel));
-
-        OrderModel result=webTestClient.post().uri(configProperties.serverUrl+"/orders")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(orderModel)
-                .exchange()
-                .expectStatus().isCreated()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(OrderModel.class)
-                .returnResult().getResponseBody();
-
-        System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(result));
-    }
-
-    @Test
-    void putOrder() {
-    }
-
-    @Test
-    void patchOrder() {
-    }
-
-    @Test
-    void deleteOrder() throws JsonProcessingException {
-
-        webTestClient.delete().uri(configProperties.serverUrl+"/orders/{id}",1070)
-                .exchange()
-                .expectStatus().isOk();
-    }
 }
