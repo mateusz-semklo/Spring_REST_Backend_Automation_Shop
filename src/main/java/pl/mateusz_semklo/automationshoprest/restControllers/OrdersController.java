@@ -71,13 +71,23 @@ public class OrdersController {
         ordersService.delete(id);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderModel> saveOrder(@RequestBody OrderModel orderModel){
-        Order order=mapper.convertToEntity(orderModel);
-        Order result=ordersService.save(order);
-        ResponseEntity<OrderModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.CREATED);
+    @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderModel> saveOrder(@RequestBody String order) throws JsonProcessingException {
+        System.out.println(order);
+        OrderPostModel order1=objectMapper.readValue(order, OrderPostModel.class);
+        Order result=ordersService.saveOrder(order1);
+        OrderModel model=mapper.convertToDTO(result);
+        ResponseEntity<OrderModel> response=new ResponseEntity<>(model,HttpStatus.CREATED);
         return response;
     }
+    @PostMapping(value = "/post",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderModel> save(@RequestBody Order order) throws JsonProcessingException {
+        Order result=ordersService.save(order);
+        OrderModel model=mapper.convertToDTO(result);
+        ResponseEntity<OrderModel> response=new ResponseEntity<>(model,HttpStatus.CREATED);
+        return response;
+    }
+
     
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void putOrder(@RequestBody OrderModel orderModel,@PathVariable("id") Integer id){
@@ -89,20 +99,6 @@ public class OrdersController {
 
     }
 
-    @PostMapping(value = "/post",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderModel> saveOrder2(@RequestBody Order order){
-        Order result=ordersService.save(order);
-        ResponseEntity<OrderModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.CREATED);
-        return response;
 
-    }
-
-    @PostMapping(value = "/post2",consumes = MediaType.TEXT_PLAIN_VALUE)
-    public void saveOrder3(@RequestBody String order) throws JsonProcessingException {
-        System.out.println(order);
-        OrderPostModel order1=objectMapper.readValue(order, OrderPostModel.class);
-        ordersService.saveOrder(order1);
-
-    }
 
 }
