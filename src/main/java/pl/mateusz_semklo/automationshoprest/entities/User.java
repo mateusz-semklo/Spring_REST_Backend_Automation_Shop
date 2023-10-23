@@ -67,7 +67,7 @@ public class User implements Serializable{
     @Column(name = "AUTHORITY",nullable = false)
     public List<String> authorities=new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Order> orders=new ArrayList<>();
 
 }

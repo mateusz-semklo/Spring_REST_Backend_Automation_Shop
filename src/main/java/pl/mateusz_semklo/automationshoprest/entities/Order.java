@@ -30,7 +30,7 @@ public class Order implements Serializable {
 
     @Basic
     @Column(name = "ORDER_DATE")
-    private Date orderDate;
+    private Date orderDate=new Date(System.currentTimeMillis());
 
     @Basic
     @Column(name = "ORDER_STREET")

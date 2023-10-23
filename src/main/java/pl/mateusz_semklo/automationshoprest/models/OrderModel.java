@@ -20,11 +20,11 @@ import java.util.List;
 public class OrderModel extends RepresentationModel<OrderModel> {
 
     private Integer orderId;
-    private Date orderDate;
+    private Date orderDate=new Date(System.currentTimeMillis());
     private String orderStreet;
     private String orderCity;
     private String orderCountry;
-    private String ordesPostCode;
+    private String orderPostCode;
     private User user;
     private List<Product> products;
 
