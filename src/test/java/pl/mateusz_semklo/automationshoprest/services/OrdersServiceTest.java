@@ -77,9 +77,25 @@ class OrdersServiceTest {
     }
 
     @Test
-    void deleteOrderById1055() {
-        boolean del=ordersService.delete(1055);
-        Order order=ordersService.findById(1055);
+    void deleteOrderById() {
+        User user=usersService.findByUsername("jankowalski");
+
+        Order orders=new Order();
+        orders.setOrderDate(new Date(System.currentTimeMillis()));
+        orders.setOrderCountry(user.getUserCountry());
+        orders.setOrderCity(user.getUserCity());
+        orders.setOrderPostCode(user.getUserPostCode());
+        orders.setUser(user);
+        orders.setOrderStreet(user.getUserStreet());
+
+        Order result= ordersService.save(orders);
+
+        assertThat(result,notNullValue());
+        assertThat(result.getUser(),equalTo(user));
+        assertThat(result.getOrderId(),notNullValue());
+
+        boolean del=ordersService.delete(result.getOrderId());
+        Order order=ordersService.findById(result.getOrderId());
         assertThat(order,nullValue());
         assertThat(del,is(true));
     }

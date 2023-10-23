@@ -48,7 +48,7 @@ public class Product implements Serializable {
     @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "CATEGORY_ID", nullable = false)
     private Category category;
 
-    @ManyToMany(mappedBy = "products",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "products",fetch = FetchType.EAGER)
     List<Order> orders=new ArrayList<>();
 
 }

@@ -58,31 +58,4 @@ class OrderRepositoryTest {
         assertThat(result.getOrderId(),notNullValue());
     }
 
-    @Test
-    void deleteOrderForJanKOwalski(){
-        Optional<User> optionalUsers=usersRepository.findById("jankowalski");
-        User user=optionalUsers.get();
-
-        Order orders=new Order();
-        orders.setOrderDate(new Date(System.currentTimeMillis()));
-        orders.setOrderCountry(user.getUserCountry());
-        orders.setOrderCity(user.getUserCity());
-        orders.setOrderPostCode(user.getUserPostCode());
-        orders.setUser(user);
-        orders.setOrderStreet(user.getUserStreet());
-
-        Order result= orderRepository.save(orders);
-        assertThat(result,notNullValue());
-        assertThat(result.getUser(),equalTo(user));
-        assertThat(result.getOrderId(),notNullValue());
-
-        List<Order> ordersList=  orderRepository.findOrdersByUsername("jankowalski");
-        orderRepository.deleteById(ordersList.get(0).getOrderId());
-        Optional<Order> optionalOrders=orderRepository.findById(ordersList.get(0).getOrderId());
-        assertThat(optionalOrders.isEmpty(),equalTo(true));
-
-    }
-
-
-
 }

@@ -48,12 +48,12 @@ public class Order implements Serializable {
     @Column(name = "ORDER_POST_CODE")
     private String orderPostCode;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME", nullable = false)
     private User user;
 
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="ORDERS_PRODUCTS",
             joinColumns = @JoinColumn(name="ORDER_ID"),
             inverseJoinColumns = @JoinColumn(name="PRODUCT_ID"))

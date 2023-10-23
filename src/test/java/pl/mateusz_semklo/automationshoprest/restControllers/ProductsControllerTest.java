@@ -125,7 +125,7 @@ class ProductsControllerTest {
         System.out.println(objectMapper.writeValueAsString(result));
 
         assertThat(result,notNullValue());
-        assertThat(productModel.getProductId(),equalTo(result.getProductId()));
+        assertThat(productModel.getProductName(),equalTo(result.getProductName()));
 
     }
     @Test
@@ -151,7 +151,7 @@ class ProductsControllerTest {
         System.out.println(objectMapper.writeValueAsString(result));
 
         assertThat(result,notNullValue());
-        assertThat(productModel.getProductId(),equalTo(result.getProductId()));
+        assertThat(productModel.getProductName(),equalTo(result.getProductName()));
 
     }
 
@@ -186,11 +186,13 @@ class ProductsControllerTest {
         System.out.println(objectMapper.writeValueAsString(result));
 
         assertThat(result,notNullValue());
-        assertThat(productModel.getProductId(),equalTo(result.getProductId()));
+        assertThat(productModel.getProductName(),equalTo(result.getProductName()));
 
         webTestClient.delete().uri(configProperties.getServerUrl()+"/products/{id}",result.getProductId())
                 .exchange()
                 .expectStatus().isOk();
+
+        assertThat(productsService.findById(result.getProductId()),nullValue());
 
     }
 

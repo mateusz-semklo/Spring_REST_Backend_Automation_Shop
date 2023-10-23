@@ -18,6 +18,7 @@ import pl.mateusz_semklo.automationshoprest.entities.User;
 import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
+import pl.mateusz_semklo.automationshoprest.repositories.CategoriesRepository;
 import pl.mateusz_semklo.automationshoprest.services.OrdersService;
 import pl.mateusz_semklo.automationshoprest.services.ProductsService;
 import pl.mateusz_semklo.automationshoprest.services.UsersService;
@@ -54,6 +55,8 @@ class OrdersControllerTest {
     Mapper modelMapper;
 
     WebTestClient webTestClient;
+    @Autowired
+    private CategoriesRepository categoriesRepository;
 
     @BeforeEach
     void init(){
@@ -165,8 +168,8 @@ class OrdersControllerTest {
     @Test
     void saveNewOrderWithExistsProducts() throws JsonProcessingException {
         //////////ORDER////////////////////////////
-        Order order=new Order();
         User user=usersService.findByUsername("jankowalski");
+        Order order=new Order();
         order.setOrderCountry(user.getUserCountry());
         order.setOrderCity(user.getUserCity());
         order.setOrderPostCode(user.getUserPostCode());
@@ -174,10 +177,11 @@ class OrdersControllerTest {
         order.setOrderStreet(user.getUserStreet());
 
         List<Product> products=new ArrayList<>();
-        Product product=productsService.findById(1014);
-        product.setProductName("aaaaaaaaaaaaaaaaaaaaaaa");
-        products.add(product);
+        products.add(productsService.findById(1014));
         products.add(productsService.findById(1015));
+
+        order.setProducts(products);
+
         OrderModel orderModel=modelMapper.convertToDTO(order);
 
         /////////////////////////////////////////////
@@ -202,6 +206,15 @@ class OrdersControllerTest {
     void saveNewOrderWithNewProductsJSON() throws JsonProcessingException {
         //////////ORDER////////////////////////////
         String orderJSON="{\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
+        OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
+        /////////////////////////////////////////////
+        ///Cascade jest wyłączone dlatego nie zapisze nowych produktów w kolekcji w order
+
+    }
+    @Test
+    void saveNewOrderWithExistsProductsJSON() throws JsonProcessingException {
+        //////////ORDER////////////////////////////
+        String orderJSON="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
         OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
         /////////////////////////////////////////////
 
@@ -252,6 +265,10 @@ class OrdersControllerTest {
     }
 
     @Test
-    void deleteOrder() {
+    void deleteOrder() throws JsonProcessingException {
+
+        webTestClient.delete().uri(configProperties.serverUrl+"/orders/{id}",1070)
+                .exchange()
+                .expectStatus().isOk();
     }
 }
