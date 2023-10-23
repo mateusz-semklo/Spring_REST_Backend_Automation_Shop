@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
+import pl.mateusz_semklo.automationshoprest.entities.Product;
+import pl.mateusz_semklo.automationshoprest.models.OrderProductModel;
 import pl.mateusz_semklo.automationshoprest.repositories.OrdersRepository;
+import pl.mateusz_semklo.automationshoprest.repositories.ProductsRepository;
 import pl.mateusz_semklo.automationshoprest.services.OrdersService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +20,9 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Autowired
     OrdersRepository ordersRepository;
+
+    @Autowired
+    ProductsRepository productsRepository;
 
     @Override
     public Order findById(Integer id) {
@@ -37,8 +44,15 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public Order saveOrder(Order order) {
-        return null;
+    public Order saveOrder(OrderProductModel orderProductModel) {
+        Order order=orderProductModel.getOrder();
+        List<Product> products =new ArrayList<>();
+        orderProductModel.getProducts().forEach((productId)->{
+            products.add(productsRepository.findById(productId).get());
+        });
+        order.setProducts(products);
+        Order result=ordersRepository.save(order);
+        return result;
     }
 
     @Override

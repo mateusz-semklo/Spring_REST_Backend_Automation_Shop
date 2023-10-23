@@ -17,6 +17,7 @@ import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.entities.User;
 import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
+import pl.mateusz_semklo.automationshoprest.models.OrderProductModel;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
 import pl.mateusz_semklo.automationshoprest.repositories.CategoriesRepository;
 import pl.mateusz_semklo.automationshoprest.repositories.OrdersRepository;
@@ -251,7 +252,7 @@ class OrdersControllerTest {
         order.setOrderStreet(user.getUserStreet());
 
         List<Product> products=new ArrayList<>();
-        products.add(productsService.findById(1033));
+        products.add(productsService.findById(1009));
 
         order.setProducts(products);
 
@@ -318,19 +319,19 @@ class OrdersControllerTest {
         order.setUser(user);
         order.setOrderStreet(user.getUserStreet());
 
-        List<Product> products=new ArrayList<>();
-        Product product=productsService.findById(1030);
-        products.add(product);
 
-        order.setProducts(products);
-        String tekst=objectMapper.writeValueAsString(order);
+        List<Integer> products=new ArrayList<>();
+        products.add(1040);
+        products.add(1041);
 
-
+        OrderProductModel orderProductModel=new OrderProductModel();
+        orderProductModel.setOrder(order);
+        orderProductModel.setProducts(products);
+        String tekst=objectMapper.writeValueAsString(orderProductModel);
 
         /////////////////////////////////////////////
         System.out.println("-----------------------------------------------------------------");
         System.out.println(objectMapper.writeValueAsString(order));
-
 
 
         webTestClient.post().uri(configProperties.serverUrl+"/orders/post2")

@@ -6,6 +6,9 @@ import lombok.*;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -15,5 +18,6 @@ import pl.mateusz_semklo.automationshoprest.entities.Product;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderProductModel {
     Order order;
+    List<Integer> products=new ArrayList<>();
 
 }

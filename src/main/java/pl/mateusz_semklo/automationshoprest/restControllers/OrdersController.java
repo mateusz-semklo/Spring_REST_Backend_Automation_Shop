@@ -14,6 +14,7 @@ import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
+import pl.mateusz_semklo.automationshoprest.models.OrderProductModel;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
 import pl.mateusz_semklo.automationshoprest.representationAssemblers.OrderModelAssembler;
 import pl.mateusz_semklo.automationshoprest.representationAssemblers.ProductModelAssembler;
@@ -102,8 +103,8 @@ public class OrdersController {
     @PostMapping(value = "/post2",consumes = MediaType.TEXT_PLAIN_VALUE)
     public void saveOrder3(@RequestBody String order) throws JsonProcessingException {
         System.out.println(order);
-        Order order1=objectMapper.readValue(order, Order.class);
-        ordersService.save(order1);
+        OrderProductModel order1=objectMapper.readValue(order, OrderProductModel.class);
+        ordersService.saveOrder(order1);
 
     }
 
