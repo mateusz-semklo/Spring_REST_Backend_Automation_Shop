@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.*;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
-import pl.mateusz_semklo.automationshoprest.entities.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @JsonRootName(value = "category")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrderProductModel {
+public class OrderPostModel {
     Order order;
     List<Integer> products=new ArrayList<>();
 

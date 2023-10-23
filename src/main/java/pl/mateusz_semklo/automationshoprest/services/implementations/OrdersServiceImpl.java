@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
-import pl.mateusz_semklo.automationshoprest.models.OrderProductModel;
+import pl.mateusz_semklo.automationshoprest.models.OrderPostModel;
 import pl.mateusz_semklo.automationshoprest.repositories.OrdersRepository;
 import pl.mateusz_semklo.automationshoprest.repositories.ProductsRepository;
 import pl.mateusz_semklo.automationshoprest.services.OrdersService;
@@ -44,10 +44,10 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public Order saveOrder(OrderProductModel orderProductModel) {
-        Order order=orderProductModel.getOrder();
+    public Order saveOrder(OrderPostModel orderPostModel) {
+        Order order= orderPostModel.getOrder();
         List<Product> products =new ArrayList<>();
-        orderProductModel.getProducts().forEach((productId)->{
+        orderPostModel.getProducts().forEach((productId)->{
             products.add(productsRepository.findById(productId).get());
         });
         order.setProducts(products);

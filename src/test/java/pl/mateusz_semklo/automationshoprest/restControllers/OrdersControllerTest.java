@@ -15,24 +15,21 @@ import pl.mateusz_semklo.automationshoprest.config.Mapper;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.entities.User;
-import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
-import pl.mateusz_semklo.automationshoprest.models.OrderProductModel;
+import pl.mateusz_semklo.automationshoprest.models.OrderPostModel;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
 import pl.mateusz_semklo.automationshoprest.repositories.CategoriesRepository;
 import pl.mateusz_semklo.automationshoprest.repositories.OrdersRepository;
 import pl.mateusz_semklo.automationshoprest.services.OrdersService;
 import pl.mateusz_semklo.automationshoprest.services.ProductsService;
 import pl.mateusz_semklo.automationshoprest.services.UsersService;
-import reactor.core.publisher.Flux;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 class OrdersControllerTest {
 
@@ -324,10 +321,10 @@ class OrdersControllerTest {
         products.add(1040);
         products.add(1041);
 
-        OrderProductModel orderProductModel=new OrderProductModel();
-        orderProductModel.setOrder(order);
-        orderProductModel.setProducts(products);
-        String tekst=objectMapper.writeValueAsString(orderProductModel);
+        OrderPostModel orderPostModel =new OrderPostModel();
+        orderPostModel.setOrder(order);
+        orderPostModel.setProducts(products);
+        String tekst=objectMapper.writeValueAsString(orderPostModel);
 
         /////////////////////////////////////////////
         System.out.println("-----------------------------------------------------------------");

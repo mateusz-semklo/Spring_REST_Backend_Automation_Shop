@@ -2,19 +2,16 @@ package pl.mateusz_semklo.automationshoprest.restControllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.mateusz_semklo.automationshoprest.config.Mapper;
-import pl.mateusz_semklo.automationshoprest.entities.Category;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
-import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
-import pl.mateusz_semklo.automationshoprest.models.OrderProductModel;
+import pl.mateusz_semklo.automationshoprest.models.OrderPostModel;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
 import pl.mateusz_semklo.automationshoprest.representationAssemblers.OrderModelAssembler;
 import pl.mateusz_semklo.automationshoprest.representationAssemblers.ProductModelAssembler;
@@ -103,7 +100,7 @@ public class OrdersController {
     @PostMapping(value = "/post2",consumes = MediaType.TEXT_PLAIN_VALUE)
     public void saveOrder3(@RequestBody String order) throws JsonProcessingException {
         System.out.println(order);
-        OrderProductModel order1=objectMapper.readValue(order, OrderProductModel.class);
+        OrderPostModel order1=objectMapper.readValue(order, OrderPostModel.class);
         ordersService.saveOrder(order1);
 
     }
