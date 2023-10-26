@@ -3,16 +3,16 @@ package pl.mateusz_semklo.automationshoprest.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.DefaultClaims;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Component
@@ -21,15 +21,20 @@ public class JwtService {
     @Value("${secretJwtKey}")
     public String SECRET;
 
-    public String generateToken(String userName) {
+    public String generateToken(String userName, Set<String> authorities) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
+        String authority="ROLE_USER";
+        if(authorities.contains("ROLE_ADMIN")){
+            authority="ROLE_ADMIN";
+        }
+        return createToken(claims, userName,authority);
     }
 
-    private String createToken(Map<String, Object> claims, String userName) {
+    private String createToken(Map<String, Object> claims, String userName,String authority) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userName)
+                .setAudience(authority)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)

@@ -4,7 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ObservationAuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,9 +26,13 @@ import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -33,6 +42,18 @@ public class SecurityConfig {
 
     @Autowired
     JwtService jwtService;
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
     @Bean
     PasswordEncoder passwordEncoder(){
@@ -50,21 +71,21 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
         http
                 .csrf((csrf)->csrf.disable())
-                .cors((cors)->cors.disable())
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests((request)-> {
                             request.requestMatchers(new MvcRequestMatcher(introspector, "/")).permitAll()
-                                    .requestMatchers(new MvcRequestMatcher(introspector, "/login**")).permitAll()
-                                    .requestMatchers(new MvcRequestMatcher(introspector, "/alfa")).permitAll()
+                                    .requestMatchers(new MvcRequestMatcher(introspector, "/authenticate")).permitAll()
+                                    .requestMatchers(new MvcRequestMatcher(introspector, "/products**")).permitAll()
+                                    .requestMatchers(new MvcRequestMatcher(introspector, "/products/**")).permitAll()
                                     .requestMatchers(new AntPathRequestMatcher("/console**")).permitAll()
                                     .anyRequest().authenticated();
                         }
                 )
                 .headers((headers)->headers.frameOptions((frame)->frame.sameOrigin()))
-              //  .sessionManagement((session)->{
+               // .sessionManagement((session)->{
                //     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
               //  })
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

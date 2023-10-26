@@ -116,7 +116,7 @@ class UsersControllerTest {
     @Test
     void getOrdersById() {
         OrderModel OrderModel=webTestClient.get()
-                .uri(configProperties.serverUrl+"/users/mateusz2606/orders/1056")
+                .uri(configProperties.serverUrl+"/users/mateusz2606/orders/1050")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -124,7 +124,7 @@ class UsersControllerTest {
                 .expectBody(OrderModel.class)
                 .returnResult().getResponseBody();
 
-        assertThat(OrderModel.getOrderId(),equalTo(1056));
+        assertThat(OrderModel.getOrderId(),equalTo(1050));
     }
 
     @Test
@@ -172,6 +172,31 @@ class UsersControllerTest {
     void saveUserJSON() throws JsonProcessingException {
         //////////////////USER/////////////////////
         String userJson="{\"username\":\"tom12345\",\"password\":\"$2a$10$iuQl1yzrwiI2vOjDiAKuAec06B3ydLluVdpdoUsildTlET.R17y7K\",\"enabled\":true,\"userEmail\":\"tom1234@wp.pl\",\"userFirstname\":\"tomasz\",\"userLastname\":\"cegilski\",\"userStreet\":\"wiosenna 23/2\",\"userCity\":\"Swrzędz\",\"userCountry\":\"Poland\",\"userPostCode\":\"64-120\",\"authorities\":[\"ROLE_USER\",\"ROLE_ADMIN\"],\"orders\":[],\"links\":[]}";
+        UserModel userModel=objectMapper.readValue(userJson,UserModel.class);
+        //////////////////////////////////////////////////
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(userModel));
+
+        UserModel result=webTestClient.post().uri(configProperties.serverUrl+"/users")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(userModel)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(UserModel.class)
+                .returnResult().getResponseBody();
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(result));
+
+        assertThat(result,notNullValue());
+        assertThat(userModel.getUsername(),equalTo(result.getUsername()));
+    }
+    @Test
+    void editUserJSON() throws JsonProcessingException {
+        //////////////////USER/////////////////////
+        String userJson="{\"username\":\"tom12345\",\"password\":\"$2a$10$iuQl1yzrwiI2vOjDiAKuAec06B3ydLluVdpdoUsildTlET.R17y7K\",\"enabled\":true,\"userFirstname\":\"tomasz\",\"userLastname\":\"cegilski\",\"userStreet\":\"wiosenna 23/2\",\"userCity\":\"Swrzędz\",\"userCountry\":\"Poland\",\"userPostCode\":\"64-120\",\"authorities\":[\"ROLE_USER\",\"ROLE_ADMIN\"],\"orders\":[],\"links\":[]}";
         UserModel userModel=objectMapper.readValue(userJson,UserModel.class);
         //////////////////////////////////////////////////
 

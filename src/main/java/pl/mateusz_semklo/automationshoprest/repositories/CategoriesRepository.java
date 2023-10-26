@@ -13,9 +13,6 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface CategoriesRepository extends JpaRepository<Category,Integer>, CategoriesRepositoryExtension {
-
-    @Query("SELECT c FROM Category c WHERE c.categoryName=:categoryName")
-    public List<Category> findCategoriesByCategoryName(@Param("categoryName") String categoryName);
+public interface CategoriesRepository extends JpaRepository<Category,String>, CategoriesRepositoryExtension {
 
 }

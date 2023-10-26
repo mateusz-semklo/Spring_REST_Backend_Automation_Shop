@@ -10,11 +10,10 @@ import java.util.List;
 @Transactional
 @Service
 public interface CategoriesService {
-    Category findById(Integer id);
-    List<Category> findByName(String name);
+    Category findByName(String name);
     List<Category> findAll();
     Category save(Category category);
-    boolean delete(Integer id);
+    boolean delete(String id);
 
 
 }

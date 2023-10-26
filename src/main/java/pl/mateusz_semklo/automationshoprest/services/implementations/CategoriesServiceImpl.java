@@ -20,18 +20,14 @@ public class CategoriesServiceImpl implements CategoriesService {
 
 
     @Override
-    public Category findById(Integer id) {
-        Optional<Category> optionalCatrgory=categoriesRepository.findById(id);
+    public Category findByName(String name) {
+        Optional<Category> optionalCatrgory=categoriesRepository.findById(name);
         if(optionalCatrgory.isPresent())
             return optionalCatrgory.get();
         else
             return null;
     }
 
-    @Override
-    public List<Category> findByName(String name) {
-        return categoriesRepository.findCategoriesByCategoryName(name);
-    }
 
     @Override
     public List<Category> findAll() {
@@ -44,7 +40,7 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(String id) {
 
         if(categoriesRepository.existsById(id)) {
             categoriesRepository.deleteById(id);

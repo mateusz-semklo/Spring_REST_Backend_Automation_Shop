@@ -44,7 +44,8 @@ class ProductsServiceTest {
         products.setProductImageUrl("/products/new");
         products.setProductPrice(34);
 
-        Category category=categoriesService.findById(1001);
+
+        Category category=categoriesService.findByName("Czujniki");
         products.setCategory(category);
 
         Product result=productsService.save(products);
@@ -52,7 +53,7 @@ class ProductsServiceTest {
         assertThat(result,notNullValue());
         assertThat(result,isA(Product.class));
         assertThat(result,hasProperty("productName"));
-        assertThat(result.getCategory().getCategoryId(),equalTo(1001));
+        assertThat(result.getCategory().getCategoryName(),equalTo("Czujniki"));
 
     }
 
@@ -65,7 +66,7 @@ class ProductsServiceTest {
         products.setProductImageUrl("/products/new");
         products.setProductPrice(34);
 
-        Category category=categoriesService.findById(1001);
+        Category category=categoriesService.findByName("Czujniki");
         products.setCategory(category);
 
         Product result=productsService.save(products);
@@ -73,7 +74,7 @@ class ProductsServiceTest {
         assertThat(result,notNullValue());
         assertThat(result,isA(Product.class));
         assertThat(result,hasProperty("productName"));
-        assertThat(result.getCategory().getCategoryId(),equalTo(1001));
+        assertThat(result.getCategory().getCategoryName(),equalTo("Czujniki"));
 
         boolean del=productsService.delete(result.getProductId());
         assertThat(productsService.findById(result.getProductId()),nullValue());

@@ -30,10 +30,10 @@ class OrdersServiceTest {
 
     @Test
     void findOrderById1056() {
-        Order order =ordersService.findById(1056);
+        Order order =ordersService.findById(1051);
         assertThat(order,notNullValue());
         assertThat(order,isA(Order.class));
-        assertThat(order.getOrderId(),equalTo(1056));
+        assertThat(order.getOrderId(),equalTo(1051));
     }
 
     @Test
@@ -125,7 +125,7 @@ class OrdersServiceTest {
 
     @Test
     void editOrderWithADDProducts(){
-        Order order=ordersService.findById(1056);
+        Order order=ordersService.findById(1051);
         List<Product> productList=productsService.findAll().subList(26,28);
 
         productList.forEach((product -> order.getProducts().add(product)));
@@ -136,7 +136,7 @@ class OrdersServiceTest {
     }
     @Test
     void editOrderWithREPLACEProducts(){
-        Order order=ordersService.findById(1056);
+        Order order=ordersService.findById(1051);
         List<Product> productList=productsService.findAll().subList(10,14);
 
         order.setProducts(productList);
@@ -149,7 +149,7 @@ class OrdersServiceTest {
     @Test
     void removeProductByIdFromOrder(){
 
-        Order order=ordersService.findById(1056);
+        Order order=ordersService.findById(1051);
         Optional<Product> optionalProduct=order.getProducts().stream().findFirst();
         int count=order.getProducts().size();
 
@@ -161,7 +161,7 @@ class OrdersServiceTest {
     }
     @Test
     void removeAllProductFromOrder(){
-        Order order=ordersService.findById(1056);
+        Order order=ordersService.findById(1051);
         order.getProducts().clear();
         Order result=ordersService.save(order);
 

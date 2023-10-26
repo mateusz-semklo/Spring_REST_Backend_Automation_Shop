@@ -104,7 +104,7 @@ class ProductsControllerTest {
         product.setProductDescription("product description");
         product.setProductImageUrl("/products/new");
         product.setProductPrice(34);
-        Category category=categoriesService.findById(1001);
+        Category category=categoriesService.findByName("Czujniki");
         product.setCategory(category);
         ProductModel productModel=modelMapper.convertToDTO(product);
         /////////////////////////////////////////////
@@ -131,7 +131,7 @@ class ProductsControllerTest {
     @Test
     void saveProductJSON() throws JsonProcessingException {
         //////////PRODUCT////////////////////////////
-        String productJSON="{\"productName\":\"nowy PPP\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}";
+        String productJSON="{\"productName\":\"nowy PPP\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryName\":\"Czujniki\"}}";
         ProductModel productModel=objectMapper.readValue(productJSON,ProductModel.class);
         /////////////////////////////////////////////
 
@@ -166,7 +166,7 @@ class ProductsControllerTest {
     @Test
     void deleteProduct() throws JsonProcessingException {
 
-        String productJSON="{\"productName\":\"nowy PPP\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}";
+        String productJSON="{\"productName\":\"nowy PPP\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryName\":\"Czujniki\"}}";
         ProductModel productModel=objectMapper.readValue(productJSON,ProductModel.class);
         /////////////////////////////////////////////
 

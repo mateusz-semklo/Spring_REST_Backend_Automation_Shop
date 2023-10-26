@@ -39,7 +39,7 @@ class ProductsRepositoryTest {
     }
 
     @Test
-    public void saveNewProductWithCategoryId1001(){
+    public void saveNewProductWithCategoryCzujnik(){
 
         Product products=new Product();
         products.setProductName("nowy product");
@@ -47,19 +47,19 @@ class ProductsRepositoryTest {
         products.setProductImageUrl("/products/new");
         products.setProductPrice(34);
 
-        Optional<Category> optionalCategories=categoriesRepository.findById(1001);
+        Optional<Category> optionalCategories=categoriesRepository.findById("Czujniki");
         Category category=optionalCategories.get();
         products.setCategory(category);
 
         assertThat(category,notNullValue());
-        assertThat(category.getCategoryId(),equalTo(1001));
+        assertThat(category.getCategoryName(),equalTo("Czujniki"));
 
         Product result=productsRepository.save(products);
 
         assertThat(result,notNullValue());
         assertThat(result,isA(Product.class));
         assertThat(result,hasProperty("productName"));
-        assertThat(result.getCategory().getCategoryId(),equalTo(1001));
+        assertThat(result.getCategory().getCategoryName(),equalTo("Czujniki"));
 
 
     }
@@ -68,19 +68,17 @@ class ProductsRepositoryTest {
         Optional<Product> optionalProduct=productsRepository.findById(1014);
         Product product=optionalProduct.get();
 
-        Optional<Category> optionalCategories=categoriesRepository.findById(1005);
-        Category category=optionalCategories.get();
-        assertThat(category,notNullValue());
-        assertThat(category.getCategoryId(),equalTo(1005));
+        Optional<Category> optionalCategories=categoriesRepository.findById("Czujniki");
 
-        product.setCategory(category);
+
+        product.setCategory(optionalCategories.get());
         Product result=productsRepository.save(product);
 
         assertThat(product,notNullValue());
         assertThat(product.getProductId(),equalTo(1014));
         assertThat(result,notNullValue());
         assertThat(result.getProductId(),equalTo(1014));
-        assertThat(result.getCategory().getCategoryId(),equalTo(1005));
+        assertThat(result.getCategory().getCategoryName(),equalTo("Czujniki"));
 
         System.out.println("KATEGORIA DLA PRODUKTU");
         System.out.println(result.getCategory().getCategoryName());

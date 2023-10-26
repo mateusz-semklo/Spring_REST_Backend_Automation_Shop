@@ -17,20 +17,13 @@ class CategoriesServiceTest {
     @Autowired
     CategoriesService categoriesService;
 
-    @Test
-    void findById1002() {
-        Category category=categoriesService.findById(1002);
-        assertThat(category,notNullValue());
-        assertThat(category,isA(Category.class));
-        assertThat(category.getCategoryId(),equalTo(1002));
-    }
 
     @Test
     void findByName() {
-        List<Category> categories=categoriesService.findByName("Czujniki");
-        assertThat(categories.get(0),notNullValue());
-        assertThat(categories.get(0),isA(Category.class));
-        assertThat(categories.get(0).getCategoryName(),equalTo("Czujniki"));
+        Category category=categoriesService.findByName("Czujniki");
+        assertThat(category,notNullValue());
+        assertThat(category,isA(Category.class));
+        assertThat(category.getCategoryName(),equalTo("Czujniki"));
     }
 
     @Test
@@ -53,19 +46,12 @@ class CategoriesServiceTest {
 
     @Test
     void deleteCategoryNowaCategoriaWithNullProducts() {
-        Category category=new Category();
-        category.setCategoryName("nowaKategoriax");
-        Category result=categoriesService.save(category);
 
-        assertThat(result,notNullValue());
-        assertThat(result.getCategoryName(),equalTo("nowaKategoriax"));
+        Category category=categoriesService.findByName("nowaKategoria");
 
-        List<Category> categories=categoriesService.findByName("nowaKategoriax");
-        Category categoryx=categories.get(0);
+        boolean del=categoriesService.delete(category.getCategoryName());
 
-        boolean del=categoriesService.delete(categoryx.getCategoryId());
-
-        Category resultx=categoriesService.findById(categoryx.getCategoryId());
+        Category resultx=categoriesService.findByName(category.getCategoryName());
         assertThat(resultx,nullValue());
         assertThat(del,is(true));
 
@@ -73,21 +59,21 @@ class CategoriesServiceTest {
     @Test
     void deleteCategoriesCzujnikiWithProducts(){
 
-        Category category=categoriesService.findByName("Czujniki").get(0);
+        Category category=categoriesService.findByName("Czujniki");
         assertThrows(DataIntegrityViolationException.class,
-                ()->categoriesService.delete(category.getCategoryId()));
+                ()->categoriesService.delete(category.getCategoryName()));
     }
     @Test
     void editCategoriesWithProducts(){
 
-        Category category=categoriesService.findById(1001);
+        Category category=categoriesService.findByName("Mikrokontrolery");
         category.setCategoryName("Microkontrolery!!!");
         Category result=categoriesService.save(category);
 
         assertThat(result,notNullValue());
         assertThat(result.getCategoryName(),equalTo("Microkontrolery!!!"));
 
-        Category categoryx=categoriesService.findById(1001);
+        Category categoryx=categoriesService.findByName("Microkontrolery!!!");
         categoryx.setCategoryName("Mikrokontrolery");
         categoriesService.save(categoryx);
     }

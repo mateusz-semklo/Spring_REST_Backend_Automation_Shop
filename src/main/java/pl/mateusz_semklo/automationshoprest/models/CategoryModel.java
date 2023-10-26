@@ -19,7 +19,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CategoryModel extends RepresentationModel<CategoryModel> {
 
-    private Integer categoryId;
     private String categoryName;
     private List<Product> products;
 

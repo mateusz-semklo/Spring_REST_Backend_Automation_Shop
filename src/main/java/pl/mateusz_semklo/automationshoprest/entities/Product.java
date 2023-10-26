@@ -1,6 +1,7 @@
 package pl.mateusz_semklo.automationshoprest.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
@@ -44,8 +45,9 @@ public class Product implements Serializable {
     @Column(name = "PRODUCT_PRICE")
     private int productPrice;
 
+  //  @JsonIgnore
     @ManyToOne(optional = false)
-    @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "CATEGORY_ID", nullable = false)
+    @JoinColumn(name = "CATEGORY_NAME", referencedColumnName = "CATEGORY_NAME", nullable = false)
     private Category category;
 
   //  @ManyToMany(mappedBy = "products",fetch = FetchType.EAGER)

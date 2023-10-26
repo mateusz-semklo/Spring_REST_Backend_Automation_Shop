@@ -66,9 +66,9 @@ class CategoriesControllerTest {
     }
 
     @Test
-    void getCategoryById() {
+    void getCategoryByName() {
         CategoryModel categoryModel=webTestClient.get()
-                .uri(configProperties.serverUrl+"/categories/1005")
+                .uri(configProperties.serverUrl+"/categories/Czujniki")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -76,14 +76,14 @@ class CategoriesControllerTest {
                 .expectBody(CategoryModel.class)
                 .returnResult().getResponseBody();
 
-        assertThat(categoryModel.getCategoryId(),equalTo(1005));
+        assertThat(categoryModel.getCategoryName(),equalTo("Czujniki"));
     }
 
 
     @Test
     void getProducts() {
         List<ProductModel> productModels =webTestClient.get()
-                .uri(configProperties.serverUrl+"/categories/1005/products")
+                .uri(configProperties.serverUrl+"/categories/Czujniki/products")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -99,7 +99,7 @@ class CategoriesControllerTest {
     @Test
     void getProductsById() {
         ProductModel productModel=webTestClient.get()
-                .uri(configProperties.serverUrl+"/categories/1005/products/1044")
+                .uri(configProperties.serverUrl+"/categories/Czujniki/products/1006")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -107,7 +107,7 @@ class CategoriesControllerTest {
                 .expectBody(ProductModel.class)
                 .returnResult().getResponseBody();
 
-        assertThat(productModel.getProductId(),equalTo(1044));
+        assertThat(productModel.getProductId(),equalTo(1006));
     }
     @Test
     void saveCategory() throws JsonProcessingException {
@@ -164,7 +164,7 @@ class CategoriesControllerTest {
     @Test
     void editCategory() throws JsonProcessingException {
         //////////CATEGORY////////////////////////////
-        Category category=categoriesService.findById(1004);
+        Category category=categoriesService.findByName("Technika napędowa");
         category.setCategoryName("Technika napedowa");
         CategoryModel categoryModel=mapper.convertToDTO(category);
         /////////////////////////////////////////////
@@ -199,7 +199,7 @@ class CategoriesControllerTest {
     @Test
     void saveAndDeleteCategory() throws JsonProcessingException {
         Category category=new Category();
-        String categoryName="kategoria";
+        String categoryName="kategoriax";
         category.setCategoryName(categoryName);
         CategoryModel categoryModel=mapper.convertToDTO(category);
 
@@ -221,7 +221,7 @@ class CategoriesControllerTest {
         assertThat(result,notNullValue());
         assertThat(category.getCategoryName(),equalTo(result.getCategoryName()));
 
-        webTestClient.delete().uri(configProperties.serverUrl+"/categories/{id}",result.getCategoryId())
+        webTestClient.delete().uri(configProperties.serverUrl+"/categories/{id}",result.getCategoryName())
                 .exchange()
                 .expectStatus().isOk();
 

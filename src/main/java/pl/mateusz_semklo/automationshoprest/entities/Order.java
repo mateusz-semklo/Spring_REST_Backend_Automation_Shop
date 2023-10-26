@@ -1,6 +1,7 @@
 package pl.mateusz_semklo.automationshoprest.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
@@ -48,11 +49,12 @@ public class Order implements Serializable {
     @Column(name = "ORDER_POST_CODE")
     private String orderPostCode;
 
+  //  @JsonIgnore
     @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME", nullable = false)
     private User user;
 
-
+   // @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="ORDERS_PRODUCTS",
             joinColumns = @JoinColumn(name="ORDER_ID"),

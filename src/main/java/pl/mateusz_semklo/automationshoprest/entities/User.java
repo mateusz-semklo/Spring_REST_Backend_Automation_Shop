@@ -1,6 +1,7 @@
 package pl.mateusz_semklo.automationshoprest.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
@@ -67,6 +68,7 @@ public class User implements Serializable{
     @Column(name = "AUTHORITY",nullable = false)
     public List<String> authorities=new ArrayList<>();
 
+   // @JsonIgnore
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Order> orders=new ArrayList<>();
 

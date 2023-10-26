@@ -43,27 +43,27 @@ public class CategoriesController {
         return categoryModelAssembler.toCollectionModel(categories).getContent().stream().toList();
     }
 
-    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public CategoryModel getCategoryById(@PathVariable("id") Integer id){
-        Category category=categoriesService.findById(id);
+    @GetMapping(value = "/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CategoryModel getCategoryByName(@PathVariable("name") String name){
+        Category category=categoriesService.findByName(name);
         return categoryModelAssembler.toModel(category);
     }
 
-    @GetMapping(value = "/{id}/products",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ProductModel> getProducts(@PathVariable("id") Integer id){
-        Category category=categoriesService.findById(id);
+    @GetMapping(value = "/{name}/products",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ProductModel> getProducts(@PathVariable("name") String name){
+        Category category=categoriesService.findByName(name);
         return productModelAssembler.toCollectionModel(category.getProducts()).getContent().stream().toList();
     }
 
-    @GetMapping(value = "/{id}/products/{product_id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProductModel getProductsById(@PathVariable("id") Integer id,@PathVariable("product_id") Integer product_id){
+    @GetMapping(value = "/{name}/products/{product_id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProductModel getProductsById(@PathVariable("name") String name,@PathVariable("product_id") Integer product_id){
         Product product=productsService.findById(product_id);
         return productModelAssembler.toModel(product);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteCategory(@PathVariable("id") Integer id){
-        categoriesService.delete(id);
+    @DeleteMapping(value = "/{name}")
+    public void deleteCategory(@PathVariable("name") String name){
+        categoriesService.delete(name);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

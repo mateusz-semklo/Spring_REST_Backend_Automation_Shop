@@ -73,7 +73,7 @@ public class OrdersController {
 
     @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OrderModel> saveOrder(@RequestBody String order) throws JsonProcessingException {
-        System.out.println(order);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         OrderPostModel order1=objectMapper.readValue(order, OrderPostModel.class);
         Order result=ordersService.saveOrder(order1);
         OrderModel model=mapper.convertToDTO(result);

@@ -33,10 +33,10 @@ class OrderRepositoryTest {
     }
     @Test
     void findOrdersById1056(){
-        Optional<Order> optionalCategory=orderRepository.findById(1056);
+        Optional<Order> optionalCategory=orderRepository.findById(1050);
 
         assertThat(optionalCategory.isPresent(),notNullValue());
-        assertThat(optionalCategory.get().getOrderId(),equalTo(1056));
+        assertThat(optionalCategory.get().getOrderId(),equalTo(1050));
     }
 
     @Test

@@ -83,7 +83,7 @@ class OrdersControllerTest {
     @Test
     void getOrderById() throws JsonProcessingException {
         OrderModel orderModel=webTestClient.get()
-                .uri(configProperties.serverUrl+"/orders/1056")
+                .uri(configProperties.serverUrl+"/orders/1050")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -92,13 +92,13 @@ class OrdersControllerTest {
                 .returnResult().getResponseBody();
 
         System.out.println(objectMapper.writeValueAsString(orderModel));
-        assertThat(orderModel.getOrderId(),equalTo(1056));
+        assertThat(orderModel.getOrderId(),equalTo(1050));
     }
 
     @Test
     void getProducts() {
         List<ProductModel> productModels =webTestClient.get()
-                .uri(configProperties.serverUrl+"/orders/1056/products")
+                .uri(configProperties.serverUrl+"/orders/1051/products")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -170,7 +170,7 @@ class OrdersControllerTest {
     @Test
     void saveNewOrderWithNewProductsJSON() throws JsonProcessingException {
         //////////ORDER////////////////////////////
-        String orderJSON="{\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
+        String orderJSON="{\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryName\":\"Mikrokontrolery\"}}]  }";
         OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
         /////////////////////////////////////////////
         ///Cascade jest wyłączone dlatego nie zapisze nowych produktów w kolekcji w order
@@ -179,7 +179,7 @@ class OrdersControllerTest {
     @Test
     void saveNewOrderWithExistsProductsJSON() throws JsonProcessingException {
         //////////ORDER////////////////////////////
-        String orderJSON="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
+        String orderJSON="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":\"Mikrokontrolery\"}}]  }";
         OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
         /////////////////////////////////////////////
 
@@ -201,7 +201,7 @@ class OrdersControllerTest {
     @Test
     void editOrderWithExistsProductsJSON() throws JsonProcessingException {
         //////////ORDER////////////////////////////
-        String orderJSON="{\"orderId\":1056,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
+        String orderJSON="{\"orderId\":1051,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
         OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
         /////////////////////////////////////////////
 
