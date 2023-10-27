@@ -43,6 +43,12 @@ public class CategoriesController {
         return categoryModelAssembler.toCollectionModel(categories).getContent().stream().toList();
     }
 
+    @GetMapping(value = "/xxx",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Category> getCategoriesX(){
+        List<Category> categories=categoriesService.findAll();
+        return categories;
+    }
+
     @GetMapping(value = "/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
     public CategoryModel getCategoryByName(@PathVariable("name") String name){
         Category category=categoriesService.findByName(name);

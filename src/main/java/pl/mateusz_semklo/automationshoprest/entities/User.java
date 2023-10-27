@@ -68,7 +68,6 @@ public class User implements Serializable{
     @Column(name = "AUTHORITY",nullable = false)
     public List<String> authorities=new ArrayList<>();
 
-   // @JsonIgnore
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Order> orders=new ArrayList<>();
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
+import pl.mateusz_semklo.automationshoprest.models.ProductModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ public class Category implements Serializable {
     @Column(name = "CATEGORY_NAME")
     private String categoryName;
 
-   // @JsonIgnore
     @OneToMany(mappedBy = "category",fetch = FetchType.EAGER)
     private List<Product> products=new ArrayList<>();
 
