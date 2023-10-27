@@ -45,12 +45,8 @@ public class Product implements Serializable {
     @Column(name = "PRODUCT_PRICE")
     private int productPrice;
 
-  //  @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "CATEGORY_NAME", referencedColumnName = "CATEGORY_NAME", nullable = false)
     private Category category;
-
-  //  @ManyToMany(mappedBy = "products",fetch = FetchType.EAGER)
-  //  List<Order> orders=new ArrayList<>();
 
 }

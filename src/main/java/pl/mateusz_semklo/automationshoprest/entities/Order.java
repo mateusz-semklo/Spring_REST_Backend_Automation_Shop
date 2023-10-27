@@ -49,12 +49,10 @@ public class Order implements Serializable {
     @Column(name = "ORDER_POST_CODE")
     private String orderPostCode;
 
-  //  @JsonIgnore
     @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME", nullable = false)
     private User user;
 
-   // @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="ORDERS_PRODUCTS",
             joinColumns = @JoinColumn(name="ORDER_ID"),
