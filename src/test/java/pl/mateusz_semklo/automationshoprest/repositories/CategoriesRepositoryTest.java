@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import pl.mateusz_semklo.automationshoprest.config.ConfigProperties;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
 
 import java.util.List;

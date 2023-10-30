@@ -81,12 +81,20 @@ public class CategoriesController {
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void putCategory(@RequestBody CategoryModel categoryModel,@PathVariable("id") Integer id){
+    public ResponseEntity<CategoryModel> putCategory(@RequestBody CategoryModel categoryModel,@PathVariable("id") Integer id){
+        Category category=this.mapper.convertToEntity(categoryModel);
+        Category result=categoriesService.save(category);
+        ResponseEntity<CategoryModel> response=new ResponseEntity<>(mapper.convertToDTO(result),HttpStatus.OK);
+        return response;
 
     }
 
     @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void patchCategory(@RequestBody CategoryModel categoryModel,@PathVariable("id") Integer id){
+    public ResponseEntity<CategoryModel> patchCategory(@RequestBody CategoryModel categoryModel,@PathVariable("id") Integer id){
+        Category category=this.mapper.convertToEntity(categoryModel);
+        Category result=categoriesService.save(category);
+        ResponseEntity<CategoryModel> response=new ResponseEntity<>(mapper.convertToDTO(result),HttpStatus.OK);
+        return response;
 
     }
 

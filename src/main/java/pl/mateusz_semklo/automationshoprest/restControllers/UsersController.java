@@ -84,12 +84,20 @@ public class UsersController {
     }
 
     @PutMapping(value = "/{username}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void putUser(@RequestBody UserModel userModel,@PathVariable("username") String username){
+    public ResponseEntity<UserModel> putUser(@RequestBody UserModel userModel,@PathVariable("username") String username){
+        User user=mapper.convertToEntity(userModel);
+        User result=usersService.save(user);
+        ResponseEntity<UserModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
+        return response;
 
     }
 
     @PatchMapping(value = "/{username}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void patchUser(@RequestBody UserModel userModel,@PathVariable("username") String username){
+    public ResponseEntity<UserModel> patchUser(@RequestBody UserModel userModel,@PathVariable("username") String username){
+        User user=mapper.convertToEntity(userModel);
+        User result=usersService.save(user);
+        ResponseEntity<UserModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
+        return response;
 
     }
 

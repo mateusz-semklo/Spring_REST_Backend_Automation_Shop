@@ -155,8 +155,31 @@ class ProductsControllerTest {
 
     }
 
+
     @Test
-    void putProduct() {
+    void putProduct() throws JsonProcessingException {
+        //////////PRODUCT////////////////////////////
+        String productJSON="{\"productId\":1111,\"productName\":\"nowy XXX\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryName\":\"Czujniki\"}}";
+        ProductModel productModel=objectMapper.readValue(productJSON,ProductModel.class);
+        /////////////////////////////////////////////
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(productModel));
+
+        ProductModel result=webTestClient.put().uri(configProperties.serverUrl+"/products/{id}",productModel.getProductId())
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(productModel)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(ProductModel.class)
+                .returnResult().getResponseBody();
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(result));
+
+        assertThat(result,notNullValue());
+        assertThat(productModel.getProductName(),equalTo(result.getProductName()));
     }
 
     @Test

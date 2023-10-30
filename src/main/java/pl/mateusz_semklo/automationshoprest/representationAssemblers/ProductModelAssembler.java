@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
+import pl.mateusz_semklo.automationshoprest.config.ConfigProperties;
 import pl.mateusz_semklo.automationshoprest.restControllers.ProductsController;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
@@ -22,7 +23,6 @@ public class ProductModelAssembler implements RepresentationModelAssembler<Produ
     public ProductModel toModel(Product entity) {
         ProductModel productModel= modelMapper.map(entity, ProductModel.class);
         productModel.add(linkTo(methodOn(ProductsController.class).getProductById(productModel.getProductId())).withSelfRel());
-       // productModel.add(linkTo(methodOn(ProductsController.class).getOrders(productModel.getProductId())).withRel("/orders"));
         return productModel;
     }
 

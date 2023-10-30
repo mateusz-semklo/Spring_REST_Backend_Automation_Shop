@@ -63,13 +63,23 @@ public class ProductsController {
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void putProduct(@RequestBody ProductModel productModel,@PathVariable("id") Integer id){
+    public ResponseEntity<ProductModel> putProduct(@RequestBody ProductModel productModel,@PathVariable("id") Integer id){
+        productModel.setProductId(id);
+        Product product=mapper.convertToEntity(productModel);
+        System.out.println(id);
+        Product result=productsService.save(product);
+        ResponseEntity<ProductModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
+        return response;
 
     }
 
     @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void patchProduct(@RequestBody ProductModel productModel,@PathVariable("id") Integer id){
-
+    public ResponseEntity<ProductModel> patchProduct(@RequestBody ProductModel productModel,@PathVariable("id") Integer id){
+        productModel.setProductId(id);
+        Product product=mapper.convertToEntity(productModel);
+        Product result=productsService.save(product);
+        ResponseEntity<ProductModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
+        return response;
     }
 
 }

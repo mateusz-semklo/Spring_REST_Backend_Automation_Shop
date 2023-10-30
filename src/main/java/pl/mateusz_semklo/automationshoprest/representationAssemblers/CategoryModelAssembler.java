@@ -22,7 +22,7 @@ public class CategoryModelAssembler implements RepresentationModelAssembler<Cate
     public CategoryModel toModel(Category entity) {
         CategoryModel categoryModel= modelMapper.map(entity, CategoryModel.class);
         categoryModel.add(linkTo(methodOn(CategoriesController.class).getCategoryByName(categoryModel.getCategoryName())).withSelfRel());
-       // categoryModel.add(linkTo(methodOn(CategoriesController.class).getProducts(categoryModel.getProducts())).withRel("/products"));
+        categoryModel.add(linkTo(methodOn(CategoriesController.class).getProducts(categoryModel.getCategoryName())).withRel("/products"));
         return categoryModel;
     }
 

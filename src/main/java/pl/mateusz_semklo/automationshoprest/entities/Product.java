@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnTransformer;
+import org.springframework.beans.factory.annotation.Autowired;
+import pl.mateusz_semklo.automationshoprest.config.ConfigProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;

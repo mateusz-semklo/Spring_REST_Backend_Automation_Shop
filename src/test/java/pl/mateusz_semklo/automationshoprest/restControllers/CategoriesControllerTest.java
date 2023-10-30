@@ -68,7 +68,7 @@ class CategoriesControllerTest {
     @Test
     void getCategoryByName() {
         CategoryModel categoryModel=webTestClient.get()
-                .uri(configProperties.serverUrl+"/categories/Czujniki")
+                .uri(configProperties.serverUrl+"/categories/Mikrokontrolery")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -76,7 +76,7 @@ class CategoriesControllerTest {
                 .expectBody(CategoryModel.class)
                 .returnResult().getResponseBody();
 
-        assertThat(categoryModel.getCategoryName(),equalTo("Czujniki"));
+        assertThat(categoryModel.getCategoryName(),equalTo("Mikrokontrolery"));
     }
 
 
