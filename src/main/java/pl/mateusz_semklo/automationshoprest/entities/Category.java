@@ -2,6 +2,7 @@ package pl.mateusz_semklo.automationshoprest.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,7 +20,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Table(name="CATEGORIES")
 @EqualsAndHashCode(callSuper = false)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "categoryName",scope = Category.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "categoryName",scope = Category.class)
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1234567L;
@@ -28,6 +29,7 @@ public class Category implements Serializable {
     @Column(name = "CATEGORY_NAME")
     private String categoryName;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "category",fetch = FetchType.EAGER)
     private List<Product> products=new ArrayList<>();
 

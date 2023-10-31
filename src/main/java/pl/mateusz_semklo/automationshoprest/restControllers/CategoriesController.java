@@ -43,8 +43,8 @@ public class CategoriesController {
         return categoryModelAssembler.toCollectionModel(categories).getContent().stream().toList();
     }
 
-    @GetMapping(value = "/xxx",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Category> getCategoriesX(){
+    @GetMapping(value = "/origin",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Category> getCategoriesO(){
         List<Category> categories=categoriesService.findAll();
         return categories;
     }
@@ -53,6 +53,11 @@ public class CategoriesController {
     public CategoryModel getCategoryByName(@PathVariable("name") String name){
         Category category=categoriesService.findByName(name);
         return categoryModelAssembler.toModel(category);
+    }
+    @GetMapping(value = "/origin/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Category getCategoryByNameO(@PathVariable("name") String name){
+        return categoriesService.findByName(name);
+
     }
 
     @GetMapping(value = "/{name}/products",produces = MediaType.APPLICATION_JSON_VALUE)

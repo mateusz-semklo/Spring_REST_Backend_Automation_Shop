@@ -42,11 +42,20 @@ public class ProductsController {
         List<Product> products=productsService.findAll();
         return productModelAssembler.toCollectionModel(products).getContent().stream().toList();
     }
+    @GetMapping(value = "/origin",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Product> getProductsO(){
+        return productsService.findAll();
+    }
 
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ProductModel getProductById(@PathVariable("id") Integer id){
         Product product=productsService.findById(id);
         return productModelAssembler.toModel(product);
+    }
+    @GetMapping(value = "/origin/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Product getProductByIdO(@PathVariable("id") Integer id){
+        return productsService.findById(id);
+
     }
 
     @DeleteMapping(value = "/{id}")

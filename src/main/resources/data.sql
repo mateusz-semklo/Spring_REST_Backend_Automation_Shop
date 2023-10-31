@@ -173,24 +173,24 @@ INSERT INTO authorities (authority,username) VALUES (
                                                         'ROLE_USER',
                                                         'adrian1234'
                                                     );
-
-INSERT INTO categories VALUES (
-                                  'Sterowniki PLC'
-                              );
-INSERT INTO categories VALUES (
-                                  'Mikrokontrolery'
-                              );
 INSERT INTO categories VALUES (
                                   'Czujniki'
                               );
 INSERT INTO categories VALUES (
+                                  'Sterowniki PLC'
+                              );
+INSERT INTO categories VALUES (
                                   'Sieci przemysłowe'
                               );
+
 INSERT INTO categories VALUES (
                                   'Technika napędowa'
                               );
 INSERT INTO categories VALUES (
                                   'Panele HMI'
+                              );
+INSERT INTO categories VALUES (
+                                  'Mikrokontrolery'
                               );
 
 select count(category_name) from categories;
@@ -300,7 +300,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC S7-1200 1215C, Kompaktowy CPU, DC/DC/DC, 2 porty PROFINET, Wejścia: 14 wejść cyfrowych 24 V DC; 2 wejścia analogowe 0-10 V, Wyjścia: 10 wyjść cyfrowych 24 V DC; 0,5 A; 2 wyjścia analogowe 0-20 mA, Napięcie zasilania: 20,4-28,8 V DC, Pamięć programu/danych: 125 kB',
                                                                                                                             'http://localhost:8080/products/sterowniki_PLC/120500.png',
                                                                                                                             2592.00,
-                                                                                                                            @TAB[2]
+                                                                                                                            @TAB[5]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -308,7 +308,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC S7-1200 1214C, Kompaktowy CPU, DC/DC/DC, Port PROFINET, Wejścia: 14 wejść cyfrowych 24 V DC; 2 wejścia analogowe 0-10 V, Wyjścia: 10 wyjść cyfrowych 24 V DC; 0,5 A; Napięcie zasilania: 20,4-28,8 V DC, Pamięć programu/danych: 100 kB',
                                                                                                                             'http://localhost:8080/products/sterowniki_PLC/120540.png',
                                                                                                                             1721.25,
-                                                                                                                            @TAB[2]
+                                                                                                                            @TAB[5]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -316,7 +316,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC S7-1200F, Moduł wejść cyfrowych SM 1226 F-DI 16X DC 24V, 16 wejść cyfrowych, Napięcie zasilania: 24 V DC, Napięcie wejściowe: -30-5 V DC (Sygnał 0)/15-30 V DC (Sygnał 1), Natężenie na wejściu: 0,5 mA, Stopień ochrony: IP20, Kategoris 3 PL d (1-kanałowe); Kategoria 3 lub 4 PL e (2-kanałowe), SIL 2 (1-kanałowe); SIL 3 (2-kanałowe)',
                                                                                                                             'http://localhost:8080/products/sterowniki_PLC/120614.png',
                                                                                                                             845.55,
-                                                                                                                            @TAB[2]
+                                                                                                                            @TAB[5]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -324,7 +324,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC S7-1200, Moduł wejść/wyjść SM 1223, 8 wejść cyfrowych 24 V DC, 8 wyjść cyfrowych, Przekaźnikowe 2 A',
                                                                                                                             'http://localhost:8080/products/sterowniki_PLC/120648.png',
                                                                                                                             789.75,
-                                                                                                                            @TAB[2]
+                                                                                                                            @TAB[5]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -332,7 +332,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC S7-1200, Moduł wejść/wyjść SM 1223, 16 wejść cyfrowych 24 V DC, 16 wyjść cyfrowych, Tranzystorowe 0,5 A',
                                                                                                                             'http://localhost:8080/products/sterowniki_PLC/120749.png',
                                                                                                                             1240.40,
-                                                                                                                            @TAB[2]
+                                                                                                                            @TAB[5]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -340,7 +340,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC S7-1200 moduł zasilacza PM1207, Zasilacz stabilizowany, Wejście: 120/230 V AC, Wyjście: 24 V DC / 2,5 A',
                                                                                                                             'http://localhost:8080/products/sterowniki_PLC/120750.png',
                                                                                                                             372.40,
-                                                                                                                            @TAB[2]
+                                                                                                                            @TAB[5]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -348,7 +348,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC DP, CPU 1510SP F-1 PN dla ET 200SP, Jednostka centralna, PL/kategoria zgodna z ISO13849-1 : PL e/kat. 4, SIL zgodnie z IEC 61508: SIL 3, Interfejs: PROFINET IRT z 3-portowym przełącznikiem, Zasilanie: 24 V DC (19,2-28,8 V DC), Prąd przełączania maks.: 4,7 A, Pamięć robocza: 150 KB dla programu; 750 KB dla danych, Wydajność bitowa 72 NS, Wymagana karta pamięci SIMATIC i adapter magistrali dla portu 1 i 2',
                                                                                                                             'http://localhost:8080/products/sterowniki_PLC/120830.png',
                                                                                                                             3690.10,
-                                                                                                                            @TAB[2]
+                                                                                                                            @TAB[5]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -356,7 +356,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC ET 200SP, DI 8x 24V DC ST, Moduł wejść cyfrowych, 8 wejść cyfrowych, 24 V DC, Typ 3 (IEC 61131), Logika Sink (PNP, odczyt P), Wbudowana diagnostyka: Zwarcie/Zasilanie urządzeń/Rozwarcie obwodu/Napięcie zasilania, Opóźnienie wejścia 0,05-20 ms, Kod koloru: CC01, Do podstawek typu A0',
                                                                                                                             'http://localhost:8080/products/sterowniki_PLC/120906.png',
                                                                                                                             219.10,
-                                                                                                                            @TAB[2]
+                                                                                                                            @TAB[5]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -364,7 +364,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC ET 200SP, AQ 2xI ST, Moduł wyjść analogowych, Wyjścia analogowe: 2 (Prądowe), 24 V DC, Diagnostyka modułu, 16 Bit, Kod koloru: CC00, Do podstawek typu A0 oraz A1',
                                                                                                                             'http://localhost:8080/products/sterowniki_PLC/120943.png',
                                                                                                                             714.15,
-                                                                                                                            @TAB[2]
+                                                                                                                            @TAB[5]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -372,23 +372,23 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC ET 200SP PS 24V/10A, Zasilacz regulowany, Wejście: 120/230 V AC, Wyjście: 24 V DC/10 A',
                                                                                                                             'http://localhost:8080/products/sterowniki_PLC/121014.png',
                                                                                                                             944.15,
-                                                                                                                            @TAB[2]
+                                                                                                                            @TAB[5]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
                                                                                                                             'Niezarządzalny Switch Ethernet TERZ NITE-RF5-1100 - 111400',
                                                                                                                             'Niezarządzalny switch Industrial Ethernet, Fast Ethernet 10/100 Mbit/s, Porty: 5 x RJ45, Napięcie wejściowe: 8-28 V AC/9-36 V DC, Temperatura pracy: -40-70 °C, Stopień ochrony: IP30, Materiał obudowy: Aluminium anodowane/Stal nierdzewna',
-                                                                                                                            'http://localhost:8080/products/sterowniki_PLC/124450.png',
+                                                                                                                            'http://localhost:8080/products/sieci_przemyslowe/124450.png',
                                                                                                                             309.50,
-                                                                                                                            @TAB[3]
+                                                                                                                            @TAB[4]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
                                                                                                                             'Niezarządzalny Switch Ethernet TERZ NITE-RS5-1100 - 211400',
                                                                                                                             'Niezarządzalny switch Industrial Ethernet, Fast Ethernet 10/100 Mbit/s, Porty: 5 x RJ45, Napięcie wejściowe: 8-28 V AC/9-36 V DC, Temperatura pracy: -40-70 °C, Stopień ochrony: IP30, Materiał obudowy: Aluminium anodowane/Stal nierdzewna',
-                                                                                                                            'http://localhost:8080/products/sterowniki_PLC/124523.png',
+                                                                                                                            'http://localhost:8080/products/sieci_przemyslowe/124523.png',
                                                                                                                             349.50,
-                                                                                                                            @TAB[3]
+                                                                                                                            @TAB[4]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -396,7 +396,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Niezarządzalny switch Industrial Ethernet, Fast Ethernet 10/100 Mbit/s, Porty: 16 x RJ45, Konstrukcja: wąska, Zakres napięcia: 8-28 V AC/9-36 V DC, Temperatura pracy: -40-70 °C, Stopień ochrony: IP30, Materiał obudowy: Aluminium anodowane/Stal nierdzewna',
                                                                                                                             'http://localhost:8080/products/sieci_przemyslowe/124551.png',
                                                                                                                             895.90,
-                                                                                                                            @TAB[3]
+                                                                                                                            @TAB[4]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -404,7 +404,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Zarządzalny Switch PROFINET, Protokół: PROFINET IO zgodny z IEC 61158-6-10, Fast Ethernet 10/100 Mbit/s, 4 porty RJ45, Napięcie zasilania: 24 V DC (18-30 V DC), Temperatura pracy: -40-65 °C, Stopień ochrony: IP20, W zestawie Instrukcja Quick Start Guide oraz CD z danymi GSDML',
                                                                                                                             'http://localhost:8080/products/sieci_przemyslowe/124622.png',
                                                                                                                             1395.90,
-                                                                                                                            @TAB[3]
+                                                                                                                            @TAB[4]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -412,7 +412,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Zarządzalny Switch PROFINET, Protokół:PROFINET IO zgodny z IEC 61158-6-10, Fast Ethernet 10/100 Mbit/s, 8 portów RJ45, Napięcie zasilania: 24 V DC (18-30 V DC), Temperatura pracy: -40-65 °C, Stopień ochrony: IP20, W zestawie Instrukcja Quick Start Guide oraz CD z danymi GSDML',
                                                                                                                             'http://localhost:8080/products/sieci_przemyslowe/124712.png',
                                                                                                                             1895.90,
-                                                                                                                            @TAB[3]
+                                                                                                                            @TAB[4]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -420,7 +420,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Niezarządzalny switch Industrial Ethernet, 4 porty M12 kodowanie D (PoE) Fast Ethernet 10/100 Mbit/s , 1 port M12 kodowanie X Full Gigabit Ethernet 10/100/1000 Mbit/s, Napięcie wejściowe: 16,8-30 V DC, Temperatura pracy: -40-70 °C, Stopień ochrony: IP65/IP67, Materiał obudowy: Niklowane aluminium/stal nierdzewna, Otwory M6 do montazu na ścianie',
                                                                                                                             'http://localhost:8080/products/sieci_przemyslowe/124752.png',
                                                                                                                             2795.30,
-                                                                                                                            @TAB[3]
+                                                                                                                            @TAB[4]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -428,7 +428,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SINAMICS V20 -1AC, 200-240 V AC (-15% +10%), Częstotliwość sieci: 47-63 Hz, Moc znamionowa: 0,55 kW, Interfejs I/O: 4 DI/2 DO/2 AI/1 AO, Stopień ochrony: IP20, Wielkość: FSAB, Komunikacja: USS/MODBUS RTU, Wbudowany panel BOP, Wbudowany filtr',
                                                                                                                             'http://localhost:8080/products/technika_napedowa/125753.png',
                                                                                                                             795.30,
-                                                                                                                            @TAB[4]
+                                                                                                                            @TAB[6]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -436,7 +436,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SINAMICS V20 - 3 AC, 380-480 V AC (-15% +10%), Częstotliwość sieci: 47-63 Hz, Moc znamionowa: 7,5 kW, Interfejs I/O: 4 DI/2 DO/2 AI/1 AO, Stopień ochrony: IP20, Wielkość: FSD, Komunikacja: USS/MODBUS RTU, Wbudowany panel BOP, Wbudowany filtr',
                                                                                                                             'http://localhost:8080/products/technika_napedowa/125823.png',
                                                                                                                             3195.30,
-                                                                                                                            @TAB[4]
+                                                                                                                            @TAB[6]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -444,7 +444,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SINAMICS G120C, 3 AC, Napięcie sieci: 380-480 V AC (+10/-20 %), Częstotliwość sieci: 47-63 Hz, Moc znamionowa: 2,2 kW, Przeciązalność 150% przez 3 s, 6 x DI/2 x DO, 1 x AI/1 x AO, Rozmiar: FSAA, Komunikacja: PROFINET-PN/Ethernet IP, Safe Torque Off (STO), Zintegrowany filtr EMC kategorii A, Stopień ochrony: IP20',
                                                                                                                             'http://localhost:8080/products/technika_napedowa/125903.png',
                                                                                                                             2995.10,
-                                                                                                                            @TAB[4]
+                                                                                                                            @TAB[6]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -452,7 +452,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SINAMICS G120C, 3 AC, Napięcie sieci: 380-480 V AC (+10/-20 %), Częstotliwość sieci: 47-63 Hz, Moc znamionowa: 11 kW, Przeciązalność 150% przez 3 s, 6 x DI/2 x DO, 1 x AI/1 x AO, Rozmiar: FSC, Komunikacja: PROFINET-PN/Ethernet IP, Safe Torque Off (STO), Zintegrowany filtr EMC kategorii A, Stopień ochrony: IP20',
                                                                                                                             'http://localhost:8080/products/technika_napedowa/125933.png',
                                                                                                                             6998.40,
-                                                                                                                            @TAB[4]
+                                                                                                                            @TAB[6]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -460,7 +460,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SINAMICS G120X, 3 AC, 380-480 V AC (+10/-20 %) Częstotliwość sieci: 47-63 Hz, Moc znamionowa: 3 kW (110 % 60 s; 100 % 240 s), 6 x DI/2 x DO (Przekaźnikowe), 2 x AI (0-10 V; 0/4-20 mA)/1 x AO (0-10 V; 0/4-20 mA), Rozmiar: FSA, Komunikacja: PROFINET-PN/Ethernet IP, Panel operatorski IOP-2, Kategoria EMC: C2, Stopień ochrony IP20',
                                                                                                                             'http://localhost:8080/products/technika_napedowa/130001.png',
                                                                                                                             4289.40,
-                                                                                                                            @TAB[4]
+                                                                                                                            @TAB[6]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -468,7 +468,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SINAMICS G120X, 3 AC, 380-480 V AC (+10/-20 %) Częstotliwość sieci: 47-63 Hz, Moc znamionowa: 11 kW (110 % 60 s; 100 % 240 s), 6 x DI/2 x DO (Przekaźnikowe), 2 x AI (0-10 V; 0/4-20 mA)/1 x AO (0-10 V; 0/4-20 mA), Rozmiar: FSC, Komunikacja: PROFINET-PN/Ethernet IP, Panel operatorski IOP-2, Kategoria EMC: C2, Stopień ochrony IP20',
                                                                                                                             'http://localhost:8080/products/technika_napedowa/130029.png',
                                                                                                                             7389.40,
-                                                                                                                            @TAB[4]
+                                                                                                                            @TAB[6]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -476,7 +476,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Softstart, Układ łagodnego rozruchu, Wielkość: S0, 32 A, 15 kW/ 400 V, 200-480 V AC, Napięcie sterujące: 24 V AC/DC, Zaciski śrubowe',
                                                                                                                             'http://localhost:8080/products/technika_napedowa/130107.png',
                                                                                                                             1534.40,
-                                                                                                                            @TAB[4]
+                                                                                                                            @TAB[6]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -484,7 +484,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Rozrusznik silnikowy z regulacją prędkości, Połączenie zasilania 3-fazowe, Połączenie silnika 3-fazowe 400 V AC, 3,6 A/ 1,5kW, Zintegrowany filtr EMC, Zaciski śrubowe',
                                                                                                                             'http://localhost:8080/products/technika_napedowa/130200.png',
                                                                                                                             1244.90,
-                                                                                                                            @TAB[4]
+                                                                                                                            @TAB[6]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -492,7 +492,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC HMI KP300 BASIC MONO PN, Panbel Basic, Obsługa przyciskami, Wyświetlacz LCD 3" FSTN, monochromatyczny, Interfejs PROFINET, Możliwość konfiguracji w WinCC BASIC V11/ STEP7 BASIC V11, Zawiera darmowe oprogramowanie open source',
                                                                                                                             'http://localhost:8080/products/panele_HMI/131638.png',
                                                                                                                             982.90,
-                                                                                                                            @TAB[5]
+                                                                                                                            @TAB[3]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -500,7 +500,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC HMI KTP700 BASIC, Panel operatorski, Ekran dotykowy/ przyciski funkcyjne, Wyświetlacz 7" TFT, 65536 kolorów, Interfejs: PROFINET, Konfiguracja przez WinCC BASIC V13/ STEP7 BASIC V13, Zawiera darmowe oprogramowanie Open Source, W zestawie dysk CD',
                                                                                                                             'http://localhost:8080/products/panele_HMI/131708.png',
                                                                                                                             2882.90,
-                                                                                                                            @TAB[5]
+                                                                                                                            @TAB[3]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -508,7 +508,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC HMI TP900 Comfort, Panel Comfort, Dotykowy, Wyświetlacz 9" TFT (Widescreen), 16 mln kolorów, Interfejs PROFINET, Interfejs MPI/PROFIBUS-DP, Pamięć na projekt: 12 MB, Windows CE 6.0 (Wsparcie Microsoft z aktualizacją zabezpieczeń), Konfiguracja za pomocą WinCC Comfort V11',
                                                                                                                             'http://localhost:8080/products/panele_HMI/131739.png',
                                                                                                                             29252.90,
-                                                                                                                            @TAB[5]
+                                                                                                                            @TAB[3]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -516,7 +516,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Panel SIMATIC HMI MTP700 Unified Comfort, Dotykowy wyświetlacz, Wyświetlacz TFT 7" (panoramiczny), 16 mln kolorów, Interfejsy: 4 x USB 3.1/1 x RS-485 (możliwy RS-422)/PROFINET, Konfigurowalny z WinCC Unified Comfort V16, Zawiera oprogramowanie Open Source (DVD), W zestawie materiał montażowy',
                                                                                                                             'http://localhost:8080/products/panele_HMI/131807.png',
                                                                                                                             5567.60,
-                                                                                                                            @TAB[5]
+                                                                                                                            @TAB[3]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -524,7 +524,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'SIMATIC HMI KTP900F Mobile z wbudowanym wyłącznikiem awaryjnym i przełącznikiem zezwalającym, Panel HMI, PL zgodny z ISO13849-1: PL e, SIL zgodny z IEC 61508: SIL 3, Wyświetlacz: 9" TFT, Rozmiar wyświetlacza: 195 x 117 mm, Kolory: 16 777 216, Rozdzielczość: 800 x 480 px, Obsługa: ekran dotykowy/przyciski, Z wyłącznikiem awaryjnym i przełącznikiem zezwalającym, Interfejsy: PROFINET / PROFIsafe / Ethernet / USB 2.0, Możliwość ściemniania podświetlenia LED, Możliwość konfiguracji od WinCC Comfort V13',
                                                                                                                             'http://localhost:8080/products/panele_HMI/131833.png',
                                                                                                                             15609.60,
-                                                                                                                            @TAB[5]
+                                                                                                                            @TAB[3]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -532,7 +532,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Zestaw uruchomieniowy oparty na mikrokontrolerze STM32F429ZIT6 (180 MHz, 2 MB Flash, 256 kB RAM, rdzeń Cortex-M4F ARM). Na płytce także 3-osiowy żyroskop , ekran dotykowy LCD 2.4" QVGA TFT oraz programator / debugger ST-LINK/V2-B.',
                                                                                                                             'http://localhost:8080/products/mikrokontrolery/132945.png',
                                                                                                                             215.00,
-                                                                                                                            @TAB[6]
+                                                                                                                            @TAB[2]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -540,7 +540,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Zestaw uruchomieniowy STM32F769I Discovery z mikrokontrolerem STM32F769NIH6 pozwala zapoznać się z układami wyposażonymi w potężny rdzeń Cortex M7 firmy ARM. Układ posiada m. in. wbudowany wyświetlacz dotykowy LCD 4", złącze USB, port Ethernet oraz gniazdo na kartę microSD. Dodatkową funkcją jest możliwość zasilania z sieci Ethernet poprzez układ PoE 3 W 48 V na 5 V.',
                                                                                                                             'http://localhost:8080/products/mikrokontrolery/133108.png',
                                                                                                                             579.00,
-                                                                                                                            @TAB[6]
+                                                                                                                            @TAB[2]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -548,7 +548,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Moduł Nucleo z 32-bitowym mikrokontrolerem STM32L476RG, który wyposażony jest w rdzeń ARM Cortex M4 o taktowaniu 80 MHz, pamięci Flash 1 MB, 128 kB pamięci SRAM. Nucleo jest kompatybilny z platformą mbed, posiada złącza umożliwiające podłączenie nakładek Arduino Shield. Współpracuje z większością popularnych platform programistycznych, w tym Keil, IAR oraz środowiskami opartymi na kompilatorze GCC. Urządzenie wyposażone zostalo w debugger / programator ST-Link.',
                                                                                                                             'http://localhost:8080/products/mikrokontrolery/133214.png',
                                                                                                                             99.00,
-                                                                                                                            @TAB[6]
+                                                                                                                            @TAB[2]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -556,7 +556,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Moduł z 32-bitowym mikrokontrolerem wyposażonym w rdzeń ARM Cortex M4, 100 MHz, 1,5 MB Flash, 320 kB SRAM. Nucleo jest kompatybilny z platformą mbed, posiada złącza umożliwiające podłączenie nakładek Arduino tzw. Arduino Shield.',
                                                                                                                             'http://localhost:8080/products/mikrokontrolery/133315.png',
                                                                                                                             199.00,
-                                                                                                                            @TAB[6]
+                                                                                                                            @TAB[2]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -564,7 +564,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Zestaw uruchomieniowy oparty na mikrokontrolerze STM32F411VET6 pozwala zapoznać się z układami wyposażonymi w najnowszy rdzeń Cortex-M4F firmy ARM. Na płytce także 3-osiowy akcelerometr i żyroskop, narzędzia audio: mikrofon i DAC oraz programator/debugger ST-LINK/V2',
                                                                                                                             'http://localhost:8080/products/mikrokontrolery/133405.png',
                                                                                                                             156.00,
-                                                                                                                            @TAB[6]
+                                                                                                                            @TAB[2]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -572,7 +572,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Zestaw uruchomieniowy z modułem LoRa CMWX1ZZABZ-091 (Murata) oparty na mikrokontrolerze STM32L072CZ pozwala zapoznać się z układami wyposażonymi w rdzeń Cortex-M0+ firmy ARM. Na płytce także programator/debuger ST-LINK/V2, diody LED, przyciski, antena, złącze Arduino UNO i złącze USB OTG w formacie micro USB - B.',
                                                                                                                             'http://localhost:8080/products/mikrokontrolery/133450.png',
                                                                                                                             356.00,
-                                                                                                                            @TAB[6]
+                                                                                                                            @TAB[2]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -580,7 +580,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Zestaw uruchomieniowy oparty na mikrokontrolerze STM32MP157FAC1 (Cortex-A7 800 MHz 32-bit + Cortex-M4 209 MHz 32-bit). Płytka posiada między innymi wbudowany wyświetlacz dotykowy o rozdzielczości 4", 4 porty USB, port Ethernet oraz slot na kartę microSD..',
                                                                                                                             'http://localhost:8080/products/mikrokontrolery/133526.png',
                                                                                                                             768.00,
-                                                                                                                            @TAB[6]
+                                                                                                                            @TAB[2]
                                                                                                                         );
 INSERT INTO products (product_id,product_name,product_description,product_image_url,product_price,category_name) VALUES (
                                                                                                                             NEXT VALUE FOR MYSEQ,
@@ -588,7 +588,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             'Płytka Nucleo z 32-bitowym rdzeniem ARM Cortex M0+ o taktowaniu 32 MHz. Nucleo współpracuje z większością popularnych platform programistycznych, do których należą m.in. Keil, IAR, oraz ze środowiskami opartymi na kompilatorze GCC. Rozkład złącz jest kompatybilny z Arduino Nano, dzięki czemu funkcjonalność platformy zostaje rozszerzona. Nucleo-32 nie wymaga żadnej oddzielnej sondy, ponieważ integruje debugger / programator ST-LINK.',
                                                                                                                             'http://localhost:8080/products/mikrokontrolery/133641.png',
                                                                                                                             89.00,
-                                                                                                                            @TAB[6]
+                                                                                                                            @TAB[2]
                                                                                                                         );
 
 INSERT INTO orders VALUES (

@@ -20,5 +20,5 @@ import java.util.List;
 public class CategoryModel extends RepresentationModel<CategoryModel>  {
 
     private String categoryName;
-    private List<ProductModel> products=new ArrayList<>();
+    private List<Product> products=new ArrayList<>();
 }

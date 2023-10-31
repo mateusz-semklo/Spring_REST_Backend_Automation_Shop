@@ -1,5 +1,6 @@
 package pl.mateusz_semklo.automationshoprest.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -21,7 +22,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Table(name="PRODUCTS")
 @EqualsAndHashCode(callSuper = false)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "productId",scope = Product.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "productId",scope = Product.class)
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1234567L;
@@ -49,6 +50,7 @@ public class Product implements Serializable {
     private int productPrice;
 
     @ManyToOne(optional = false)
+    @JsonBackReference
     @JoinColumn(name = "CATEGORY_NAME", referencedColumnName = "CATEGORY_NAME", nullable = false)
     private Category category;
 
