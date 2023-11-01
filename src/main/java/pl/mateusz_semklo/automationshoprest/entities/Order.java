@@ -1,5 +1,6 @@
 package pl.mateusz_semklo.automationshoprest.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -49,6 +50,7 @@ public class Order implements Serializable {
     @Column(name = "ORDER_POST_CODE")
     private String orderPostCode;
 
+    @JsonBackReference
     @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME", nullable = false)
     private User user;
@@ -56,8 +58,8 @@ public class Order implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="ORDERS_PRODUCTS",
             joinColumns = @JoinColumn(name="ORDER_ID"),
-            inverseJoinColumns = @JoinColumn(name="PRODUCT_ID"))
-    List<Product> products =new ArrayList<>();
+            inverseJoinColumns = @JoinColumn(name="CART_PRODUCT_ID"))
+    List<Cart> carts =new ArrayList<>();
 
 
 

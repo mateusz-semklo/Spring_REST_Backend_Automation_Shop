@@ -2,6 +2,7 @@ package pl.mateusz_semklo.automationshoprest.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +19,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Table(name="USERS")
 @EqualsAndHashCode(callSuper = false)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username",scope = User.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username",scope = User.class)
 public class User implements Serializable{
 
     private static final long serialVersionUID = 1234567L;
@@ -68,6 +69,7 @@ public class User implements Serializable{
     @Column(name = "AUTHORITY",nullable = false)
     public List<String> authorities=new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Order> orders=new ArrayList<>();
 
