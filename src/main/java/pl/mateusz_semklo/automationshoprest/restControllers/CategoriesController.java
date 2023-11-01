@@ -38,72 +38,72 @@ public class CategoriesController {
     Mapper mapper;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CategoryModel> getCategories(){
-        List<Category> categories=categoriesService.findAll();
+    public List<CategoryModel> getCategories() {
+        List<Category> categories = categoriesService.findAll();
         return categoryModelAssembler.toCollectionModel(categories).getContent().stream().toList();
     }
 
-    @GetMapping(value = "/origin",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Category> getCategoriesO(){
-        List<Category> categories=categoriesService.findAll();
-        return categories;
-    }
-
-    @GetMapping(value = "/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public CategoryModel getCategoryByName(@PathVariable("name") String name){
-        Category category=categoriesService.findByName(name);
+    @GetMapping(value = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CategoryModel getCategoryByName(@PathVariable("name") String name) {
+        Category category = categoriesService.findByName(name);
         return categoryModelAssembler.toModel(category);
     }
-    @GetMapping(value = "/origin/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Category getCategoryByNameO(@PathVariable("name") String name){
-        return categoriesService.findByName(name);
 
-    }
-
-    @GetMapping(value = "/{name}/products",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ProductModel> getProducts(@PathVariable("name") String name){
-        Category category=categoriesService.findByName(name);
+    @GetMapping(value = "/{name}/products", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ProductModel> getProducts(@PathVariable("name") String name) {
+        Category category = categoriesService.findByName(name);
         return productModelAssembler.toCollectionModel(category.getProducts()).getContent().stream().toList();
     }
 
-    @GetMapping(value = "/{name}/products/{product_id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProductModel getProductsById(@PathVariable("name") String name,@PathVariable("product_id") Integer product_id){
-        Product product=productsService.findById(product_id);
+    @GetMapping(value = "/{name}/products/{product_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProductModel getProductsById(@PathVariable("name") String name, @PathVariable("product_id") Integer product_id) {
+        Product product = productsService.findById(product_id);
         return productModelAssembler.toModel(product);
     }
 
     @DeleteMapping(value = "/{name}")
-    public void deleteCategory(@PathVariable("name") String name){
+    public void deleteCategory(@PathVariable("name") String name) {
         categoriesService.delete(name);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CategoryModel> saveCategory(@RequestBody CategoryModel categoryModel){
-        Category category=this.mapper.convertToEntity(categoryModel);
-        Category result=categoriesService.save(category);
-        ResponseEntity<CategoryModel> response=new ResponseEntity<>(mapper.convertToDTO(result),HttpStatus.CREATED);
+    public ResponseEntity<CategoryModel> saveCategory(@RequestBody CategoryModel categoryModel) {
+        Category category = this.mapper.convertToEntity(categoryModel);
+        Category result = categoriesService.save(category);
+        ResponseEntity<CategoryModel> response = new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.CREATED);
         return response;
     }
 
-    @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CategoryModel> putCategory(@RequestBody CategoryModel categoryModel,@PathVariable("id") Integer id){
-        Category category=this.mapper.convertToEntity(categoryModel);
-        Category result=categoriesService.save(category);
-        ResponseEntity<CategoryModel> response=new ResponseEntity<>(mapper.convertToDTO(result),HttpStatus.OK);
-        return response;
-
-    }
-
-    @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CategoryModel> patchCategory(@RequestBody CategoryModel categoryModel,@PathVariable("id") Integer id){
-        Category category=this.mapper.convertToEntity(categoryModel);
-        Category result=categoriesService.save(category);
-        ResponseEntity<CategoryModel> response=new ResponseEntity<>(mapper.convertToDTO(result),HttpStatus.OK);
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CategoryModel> putCategory(@RequestBody CategoryModel categoryModel, @PathVariable("id") Integer id) {
+        Category category = this.mapper.convertToEntity(categoryModel);
+        Category result = categoriesService.save(category);
+        ResponseEntity<CategoryModel> response = new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
         return response;
 
     }
 
+    @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CategoryModel> patchCategory(@RequestBody CategoryModel categoryModel, @PathVariable("id") Integer id) {
+        Category category = this.mapper.convertToEntity(categoryModel);
+        Category result = categoriesService.save(category);
+        ResponseEntity<CategoryModel> response = new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
+        return response;
 
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    @GetMapping(value = "/origin", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Category> getCategoriesO() {
+        List<Category> categories = categoriesService.findAll();
+        return categories;
+    }
+
+    @GetMapping(value = "/origin/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Category getCategoryByNameO(@PathVariable("name") String name) {
+        return categoriesService.findByName(name);
+
+    }
 
 
 }

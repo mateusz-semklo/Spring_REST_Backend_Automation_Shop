@@ -3,14 +3,8 @@ package pl.mateusz_semklo.automationshoprest.config;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.mateusz_semklo.automationshoprest.entities.Category;
-import pl.mateusz_semklo.automationshoprest.entities.Order;
-import pl.mateusz_semklo.automationshoprest.entities.Product;
-import pl.mateusz_semklo.automationshoprest.entities.User;
-import pl.mateusz_semklo.automationshoprest.models.CategoryModel;
-import pl.mateusz_semklo.automationshoprest.models.OrderModel;
-import pl.mateusz_semklo.automationshoprest.models.ProductModel;
-import pl.mateusz_semklo.automationshoprest.models.UserModel;
+import pl.mateusz_semklo.automationshoprest.entities.*;
+import pl.mateusz_semklo.automationshoprest.models.*;
 
 @Component
 public class Mapper {
@@ -47,6 +41,14 @@ public class Mapper {
     
     public User convertToEntity(UserModel userModel){
         return modelMapper.map(userModel,User.class);
+    }
+
+    public CartModel convertToDTO(Cart cart){
+        return modelMapper.map(cart, CartModel.class);
+    }
+
+    public Cart convertToEntity(CartModel cartModel){
+        return modelMapper.map(cartModel,Cart.class);
     }
     
 }

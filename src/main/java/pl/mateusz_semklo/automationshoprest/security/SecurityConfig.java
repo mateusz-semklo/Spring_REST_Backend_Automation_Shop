@@ -77,7 +77,10 @@ public class SecurityConfig {
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/authenticate")).permitAll()
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/products**")).permitAll()
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/products/**")).permitAll()
-                                    .requestMatchers(new MvcRequestMatcher(introspector, "/categories")).permitAll()
+                                    .requestMatchers(new MvcRequestMatcher(introspector, "/categories**")).permitAll()
+                                    .requestMatchers(new MvcRequestMatcher(introspector, "/categories/**")).permitAll()
+                                    .requestMatchers(new MvcRequestMatcher(introspector, "/carts**")).permitAll()
+                                    .requestMatchers(new MvcRequestMatcher(introspector, "/carts/**")).permitAll()
                                     .requestMatchers(new AntPathRequestMatcher("/console**")).permitAll()
                                     .anyRequest().authenticated();
                         }

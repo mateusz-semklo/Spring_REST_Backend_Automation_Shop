@@ -14,9 +14,4 @@ import java.util.List;
 @Transactional
 public interface OrdersRepository extends JpaRepository<Order,Integer>, OrdersRepositoryExtension {
 
-    @Query("SELECT o FROM Order o WHERE o.user.username=:username")
-    List<Order> findOrdersByUsername(@Param("username") String username);
-
-
-
 }

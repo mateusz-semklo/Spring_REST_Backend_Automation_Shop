@@ -42,20 +42,11 @@ public class ProductsController {
         List<Product> products=productsService.findAll();
         return productModelAssembler.toCollectionModel(products).getContent().stream().toList();
     }
-    @GetMapping(value = "/origin",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Product> getProductsO(){
-        return productsService.findAll();
-    }
 
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ProductModel getProductById(@PathVariable("id") Integer id){
         Product product=productsService.findById(id);
         return productModelAssembler.toModel(product);
-    }
-    @GetMapping(value = "/origin/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Product getProductByIdO(@PathVariable("id") Integer id){
-        return productsService.findById(id);
-
     }
 
     @DeleteMapping(value = "/{id}")
@@ -89,6 +80,18 @@ public class ProductsController {
         Product result=productsService.save(product);
         ResponseEntity<ProductModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
         return response;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    @GetMapping(value = "/origin",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Product> getProductsO(){
+        return productsService.findAll();
+    }
+
+    @GetMapping(value = "/origin/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Product getProductByIdO(@PathVariable("id") Integer id){
+        return productsService.findById(id);
+
     }
 
 }

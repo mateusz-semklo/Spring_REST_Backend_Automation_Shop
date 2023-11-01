@@ -54,4 +54,5 @@ public class Product implements Serializable {
     @JoinColumn(name = "CATEGORY_NAME", referencedColumnName = "CATEGORY_NAME", nullable = false)
     private Category category;
 
+
 }

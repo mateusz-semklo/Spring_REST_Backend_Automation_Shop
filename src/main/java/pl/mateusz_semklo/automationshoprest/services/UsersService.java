@@ -12,7 +12,7 @@ public interface UsersService {
 
     User findByUsername(String username);
     List<User> findAll();
-    User save(User users);
+    User save(User user);
     boolean delete(String username);
 
 }

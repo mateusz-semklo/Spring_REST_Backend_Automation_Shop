@@ -14,7 +14,4 @@ import java.util.List;
 @Transactional
 public interface ProductsRepository extends JpaRepository<Product,Integer>, ProductsRepositoryExtension {
 
-    @Query("SELECT p FROM Product p WHERE p.category.categoryName=:categoryName")
-    public List<Product> findProductsByCategoryName(@Param(value = "categoryName") String categoryName);
-
 }
