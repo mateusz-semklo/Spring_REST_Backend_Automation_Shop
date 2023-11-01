@@ -4,11 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import pl.mateusz_semklo.automationshoprest.entities.Cart;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
-import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.entities.User;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,12 +29,15 @@ class OrdersServiceTest {
     @Autowired
     ProductsService productsService;
 
+    @Autowired
+    CartsService cartsService;
+
     @Test
-    void findOrderById1056() {
-        Order order =ordersService.findById(1051);
+    void findOrderById1052() {
+        Order order =ordersService.findById(1052);
         assertThat(order,notNullValue());
         assertThat(order,isA(Order.class));
-        assertThat(order.getOrderId(),equalTo(1051));
+        assertThat(order.getOrderId(),equalTo(1052));
     }
 
     @Test
@@ -76,10 +80,10 @@ class OrdersServiceTest {
         orders.setUser(user);
         orders.setOrderStreet(user.getUserStreet());
 
-        Product product=productsService.findById(1015);
-        Product product1=productsService.findById(1016);
-        orders.getProducts().add(product);
-        orders.getProducts().add(product1);
+        Cart cart1=cartsService.findById(1049);
+        Cart cart2=cartsService.findById(1050);
+        orders.getCarts().add(cart1);
+        orders.getCarts().add(cart2);
 
         Order result= ordersService.save(orders);
 
@@ -125,10 +129,19 @@ class OrdersServiceTest {
 
     @Test
     void editOrderWithADDProducts(){
-        Order order=ordersService.findById(1051);
-        List<Product> productList=productsService.findAll().subList(26,28);
+        Order order=ordersService.findById(1052);
+        List<Cart> cartList=new ArrayList<>();
+        Cart cart1=new Cart();
+        Cart cart2=new Cart();
+        cart1.setProduct(this.productsService.findById(1020));
+        cart2.setProduct(this.productsService.findById(1021));
 
-        productList.forEach((product -> order.getProducts().add(product)));
+        this.cartsService.save(cart1);
+        this.cartsService.save(cart2);
+        cartList.add(cart1);
+        cartList.add(cart2);
+
+        cartList.forEach((cart -> order.getCarts().add(cart)));
         Order result=ordersService.save(order);
 
         assertThat(result,notNullValue());
@@ -136,37 +149,35 @@ class OrdersServiceTest {
     }
     @Test
     void editOrderWithREPLACEProducts(){
-        Order order=ordersService.findById(1051);
-        List<Product> productList=productsService.findAll().subList(10,14);
+        Order order=ordersService.findById(1052);
+        List<Cart> cartList=cartsService.findAll();
 
-        order.setProducts(productList);
+        order.setCarts(cartList);
         Order result=ordersService.save(order);
 
         assertThat(result,notNullValue());
-        // assertThat(result.getProducts().size(),equalTo(order.getProducts().size()+count));
+
     }
 
     @Test
     void removeProductByIdFromOrder(){
 
-        Order order=ordersService.findById(1051);
-        Optional<Product> optionalProduct=order.getProducts().stream().findFirst();
-        int count=order.getProducts().size();
+        Order order=ordersService.findById(1052);
+        Cart cart=order.getCarts().get(0);
+        int count=order.getCarts().size();
 
-        order.getProducts().remove(0);
+        Cart x=order.getCarts().get(0);
+        order.getCarts().remove(0);
 
         Order result=ordersService.save(order);
         assertThat(result,notNullValue());
-        assertThat(result.getProducts().size(),equalTo(count-1));
-    }
-    @Test
-    void removeAllProductFromOrder(){
-        Order order=ordersService.findById(1051);
-        order.getProducts().clear();
-        Order result=ordersService.save(order);
+        assertThat(result.getCarts().size(),equalTo(count-1));
 
-        assertThat(result,notNullValue());
-        assertThat(result.getProducts().size(),equalTo(0));
+        order.getCarts().add(x);
+        Order xx=this.ordersService.save(order);
+        assertThat(xx.getCarts().size(),equalTo(count));
+
+
     }
 
 

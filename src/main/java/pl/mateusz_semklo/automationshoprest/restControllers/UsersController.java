@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.mateusz_semklo.automationshoprest.config.Mapper;
+import pl.mateusz_semklo.automationshoprest.entities.Category;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.entities.User;
@@ -99,6 +100,18 @@ public class UsersController {
         ResponseEntity<UserModel> response=new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
         return response;
 
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    @GetMapping(value = "/origin", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<User> getUsersO() {
+        List<User> users = usersService.findAll();
+        return users;
+    }
+
+    @GetMapping(value = "/origin/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUsersByNameO(@PathVariable("name") String username) {
+        return usersService.findByUsername(username);
     }
 
 }

@@ -23,49 +23,69 @@ class CategoriesRepositoryTest {
     ProductsRepository productsRepository;
 
     @Test
-    void findCategoriesAll(){
-        List<Category> categoriesList=categoriesRepository.findAll();
+    void findCategoriesAll() {
+        List<Category> categoriesList = categoriesRepository.findAll();
 
-        assertThat(categoriesList,notNullValue());
-        assertThat(categoriesList.size(),is(greaterThan(0)));
+        assertThat(categoriesList, notNullValue());
+        assertThat(categoriesList.size(), is(greaterThan(0)));
         categoriesList.forEach((categories -> System.out.println(categories.getCategoryName())));
 
     }
-    @Test
-    void findCategoriesById1002Czujniki(){
-        Optional<Category> optionalCategory=categoriesRepository.findById("Czujniki");
 
-        assertThat(optionalCategory.isPresent(),notNullValue());
-        assertThat(optionalCategory.get().getCategoryName(),equalTo("Czujniki"));
-    }
     @Test
-    void saveNewCategories(){
-        if(categoriesRepository.findById("nowa").isEmpty()) {
-            Category category = new Category();
-            category.setCategoryName("nowa");
-            Category result = categoriesRepository.save(category);
-            assertThat(result, notNullValue());
-            assertThat(result.getCategoryName(), equalTo("nowa"));
+    void findCategoriesByCzujniki() {
+        Optional<Category> optionalCategory = categoriesRepository.findById("Czujniki");
+
+        assertThat(optionalCategory.isPresent(), notNullValue());
+        assertThat(optionalCategory.get().getCategoryName(), equalTo("Czujniki"));
+    }
+
+    @Test
+    void saveNewCategories() {
+        Category cat = new Category();
+        Optional<Category> category = categoriesRepository.findById("nowa");
+        if (category.isEmpty()) {
+            cat = new Category();
+            cat.setCategoryName("nowa");
+        } else {
+            cat.setCategoryName(category.get().getCategoryName() + "a");
         }
+        Category result = categoriesRepository.save(cat);
+        assertThat(result, notNullValue());
+        assertThat(categoriesRepository.findById(result.getCategoryName()), notNullValue());
 
     }
-    @Test
-    void deleteCategoriesWithNoProducts(){
 
-        if(categoriesRepository.findById("nowa").isPresent()) {
-            categoriesRepository.deleteById("nowa");
-            Optional<Category> optionalCategory = categoriesRepository.findById("nowa");
-            assertThat(optionalCategory.isEmpty(), equalTo(true));
+
+    @Test
+    void deleteCategoriesWithNoProducts() {
+
+        Category cat = new Category();
+        Optional<Category> category = categoriesRepository.findById("nowa");
+        if (category.isEmpty()) {
+            cat = new Category();
+            cat.setCategoryName("nowa");
+        } else {
+            cat.setCategoryName(category.get().getCategoryName() + "a");
         }
+        Category result = categoriesRepository.save(cat);
+        assertThat(result, notNullValue());
+        assertThat(categoriesRepository.findById(result.getCategoryName()), notNullValue());
+
+        categoriesRepository.deleteById(result.getCategoryName());
+        Optional<Category> optionalCategory = categoriesRepository.findById(result.getCategoryName());
+        assertThat(optionalCategory.isEmpty(), equalTo(true));
+
 
     }
-    @Test
-    void deleteCategoriesCzujnikiWithProducts(){
 
-        Category category=categoriesRepository.findById("Czujniki").get();
+    @Test
+    void deleteCategoriesCzujnikiWithProducts() {
+
+        Category category = categoriesRepository.findById("Czujniki").get();
 
         assertThrows(DataIntegrityViolationException.class,
-                ()->categoriesRepository.deleteById(category.getCategoryName()));
+                () -> categoriesRepository.deleteById(category.getCategoryName()));
     }
 
 

@@ -34,20 +34,18 @@ class CategoriesServiceTest {
         assertThat(categories,not(empty()));
     }
 
+
+
     @Test
-    void saveCategoryNowaKategoria() {
+    void saveAnddeleteCategoryNowaCategoriaWithNullProducts() {
+
         Category category=new Category();
-        category.setCategoryName("nowaKategoria");
+        category.setCategoryName("nowaKategoriaaa");
         Category result=categoriesService.save(category);
 
         assertThat(result,notNullValue());
-        assertThat(result.getCategoryName(),equalTo("nowaKategoria"));
-    }
-
-    @Test
-    void deleteCategoryNowaCategoriaWithNullProducts() {
-
-        Category category=categoriesService.findByName("nowaKategoria");
+        assertThat(result.getCategoryName(),equalTo("nowaKategoriaaa"));
+        assertThat(this.categoriesService.findByName(result.getCategoryName()).getCategoryName(),equalTo("nowaKategoriaaa"));
 
         boolean del=categoriesService.delete(category.getCategoryName());
 

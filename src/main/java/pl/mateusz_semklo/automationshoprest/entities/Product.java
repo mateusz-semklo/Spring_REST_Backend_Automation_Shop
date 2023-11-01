@@ -1,9 +1,6 @@
 package pl.mateusz_semklo.automationshoprest.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnTransformer;
@@ -53,6 +50,5 @@ public class Product implements Serializable {
     @JsonBackReference
     @JoinColumn(name = "CATEGORY_NAME", referencedColumnName = "CATEGORY_NAME", nullable = false)
     private Category category;
-
 
 }

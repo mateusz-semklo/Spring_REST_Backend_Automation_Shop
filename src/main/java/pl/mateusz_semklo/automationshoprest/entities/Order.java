@@ -20,7 +20,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Table(name="ORDERS")
 @EqualsAndHashCode(callSuper = false)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderId",scope = Order.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderId",scope = Order.class)
 public class Order implements Serializable {
     private static final long serialVersionUID = 1234567L;
 
@@ -51,7 +51,7 @@ public class Order implements Serializable {
     private String orderPostCode;
 
     @JsonBackReference
-    @ManyToOne(optional = false,fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME", nullable = false)
     private User user;
 
@@ -60,6 +60,8 @@ public class Order implements Serializable {
             joinColumns = @JoinColumn(name="ORDER_ID"),
             inverseJoinColumns = @JoinColumn(name="CART_PRODUCT_ID"))
     List<Cart> carts =new ArrayList<>();
+
+
 
 
 

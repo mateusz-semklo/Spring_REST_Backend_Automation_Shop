@@ -12,14 +12,17 @@ import org.springframework.test.web.servlet.client.MockMvcWebTestClient;
 import org.springframework.web.context.WebApplicationContext;
 import pl.mateusz_semklo.automationshoprest.config.ConfigProperties;
 import pl.mateusz_semklo.automationshoprest.config.Mapper;
+import pl.mateusz_semklo.automationshoprest.entities.Cart;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.entities.User;
+import pl.mateusz_semklo.automationshoprest.models.CartModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderPostModel;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
 import pl.mateusz_semklo.automationshoprest.repositories.CategoriesRepository;
 import pl.mateusz_semklo.automationshoprest.repositories.OrdersRepository;
+import pl.mateusz_semklo.automationshoprest.services.CartsService;
 import pl.mateusz_semklo.automationshoprest.services.OrdersService;
 import pl.mateusz_semklo.automationshoprest.services.ProductsService;
 import pl.mateusz_semklo.automationshoprest.services.UsersService;
@@ -55,10 +58,15 @@ class OrdersControllerTest {
     Mapper modelMapper;
 
     WebTestClient webTestClient;
+
     @Autowired
     private CategoriesRepository categoriesRepository;
+
     @Autowired
     private OrdersRepository ordersRepository;
+
+    @Autowired
+    CartsService cartsService;
 
     @BeforeEach
     void init(){
@@ -83,7 +91,7 @@ class OrdersControllerTest {
     @Test
     void getOrderById() throws JsonProcessingException {
         OrderModel orderModel=webTestClient.get()
-                .uri(configProperties.serverUrl+"/orders/1050")
+                .uri(configProperties.serverUrl+"/orders/1052")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -92,21 +100,21 @@ class OrdersControllerTest {
                 .returnResult().getResponseBody();
 
         System.out.println(objectMapper.writeValueAsString(orderModel));
-        assertThat(orderModel.getOrderId(),equalTo(1050));
+        assertThat(orderModel.getOrderId(),equalTo(1052));
     }
 
     @Test
-    void getProducts() {
-        List<ProductModel> productModels =webTestClient.get()
-                .uri(configProperties.serverUrl+"/orders/1051/products")
+    void getCarts() {
+        List<CartModel> cartModels =webTestClient.get()
+                .uri(configProperties.serverUrl+"/orders/1052/carts")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBodyList(ProductModel.class)
+                .expectBodyList(CartModel.class)
                 .returnResult().getResponseBody();
 
-        assertThat(productModels,notNullValue());
+        assertThat(cartModels,notNullValue());
     }
 
     @Test
@@ -142,6 +150,45 @@ class OrdersControllerTest {
     }
 
     @Test
+    void saveNewOrderWithCard() throws JsonProcessingException {
+        //////////ORDER////////////////////////////
+        Order order=new Order();
+        User user=usersService.findByUsername("mateusz2606");
+        order.setOrderCountry(user.getUserCountry());
+        order.setOrderCity(user.getUserCity());
+        order.setOrderPostCode(user.getUserPostCode());
+        order.setUser(user);
+        order.setOrderStreet(user.getUserStreet());
+
+        Cart cart=cartsService.findAll().get(2);
+        order.getCarts().add(cart);
+
+        OrderModel orderModel=modelMapper.convertToDTO(order);
+        /////////////////////////////////////////////
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(orderModel));
+
+        OrderModel result=webTestClient.post().uri(configProperties.getServerUrl()+"/orders")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(orderModel)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(OrderModel.class)
+                .returnResult().getResponseBody();
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(result));
+
+        assertThat(result,notNullValue());
+        assertThat(orderModel.getOrderCity(),equalTo(result.getOrderCity()));
+
+    }
+
+
+
+
+    @Test
     void saveNewOrderJSON() throws JsonProcessingException {
 
         //////////ORDER////////////////////////////
@@ -167,24 +214,39 @@ class OrdersControllerTest {
         assertThat(orderModel.getOrderCity(),equalTo(result.getOrderCity()));
     }
 
-    @Test
-    void saveNewOrderWithNewProductsJSON() throws JsonProcessingException {
-        //////////ORDER////////////////////////////
-        String orderJSON="{\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryName\":\"Mikrokontrolery\"}}]  }";
-        OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
-        /////////////////////////////////////////////
-        ///Cascade jest wyłączone dlatego nie zapisze nowych produktów w kolekcji w order
 
-    }
     @Test
     void saveNewOrderWithExistsProductsJSON() throws JsonProcessingException {
         //////////ORDER////////////////////////////
-        String orderJSON="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":\"Mikrokontrolery\"}}]  }";
-        OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
-        /////////////////////////////////////////////
+       // String orderJSON="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":\"Mikrokontrolery\"}}]  }";
+        String orderJSON2="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"carts\":[{\"cardProductId\":1049,\"count\":4,\"productId\":1009}]}";
 
+        String orderJSON="{\n" +
+                "  \"orderId\": 0,\n" +
+                "  \"orderDate\": \"2023-11-01\",\n" +
+                "  \"orderStreet\": \"Gowarzewo 2a/2\",\n" +
+                "  \"orderCity\": \"Swarzedz\",\n" +
+                "  \"orderCountry\": \"Polska\",\n" +
+                "  \"orderPostCode\": \"60-002\",\n" +
+                "  \"user\": {\n" +
+                "    \"username\": \"mateusz2606\"\n" +
+                "  },\n" +
+                "  \"carts\": [\n" +
+                "    {\n" +
+                "      \"cartProductId\": 1051,\n" +
+                "      \"count\": 2,\n" +
+                "      \"product\": {\n" +
+                "        \"productId\": 1025\n" +
+                "       \n" +
+                "      }\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"links\": []\n" +
+                "}";
         System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(orderModel));
+        System.out.println(objectMapper.writeValueAsString(orderJSON2));
+        Order order=objectMapper.readValue(orderJSON,Order.class);
+        OrderModel orderModel=modelMapper.convertToDTO(order);
 
         OrderModel result=webTestClient.post().uri(configProperties.serverUrl+"/orders")
                 .accept(MediaType.APPLICATION_JSON)
@@ -250,13 +312,13 @@ class OrdersControllerTest {
         order.setOrderStreet(user.getUserStreet());
 
 
-        List<Integer> products=new ArrayList<>();
-        products.add(1040);
-        products.add(1041);
+        List<Integer> carts=new ArrayList<>();
+        carts.add(1049);
+        carts.add(1050);
 
         OrderPostModel orderPostModel =new OrderPostModel();
         orderPostModel.setOrder(order);
-        orderPostModel.setProducts(products);
+        orderPostModel.setCarts(carts);
         String tekst=objectMapper.writeValueAsString(orderPostModel);
 
         /////////////////////////////////////////////

@@ -21,5 +21,6 @@ public class ConfigProperties {
     public String categoriesUrl;
     public String ordersUrl;
     public String usersUrl;
+    public String cartsUrl;
 
 }

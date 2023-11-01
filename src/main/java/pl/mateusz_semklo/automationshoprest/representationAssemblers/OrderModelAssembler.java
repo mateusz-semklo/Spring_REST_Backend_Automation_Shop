@@ -22,7 +22,7 @@ public class OrderModelAssembler implements RepresentationModelAssembler<Order, 
     public OrderModel toModel(Order entity) {
         OrderModel orderModel= modelMapper.map(entity, OrderModel.class);
         orderModel.add(linkTo(methodOn(OrdersController.class).getOrderById(orderModel.getOrderId())).withSelfRel());
-        orderModel.add(linkTo(methodOn(OrdersController.class).getProducts(orderModel.getOrderId())).withRel("products"));
+        orderModel.add(linkTo(methodOn(OrdersController.class).getCarts(orderModel.getOrderId())).withRel("carts"));
         return orderModel;
     }
 

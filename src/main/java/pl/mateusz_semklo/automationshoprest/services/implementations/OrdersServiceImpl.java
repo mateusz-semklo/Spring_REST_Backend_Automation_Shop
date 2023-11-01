@@ -3,9 +3,11 @@ package pl.mateusz_semklo.automationshoprest.services.implementations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.mateusz_semklo.automationshoprest.entities.Cart;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.models.OrderPostModel;
+import pl.mateusz_semklo.automationshoprest.repositories.CartsRepository;
 import pl.mateusz_semklo.automationshoprest.repositories.OrdersRepository;
 import pl.mateusz_semklo.automationshoprest.repositories.ProductsRepository;
 import pl.mateusz_semklo.automationshoprest.services.OrdersService;
@@ -22,7 +24,7 @@ public class OrdersServiceImpl implements OrdersService {
     OrdersRepository ordersRepository;
 
     @Autowired
-    ProductsRepository productsRepository;
+    CartsRepository cartsRepository;
 
     @Override
     public Order findById(Integer id) {
@@ -46,11 +48,11 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public Order saveOrder(OrderPostModel orderPostModel) {
         Order order= orderPostModel.getOrder();
-        List<Product> products =new ArrayList<>();
-        orderPostModel.getProducts().forEach((productId)->{
-            products.add(productsRepository.findById(productId).get());
+        List<Cart> carts =new ArrayList<>();
+        orderPostModel.getCarts().forEach((cartProductId)->{
+            carts.add(cartsRepository.findById(cartProductId).get());
         });
-        order.setProducts(products);
+        order.setCarts(carts);
         Order result=ordersRepository.save(order);
         return result;
     }

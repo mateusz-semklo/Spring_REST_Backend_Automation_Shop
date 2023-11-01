@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class ProductsRepositoryTest {
@@ -85,11 +86,40 @@ class ProductsRepositoryTest {
 
     }
     @Test
-    public void deleteProductId1020(){
+    public void deleteProductId1021WIthCart(){
 
-        productsRepository.deleteById(1020);
-        Optional<Product> productsOptional=productsRepository.findById(1020);
-        assertThat(productsOptional.isEmpty(),is(true));
+        assertThrows(org.springframework.dao.DataIntegrityViolationException.class,()->{productsRepository.deleteById(1021);});
+
+    }
+    @Test
+    public void deleteProduct(){
+
+
+        Product products=new Product();
+        products.setProductName("nowy product");
+        products.setProductDescription("product description");
+        products.setProductImageUrl("/products/new");
+        products.setProductPrice(34);
+
+        Optional<Category> optionalCategories=categoriesRepository.findById("Czujniki");
+        Category category=optionalCategories.get();
+        products.setCategory(category);
+
+        assertThat(category,notNullValue());
+        assertThat(category.getCategoryName(),equalTo("Czujniki"));
+
+        Product result=productsRepository.save(products);
+
+        assertThat(result,notNullValue());
+        assertThat(result,isA(Product.class));
+        assertThat(result,hasProperty("productName"));
+        assertThat(result.getCategory().getCategoryName(),equalTo("Czujniki"));
+
+        productsRepository.deleteById(result.getProductId());
+        Optional<Product> result2=productsRepository.findById(result.getProductId());
+        assertThat(result2.isEmpty(),is(true));
+
+
     }
 
 }

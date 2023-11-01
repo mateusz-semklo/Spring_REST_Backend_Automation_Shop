@@ -81,21 +81,6 @@ class ProductsControllerTest {
         assertThat(productModel.getProductId(),equalTo(1010));
     }
 
-  //  @Test
-  //  void getOrders() {
-    //    List<OrderModel> ordersModels =webTestClient.get()
-     //           .uri(configProperties.serverUrl+"/products/1010/orders")
-      //          .accept(MediaType.APPLICATION_JSON)
-      //          .exchange()
-      //          .expectStatus().isOk()
-      //          .expectHeader().contentType(MediaType.APPLICATION_JSON)
-      //          .expectBodyList(OrderModel.class)
-      //          .returnResult().getResponseBody();
-
-     //   assertThat(ordersModels,notNullValue());
-   // }
-
-
     @Test
     void saveProduct() throws JsonProcessingException {
         //////////PRODUCT////////////////////////////

@@ -13,10 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@JsonRootName(value = "category")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderPostModel {
     Order order;
-    List<Integer> products=new ArrayList<>();
+    List<Integer> carts=new ArrayList<>();
 
 }

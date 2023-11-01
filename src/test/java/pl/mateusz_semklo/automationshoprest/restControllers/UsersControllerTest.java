@@ -116,7 +116,7 @@ class UsersControllerTest {
     @Test
     void getOrdersById() {
         OrderModel OrderModel=webTestClient.get()
-                .uri(configProperties.serverUrl+"/users/mateusz2606/orders/1050")
+                .uri(configProperties.serverUrl+"/users/mateusz2606/orders/1052")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -124,7 +124,7 @@ class UsersControllerTest {
                 .expectBody(OrderModel.class)
                 .returnResult().getResponseBody();
 
-        assertThat(OrderModel.getOrderId(),equalTo(1050));
+        assertThat(OrderModel.getOrderId(),equalTo(1052));
     }
 
     @Test

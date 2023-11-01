@@ -8,13 +8,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.mateusz_semklo.automationshoprest.config.Mapper;
+import pl.mateusz_semklo.automationshoprest.entities.Cart;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
+import pl.mateusz_semklo.automationshoprest.entities.User;
+import pl.mateusz_semklo.automationshoprest.models.CartModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderModel;
 import pl.mateusz_semklo.automationshoprest.models.OrderPostModel;
 import pl.mateusz_semklo.automationshoprest.models.ProductModel;
+import pl.mateusz_semklo.automationshoprest.representationAssemblers.CartModelAssembler;
 import pl.mateusz_semklo.automationshoprest.representationAssemblers.OrderModelAssembler;
 import pl.mateusz_semklo.automationshoprest.representationAssemblers.ProductModelAssembler;
+import pl.mateusz_semklo.automationshoprest.services.CartsService;
 import pl.mateusz_semklo.automationshoprest.services.OrdersService;
 import pl.mateusz_semklo.automationshoprest.services.ProductsService;
 
@@ -27,7 +32,7 @@ public class OrdersController {
     OrdersService ordersService;
 
     @Autowired
-    ProductsService productsService;
+    CartsService cartsService;
 
     @Autowired
     Mapper mapper;
@@ -39,7 +44,8 @@ public class OrdersController {
     OrderModelAssembler orderModelAssembler;
 
     @Autowired
-    ProductModelAssembler productModelAssembler;
+    CartModelAssembler cartModelAssembler;
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<OrderModel> getOrders(){
@@ -53,42 +59,28 @@ public class OrdersController {
         return orderModelAssembler.toModel(order);
     }
 
-    @GetMapping(value = "/{id}/products",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ProductModel> getProducts(@PathVariable("id") Integer id){
+    @GetMapping(value = "/{id}/carts",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CartModel> getCarts(@PathVariable("id") Integer id){
         Order order=ordersService.findById(id);
-        List<Product> products=order.getProducts();
-        return productModelAssembler.toCollectionModel(products).getContent().stream().toList();
+        List<Cart> carts=order.getCarts();
+        return cartModelAssembler.toCollectionModel(carts).getContent().stream().toList();
     }
 
-    @GetMapping(value = "/{id}/products/{product_id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProductModel getProductsById(@PathVariable("id") Integer id,@PathVariable("product_id") Integer product_id){
-        Product product= productsService.findById(product_id);
-        return productModelAssembler.toModel(product);
+    @GetMapping(value = "/{id}/carts/{cart_product_id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CartModel getCartsById(@PathVariable("id") Integer id,@PathVariable("cart_product_id") Integer cart_product_id){
+        Cart cart= cartsService.findById(cart_product_id);
+        return cartModelAssembler.toModel(cart);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteOrder(@PathVariable("id") Integer id){
-        ordersService.delete(id);
-    }
-
-    @PostMapping(consumes = MediaType.TEXT_PLAIN_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderModel> saveOrder(@RequestBody String order) throws JsonProcessingException {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        OrderPostModel order1=objectMapper.readValue(order, OrderPostModel.class);
-        Order result=ordersService.saveOrder(order1);
-        OrderModel model=mapper.convertToDTO(result);
-        ResponseEntity<OrderModel> response=new ResponseEntity<>(model,HttpStatus.CREATED);
-        return response;
-    }
-    @PostMapping(value = "/post",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderModel> save(@RequestBody Order order) throws JsonProcessingException {
-        Order result=ordersService.save(order);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderModel> save(@RequestBody OrderModel order) throws JsonProcessingException {
+        Order order1=mapper.convertToEntity(order);
+        Order result=ordersService.save(order1);
         OrderModel model=mapper.convertToDTO(result);
         ResponseEntity<OrderModel> response=new ResponseEntity<>(model,HttpStatus.CREATED);
         return response;
     }
 
-    
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void putOrder(@RequestBody OrderModel orderModel,@PathVariable("id") Integer id){
 
@@ -97,6 +89,41 @@ public class OrdersController {
     @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void patchOrder(@RequestBody OrderModel orderModel,@PathVariable("id") Integer id){
 
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteOrder(@PathVariable("id") Integer id){
+        ordersService.delete(id);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @PostMapping(value = "/post",consumes = MediaType.TEXT_PLAIN_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderModel> saveOrder(@RequestBody String order) throws JsonProcessingException {
+        OrderPostModel order1=objectMapper.readValue(order, OrderPostModel.class);
+        Order result=ordersService.saveOrder(order1);
+        OrderModel model=mapper.convertToDTO(result);
+        ResponseEntity<OrderModel> response=new ResponseEntity<>(model,HttpStatus.CREATED);
+        return response;
+    }
+
+    @PostMapping(value = "/origin",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderModel> saveOrder2(@RequestBody Order order) throws JsonProcessingException {
+        Order result=ordersService.save(order);
+        OrderModel model=mapper.convertToDTO(result);
+        ResponseEntity<OrderModel> response=new ResponseEntity<>(model,HttpStatus.CREATED);
+        return response;
+    }
+
+    @GetMapping(value = "/origin", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Order> getOrdersO() {
+        List<Order> users = ordersService.findAll();
+        return users;
+    }
+
+    @GetMapping(value = "/origin/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Order getOrderByIdO(@PathVariable("id") Integer id) {
+        return ordersService.findById(id);
     }
 
 

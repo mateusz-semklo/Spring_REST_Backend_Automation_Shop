@@ -1,0 +1,22 @@
+{
+  "orderId": 0,
+  "orderDate": "2023-11-01",
+  "orderStreet": "Gowarzewo 2a/2",
+  "orderCity": "Swarzedz",
+  "orderCountry": "Polska",
+  "orderPostCode": "60-002",
+  "user": {
+    "username": "mateusz2606"
+  },
+  "carts": [
+    {
+      "cartProductId": 1051,
+      "count": 2,
+      "product": {
+        "productId": 1025
+
+      }
+    }
+  ],
+  "links": []
+}

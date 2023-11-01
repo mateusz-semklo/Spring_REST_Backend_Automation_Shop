@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
+import pl.mateusz_semklo.automationshoprest.entities.Cart;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
 import pl.mateusz_semklo.automationshoprest.entities.User;
 
@@ -31,7 +32,7 @@ public class OrderModel extends RepresentationModel<OrderModel> {
     private String orderCountry;
     private String orderPostCode;
     private UserModel user;
-    private List<Product> products=new ArrayList<>();
+    private List<Cart> carts=new ArrayList<>();
 
 
 }
