@@ -209,7 +209,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             NEXT VALUE FOR MYSEQ,
                                                                                                                             'Czujnik indukcyjny M.D. Micro Detectors AM6/AP-2H',
                                                                                                                             'Czujnik indukcyjny M12x1, Zasięg działania: 4 mm [czoło wysunięte], Napięcie zasilania: 10-30 V DC, Funkcja wyjścia: NO PNP, Stopień ochrony: IP67, Częstotliwość przełączania: 2 000 Hz, Połączenie: Złącze męskie M12',
-                                                                                                                            'https://infinite-crag-10033-9a1c63145ebd.herokuapp.com/products/Czujniki/105947.png',
+                                                                                                                            'https://infinite-crag-10033-9a1c63145ebd.herokuapp.com/products/czujniki/105947.png',
                                                                                                                             64.80,
                                                                                                                             @TAB[1]
                                                                                                                         );
@@ -218,7 +218,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             NEXT VALUE FOR MYSEQ,
                                                                                                                             'Czujnik indukcyjny ifm electronic IM5135 - IMC4040-CPKG/K1/US',
                                                                                                                             'Czujnik indukcyjny prostopadłościenny, Zasięg działania: 40 mm [czoło wysunięte], Wyjście komplementarne, DC PNP, Współczynnik korekcji 1 dla wszystkich metali, Stopień ochrony: IP67/IP69K, Powierzchnia aktywna ustawialna w 5 pozycjach, Złącze M12.',
-                                                                                                                            'https://infinite-crag-10033-9a1c63145ebd.herokuapp.com/products/Czujniki/110420.png',
+                                                                                                                            'https://infinite-crag-10033-9a1c63145ebd.herokuapp.com/products/czujniki/110420.png',
                                                                                                                             206.10,
                                                                                                                             @TAB[1]
                                                                                                                         );
@@ -227,7 +227,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             NEXT VALUE FOR MYSEQ,
                                                                                                                             'Czujnik indukcyjny M.D. Micro Detectors AE6/AP-3A',
                                                                                                                             'Czujnik indukcyjny M8x1, Zasięg działania: 2 mm [czoło zabudowane], Napięcie robocze: 10-30 V DC, NO PNP, Stopień ochrony: IP67, Częstotliwość przełączania: 5 000 Hz, Połączenie: kabel PVC 2 m',
-                                                                                                                            'http://localhost:8080/products/Czujniki/110545.png',
+                                                                                                                            'http://localhost:8080/products/czujniki/110545.png',
                                                                                                                             87.30,
                                                                                                                             @TAB[1]
                                                                                                                         );
@@ -235,7 +235,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             NEXT VALUE FOR MYSEQ,
                                                                                                                             'Czujnik dyfuzyjny M.D. Micro Detectors FQI7/BP-0E',
                                                                                                                             'Czujnik dyfuzyjny, 1x NC/NO, DC PNP, Zasięg działania: 400 mm, Potencjometr, Stopień ochrony: IP67, Złącze M12',
-                                                                                                                            'http://localhost:8080/products/Czujniki/110703.png',
+                                                                                                                            'http://localhost:8080/products/czujniki/110703.png',
                                                                                                                             140.85,
                                                                                                                             @TAB[1]
                                                                                                                         );
@@ -243,7 +243,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             NEXT VALUE FOR MYSEQ,
                                                                                                                             'Czujnik dyfuzyjny ifm electronic O6H202 - O6H-FPKG/AS/3P',
                                                                                                                             'Czujnik dyfuzyjny z tłumieniem tła, Tryby światło-włącz / ciemno-włącz, 3-przewodowy DC, PNP, Zasięg: 2-200 mm, Stopień ochrony: IP65/IP67, Złącze M8 3-biegunowe',
-                                                                                                                            'http://localhost:8080/products/Czujniki/110748.png',
+                                                                                                                            'http://localhost:8080/products/czujniki/110748.png',
                                                                                                                             356.40,
                                                                                                                             @TAB[1]
                                                                                                                         );
