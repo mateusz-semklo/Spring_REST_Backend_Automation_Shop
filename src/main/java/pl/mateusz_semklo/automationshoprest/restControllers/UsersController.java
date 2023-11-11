@@ -33,11 +33,13 @@ public class UsersController {
     @Autowired
     OrderModelAssembler orderModelAssembler;
 
+    
     @Autowired
     UserModelAssembler userModelAssembler;
 
     @Autowired
     Mapper mapper;
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserModel> getUsers(){
