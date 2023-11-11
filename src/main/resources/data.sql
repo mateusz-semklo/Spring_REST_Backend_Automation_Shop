@@ -209,7 +209,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             NEXT VALUE FOR MYSEQ,
                                                                                                                             'Czujnik indukcyjny M.D. Micro Detectors AM6/AP-2H',
                                                                                                                             'Czujnik indukcyjny M12x1, Zasięg działania: 4 mm [czoło wysunięte], Napięcie zasilania: 10-30 V DC, Funkcja wyjścia: NO PNP, Stopień ochrony: IP67, Częstotliwość przełączania: 2 000 Hz, Połączenie: Złącze męskie M12',
-                                                                                                                            'http://localhost:8080/products/Czujniki/105947.png',
+                                                                                                                            'https://infinite-crag-10033-9a1c63145ebd.herokuapp.com/products/Czujniki/105947.png',
                                                                                                                             64.80,
                                                                                                                             @TAB[1]
                                                                                                                         );
@@ -218,7 +218,7 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             NEXT VALUE FOR MYSEQ,
                                                                                                                             'Czujnik indukcyjny ifm electronic IM5135 - IMC4040-CPKG/K1/US',
                                                                                                                             'Czujnik indukcyjny prostopadłościenny, Zasięg działania: 40 mm [czoło wysunięte], Wyjście komplementarne, DC PNP, Współczynnik korekcji 1 dla wszystkich metali, Stopień ochrony: IP67/IP69K, Powierzchnia aktywna ustawialna w 5 pozycjach, Złącze M12.',
-                                                                                                                            'http://localhost:8080/products/Czujniki/110420.png',
+                                                                                                                            'https://infinite-crag-10033-9a1c63145ebd.herokuapp.com/products/Czujniki/110420.png',
                                                                                                                             206.10,
                                                                                                                             @TAB[1]
                                                                                                                         );
