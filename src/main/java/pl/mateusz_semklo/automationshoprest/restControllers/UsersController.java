@@ -33,7 +33,7 @@ public class UsersController {
     @Autowired
     OrderModelAssembler orderModelAssembler;
 
-    
+
     @Autowired
     UserModelAssembler userModelAssembler;
 
