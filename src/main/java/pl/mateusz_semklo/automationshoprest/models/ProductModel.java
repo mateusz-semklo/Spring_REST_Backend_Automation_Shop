@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.stereotype.Component;
 import pl.mateusz_semklo.automationshoprest.config.ConfigProperties;
+import pl.mateusz_semklo.automationshoprest.entities.Cart;
 import pl.mateusz_semklo.automationshoprest.entities.Category;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -28,5 +31,6 @@ public class ProductModel extends RepresentationModel<ProductModel>  {
     private String productImageUrl;
     private int productPrice;
     private Category category;
+
 
 }

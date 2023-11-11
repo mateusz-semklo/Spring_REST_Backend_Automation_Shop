@@ -51,8 +51,8 @@ public class Order implements Serializable {
     private String orderPostCode;
 
     @JsonBackReference
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME", nullable = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME")
     private User user;
 
     @ManyToMany(fetch = FetchType.EAGER)

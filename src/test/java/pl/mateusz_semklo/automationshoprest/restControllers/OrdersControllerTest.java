@@ -216,7 +216,7 @@ class OrdersControllerTest {
 
 
     @Test
-    void saveNewOrderWithExistsProductsJSON() throws JsonProcessingException {
+    void saveNewOrderWithExistsCarts() throws JsonProcessingException {
         //////////ORDER////////////////////////////
        // String orderJSON="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":\"Mikrokontrolery\"}}]  }";
         String orderJSON2="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"carts\":[{\"cardProductId\":1049,\"count\":4,\"productId\":1009}]}";
@@ -233,18 +233,16 @@ class OrdersControllerTest {
                 "  },\n" +
                 "  \"carts\": [\n" +
                 "    {\n" +
-                "      \"cartProductId\": 1051,\n" +
-                "      \"count\": 2,\n" +
-                "      \"product\": {\n" +
-                "        \"productId\": 1025\n" +
-                "       \n" +
-                "      }\n" +
+                "      \"cartProductId\": 1090\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"cartProductId\": 1091\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"links\": []\n" +
                 "}";
         System.out.println("-----------------------------------------------------------------");
-        System.out.println(objectMapper.writeValueAsString(orderJSON2));
+        System.out.println(objectMapper.writeValueAsString(orderJSON));
         Order order=objectMapper.readValue(orderJSON,Order.class);
         OrderModel orderModel=modelMapper.convertToDTO(order);
 
@@ -261,9 +259,105 @@ class OrdersControllerTest {
         System.out.println(objectMapper.writeValueAsString(result));
     }
     @Test
-    void editOrderWithExistsProductsJSON() throws JsonProcessingException {
+    void saveNewOrderWithNEWCarts() throws JsonProcessingException {
         //////////ORDER////////////////////////////
-        String orderJSON="{\"orderId\":1051,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":1001}}]  }";
+        // String orderJSON="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"products\":[{\"productId\":1014,\"productName\":\"nowy product\",\"productDescription\":\"product description\",\"productImageUrl\":\"/products/new\",\"productPrice\":34,\"category\":{\"categoryId\":\"Mikrokontrolery\"}}]  }";
+        String orderJSON2="{\"orderId\":0,\"orderStreet\":\"Obornicka 2a/2\",\"orderCity\":\"Poznan\",\"orderCountry\":\"Polska\",\"orderPostCode\":\"61-122\",\"user\":{\"username\":\"mateusz2606\"},\"carts\":[{\"cardProductId\":1049,\"count\":4,\"productId\":1009}]}";
+
+        String orderJSON="{\n" +
+                "  \"orderId\": 0,\n" +
+                "  \"orderDate\": \"2023-11-01\",\n" +
+                "  \"orderStreet\": \"Gowarzewo 2a/2\",\n" +
+                "  \"orderCity\": \"Swarzedz\",\n" +
+                "  \"orderCountry\": \"Polska\",\n" +
+                "  \"orderPostCode\": \"60-002\",\n" +
+                "  \"user\": {\n" +
+                "    \"username\": \"mateusz2606\"\n" +
+                "  },\n" +
+                "  \"carts\": [\n" +
+                "    {\n" +
+                "      \"cartProductId\": 0,\n" +
+                "      \"count\": 2,\n" +
+                "      \"product\": {\n" +
+                "        \"productId\": 1025\n" +
+                "       \n" +
+                "      }\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"links\": []\n" +
+                "}";
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(orderJSON));
+        Order order=objectMapper.readValue(orderJSON,Order.class);
+        OrderModel orderModel=modelMapper.convertToDTO(order);
+
+        OrderModel result=webTestClient.post().uri(configProperties.serverUrl+"/orders")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(orderModel)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(OrderModel.class)
+                .returnResult().getResponseBody();
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(result));
+    }
+    @Test
+    void editOrderWithExistsCartJSON() throws JsonProcessingException {
+        //////////ORDER////////////////////////////
+
+        String orderJSON="{\n" +
+                "  \"orderId\": 1211,\n" +
+                "  \"user\": {\n" +
+                "    \"username\": \"admin\"\n" +
+                "  },\n" +
+                "  \"carts\": [\n" +
+                "    {\n" +
+                "      \"cartProductId\": 1050,\n" +
+                " \"count\":20 " +
+                "    },\n" +
+                "    {\n" +
+                "      \"cartProductId\": 1090\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"links\": []\n" +
+                "}";
+        OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
+        /////////////////////////////////////////////
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(orderModel));
+
+        OrderModel result=webTestClient.post().uri(configProperties.serverUrl+"/orders")
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(orderModel)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(OrderModel.class)
+                .returnResult().getResponseBody();
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(result));
+    }
+
+    @Test
+    void editOrderWithNewCartJSON() throws JsonProcessingException {
+        //////////ORDER////////////////////////////
+
+        String orderJSON="{\n" +
+                "  \"orderId\": 1211,\n" +
+                "  \"user\": {\n" +
+                "    \"username\": \"admin\"\n" +
+                "  },\n" +
+                "  \"carts\": [\n" +
+                "    {\n" +
+                "      \"cartProductId\": 0\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"links\": []\n" +
+                "}";
         OrderModel orderModel=objectMapper.readValue(orderJSON,OrderModel.class);
         /////////////////////////////////////////////
 
@@ -291,13 +385,6 @@ class OrdersControllerTest {
     void patchOrder() {
     }
 
-    @Test
-    void deleteOrder() throws JsonProcessingException {
-
-        webTestClient.delete().uri(configProperties.serverUrl+"/orders/{id}",1070)
-                .exchange()
-                .expectStatus().isOk();
-    }
 
 
     @Test

@@ -90,21 +90,9 @@ class OrdersServiceTest {
     }
 
 
-    @Test
-    void saveNewOrderWithoutUser() {
-
-        Order orders=new Order();
-        orders.setOrderDate(new Date(System.currentTimeMillis()));
-        orders.setOrderCountry("poland");
-        orders.setOrderCity("wawa");
-        orders.setOrderPostCode("65-609");
-        orders.setOrderStreet("lesna 5");
-
-        assertThrows(DataIntegrityViolationException.class,()->ordersService.save(orders));
-    }
 
     @Test
-    void deleteOrderById() {
+    void deleteOrder() {
         User user=usersService.findByUsername("jankowalski");
 
         Order orders=new Order();

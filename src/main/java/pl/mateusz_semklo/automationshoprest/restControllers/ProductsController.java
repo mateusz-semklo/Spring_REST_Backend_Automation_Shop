@@ -46,7 +46,8 @@ public class ProductsController {
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ProductModel getProductById(@PathVariable("id") Integer id){
         Product product=productsService.findById(id);
-        return productModelAssembler.toModel(product);
+        if(product==null) return null;
+        else return productModelAssembler.toModel(product);
     }
 
     @DeleteMapping(value = "/{id}")

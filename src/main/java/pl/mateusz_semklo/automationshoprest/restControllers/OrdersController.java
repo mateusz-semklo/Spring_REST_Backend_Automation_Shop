@@ -56,7 +56,8 @@ public class OrdersController {
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public OrderModel getOrderById(@PathVariable("id") Integer id){
         Order order=ordersService.findById(id);
-        return orderModelAssembler.toModel(order);
+        if(order!=null) return orderModelAssembler.toModel(order);
+        else return null;
     }
 
     @GetMapping(value = "/{id}/carts",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -69,25 +70,39 @@ public class OrdersController {
     @GetMapping(value = "/{id}/carts/{cart_product_id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public CartModel getCartsById(@PathVariable("id") Integer id,@PathVariable("cart_product_id") Integer cart_product_id){
         Cart cart= cartsService.findById(cart_product_id);
-        return cartModelAssembler.toModel(cart);
+        if(cart!=null) return cartModelAssembler.toModel(cart);
+        else return null;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderModel> save(@RequestBody OrderModel order) throws JsonProcessingException {
-        Order order1=mapper.convertToEntity(order);
-        Order result=ordersService.save(order1);
+    public ResponseEntity<OrderModel> save(@RequestBody OrderModel orderModel) throws JsonProcessingException {
+        Order order=mapper.convertToEntity(orderModel);
+        Order result=ordersService.save(order);
         OrderModel model=mapper.convertToDTO(result);
         ResponseEntity<OrderModel> response=new ResponseEntity<>(model,HttpStatus.CREATED);
         return response;
     }
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void putOrder(@RequestBody OrderModel orderModel,@PathVariable("id") Integer id){
+    public ResponseEntity<OrderModel> putOrder(@RequestBody OrderModel orderModel,@PathVariable("id") Integer id){
+        orderModel.setOrderId(id);
+        Order order1=mapper.convertToEntity(orderModel);
+        Order result=ordersService.save(order1);
+        OrderModel model=mapper.convertToDTO(result);
+        ResponseEntity<OrderModel> response=new ResponseEntity<>(model,HttpStatus.OK);
+        return response;
+
 
     }
     
     @PatchMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void patchOrder(@RequestBody OrderModel orderModel,@PathVariable("id") Integer id){
+    public ResponseEntity<OrderModel> patchOrder(@RequestBody OrderModel orderModel,@PathVariable("id") Integer id){
+        orderModel.setOrderId(id);
+        Order order1=mapper.convertToEntity(orderModel);
+        Order result=ordersService.save(order1);
+        OrderModel model=mapper.convertToDTO(result);
+        ResponseEntity<OrderModel> response=new ResponseEntity<>(model,HttpStatus.OK);
+        return response;
 
     }
 

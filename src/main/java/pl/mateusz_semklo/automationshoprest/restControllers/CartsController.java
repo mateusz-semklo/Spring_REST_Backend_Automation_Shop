@@ -48,14 +48,14 @@ public class CartsController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CartModel getCartById(@PathVariable("id") Integer id) {
         Cart cart = cartsService.findById(id);
-        return cartModelAssembler.toModel(cart);
+        if(cart==null) return null;
+        else return cartModelAssembler.toModel(cart);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CartModel> save(@RequestBody CartModel cartModel) {
-        System.out.println(cartModel);
-        Cart cart = mapper.convertToEntity(cartModel);
-        Cart result = cartsService.save(cart);
+        Cart cart = cartsService.save(mapper.convertToEntity(cartModel));
+        Cart result=cartsService.findById(cart.getCartProductId());
         ResponseEntity<CartModel> response = new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.CREATED);
         return response;
     }
@@ -63,8 +63,8 @@ public class CartsController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CartModel> putCart(@RequestBody CartModel cartModel, @PathVariable("id") Integer id) {
         cartModel.setCartProductId(id);
-        Cart cart = mapper.convertToEntity(cartModel);
-        Cart result = cartsService.save(cart);
+        Cart cart = cartsService.save(mapper.convertToEntity(cartModel));
+        Cart result=cartsService.findById(cart.getCartProductId());
         ResponseEntity<CartModel> response = new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
         return response;
 
@@ -73,8 +73,8 @@ public class CartsController {
     @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CartModel> patchCart(@RequestBody CartModel cartModel, @PathVariable("id") Integer id) {
         cartModel.setCartProductId(id);
-        Cart cart = mapper.convertToEntity(cartModel);
-        Cart result = cartsService.save(cart);
+        Cart cart = cartsService.save(mapper.convertToEntity(cartModel));
+        Cart result=cartsService.findById(cart.getCartProductId());
         ResponseEntity<CartModel> response = new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
         return response;
     }

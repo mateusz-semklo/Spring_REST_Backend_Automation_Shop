@@ -1,4 +1,5 @@
 DROP TABLE If EXISTS orders_products;
+DROP TABLE If EXISTS cart_products;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS orders;
 DROP TABLE If EXISTS categories;
@@ -50,26 +51,34 @@ create table products (
                               ON UPDATE CASCADE
 );
 
+create table cart_products (
+                               cart_product_id int not null primary key,
+                               count int,
+                               product_id int,
+                               constraint fk_products_carts_products foreign key(product_id) references products(product_id)
+                                   ON UPDATE CASCADE
+);
+
 create table orders (
                         order_id int not null primary key,
-                        order_date date not null,
-                        order_street varchar(50) not null,
-                        order_city varchar(50) not null,
-                        order_country varchar(50) not null,
-                        order_post_code varchar(50) not null,
-                        username varchar(50) not null,
+                        order_date date,
+                        order_street varchar(50),
+                        order_city varchar(50),
+                        order_country varchar(50),
+                        order_post_code varchar(50) ,
+                        username varchar(50),
                         constraint fk_orders_users foreign key(username) references users(username)
                             ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table orders_products (
                                  order_id int not null,
-                                 product_id int not null,
+                                 cart_product_id int not null,
                                  constraint fk_ordersProducts_orders foreign key(order_id) references orders(order_id)
                                      ON DELETE CASCADE ON UPDATE CASCADE,
-                                 constraint fk_ordersProducts_products foreign key(product_id) references products(product_id)
+                                 constraint fk_ordersProducts_products foreign key(cart_product_id) references cart_products(cart_product_id)
                                      ON DELETE CASCADE ON UPDATE CASCADE,
-                                 constraint pk_orders_products PRIMARY KEY (order_id,product_id)
+                                 constraint pk_orders_products PRIMARY KEY (order_id,cart_product_id)
 );
 
 INSERT INTO users VALUES(
@@ -591,6 +600,25 @@ INSERT INTO products (product_id,product_name,product_description,product_image_
                                                                                                                             @TAB[2]
                                                                                                                         );
 
+INSERT INTO cart_products VALUES(
+                                    NEXT VALUE FOR MYSEQ,
+                                    3,
+                                    1020
+                                );
+
+INSERT INTO cart_products VALUES(
+                                    NEXT VALUE FOR MYSEQ,
+                                    4,
+                                    1021
+                                );
+
+INSERT INTO cart_products VALUES(
+                                    NEXT VALUE FOR MYSEQ,
+                                    2,
+                                    1025
+                                );
+
+
 INSERT INTO orders VALUES (
                               NEXT VALUE FOR MYSEQ,
                               current_date,
@@ -621,14 +649,14 @@ INSERT INTO orders VALUES (
                               'jankowalski'
                           );
 
-SET @ORD=SELECT TOP 1ORDER_ID FROM ORDERS;
-SET @PRD=SELECT TOP 1 PRODUCT_ID FROM PRODUCTS;
+SET @ORD=SELECT TOP 1 ORDER_ID FROM ORDERS;
+SET @PRD=SELECT TOP 1 CART_PRODUCT_ID FROM CART_PRODUCTS;
 SELECT @ORD;
 SELECT @PRD;
-INSERT INTO ORDERS_PRODUCTS(
-    SELECT @ORD,
-    SELECT @PRD
-);
+INSERT INTO ORDERS_PRODUCTS VALUES(
+                                      1052,
+                                      1050
+                                  );
 
 
 

@@ -43,6 +43,12 @@ public class SecurityConfig {
     @Autowired
     JwtService jwtService;
 
+    @Autowired
+    CustomAccessDeniedHandler customAccessDeniedHandler;
+
+    @Autowired
+    CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
 
@@ -81,6 +87,8 @@ public class SecurityConfig {
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/categories/**")).permitAll()
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/carts**")).permitAll()
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/carts/**")).permitAll()
+                                    .requestMatchers(new MvcRequestMatcher(introspector, "/orders**")).permitAll()
+                                    .requestMatchers(new MvcRequestMatcher(introspector, "/orders/**")).permitAll()
                                     .requestMatchers(new AntPathRequestMatcher("/console**")).permitAll()
                                     .anyRequest().authenticated();
                         }

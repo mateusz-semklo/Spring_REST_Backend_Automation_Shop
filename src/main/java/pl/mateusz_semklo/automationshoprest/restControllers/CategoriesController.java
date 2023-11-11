@@ -46,7 +46,8 @@ public class CategoriesController {
     @GetMapping(value = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CategoryModel getCategoryByName(@PathVariable("name") String name) {
         Category category = categoriesService.findByName(name);
-        return categoryModelAssembler.toModel(category);
+        if(category==null) return null;
+        else return categoryModelAssembler.toModel(category);
     }
 
     @GetMapping(value = "/{name}/products", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,7 +76,7 @@ public class CategoriesController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CategoryModel> putCategory(@RequestBody CategoryModel categoryModel, @PathVariable("id") Integer id) {
+    public ResponseEntity<CategoryModel> putCategory(@RequestBody CategoryModel categoryModel, @PathVariable("id") String id) {
         Category category = this.mapper.convertToEntity(categoryModel);
         Category result = categoriesService.save(category);
         ResponseEntity<CategoryModel> response = new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);
@@ -84,7 +85,7 @@ public class CategoriesController {
     }
 
     @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CategoryModel> patchCategory(@RequestBody CategoryModel categoryModel, @PathVariable("id") Integer id) {
+    public ResponseEntity<CategoryModel> patchCategory(@RequestBody CategoryModel categoryModel, @PathVariable("id") String id) {
         Category category = this.mapper.convertToEntity(categoryModel);
         Category result = categoriesService.save(category);
         ResponseEntity<CategoryModel> response = new ResponseEntity<>(mapper.convertToDTO(result), HttpStatus.OK);

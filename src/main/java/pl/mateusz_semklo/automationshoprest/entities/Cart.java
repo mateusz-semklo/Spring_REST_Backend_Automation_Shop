@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,10 +32,12 @@ public class Cart implements Serializable {
     @Column(name = "COUNT")
     private Integer count;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name="PRODUCT_ID")
     private Product product;
 
+    //@ManyToMany(mappedBy = "carts")
+    //List<Order> orders=new ArrayList<>();
 
 
 }

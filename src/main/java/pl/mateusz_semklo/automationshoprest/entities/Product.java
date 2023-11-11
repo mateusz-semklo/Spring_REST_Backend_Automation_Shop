@@ -51,4 +51,8 @@ public class Product implements Serializable {
     @JoinColumn(name = "CATEGORY_NAME", referencedColumnName = "CATEGORY_NAME", nullable = false)
     private Category category;
 
+   // @JsonManagedReference
+   // @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+   // List<Cart> carts=new ArrayList<>();
+
 }

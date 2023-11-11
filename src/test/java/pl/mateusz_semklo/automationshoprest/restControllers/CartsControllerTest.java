@@ -72,7 +72,7 @@ class CartsControllerTest {
 
 
     @Test
-    void saveCartJSON() throws JsonProcessingException {
+    void saveNewCartWithExistProductJSON() throws JsonProcessingException {
 
         String cartJson="{\"count\":5,\"product\":{\"productId\":1005}}";
 
@@ -93,9 +93,34 @@ class CartsControllerTest {
     }
 
     @Test
-    void saveCartJSON2() throws JsonProcessingException {
+    void saveNewCartWithExistProductJSON2() throws JsonProcessingException {
 
-        String cartJson="{\"count\":5,\"product\":{\"productId\":1005}}";
+        String cartJson="{\"cartProductId\":null,\"count\":5,\"product\":{\"productId\":1005,\"productPrice\":40}}";
+
+        Cart cart=objectMapper.readValue(cartJson,Cart.class);
+        CartModel cartModel=modelMapper.convertToDTO(cart);
+
+
+        CartModel result=this.webTestClient.post()
+                .uri(configProperties.serverUrl+"/carts")
+                .bodyValue(cartModel)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(CartModel.class)
+                .returnResult().getResponseBody();
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(objectMapper.writeValueAsString(result));
+
+        assertThat(result,notNullValue());
+    }
+
+    @Test
+    void editCartWithExistProductJSON2() throws JsonProcessingException {
+
+        String cartJson="{\"cartProductId\":1050,\"count\":5,\"product\":{\"productId\":1006}}";
 
         Cart cart=objectMapper.readValue(cartJson,Cart.class);
         CartModel cartModel=modelMapper.convertToDTO(cart);
@@ -120,7 +145,7 @@ class CartsControllerTest {
     @Test
     void saveCart() throws JsonProcessingException {
 
-        Cart cart=this.cartsRepository.findAll().get(4);
+        Cart cart=this.cartsRepository.findAll().get(1);
         cart.setProduct(this.productsService.findAll().get(12));
 
         CartModel cartModel=modelMapper.convertToDTO(cart);

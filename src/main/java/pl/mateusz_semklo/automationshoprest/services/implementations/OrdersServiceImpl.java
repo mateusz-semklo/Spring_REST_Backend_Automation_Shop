@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.mateusz_semklo.automationshoprest.entities.Cart;
 import pl.mateusz_semklo.automationshoprest.entities.Order;
 import pl.mateusz_semklo.automationshoprest.entities.Product;
+import pl.mateusz_semklo.automationshoprest.entities.User;
 import pl.mateusz_semklo.automationshoprest.models.OrderPostModel;
 import pl.mateusz_semklo.automationshoprest.repositories.CartsRepository;
 import pl.mateusz_semklo.automationshoprest.repositories.OrdersRepository;
@@ -61,7 +62,8 @@ public class OrdersServiceImpl implements OrdersService {
     public boolean delete(Integer id) {
         if(ordersRepository.existsById(id)) {
             Order order=ordersRepository.findById(id).get();
-            order.getUser().getOrders().remove(order);
+            User user=order.getUser();
+            if(user!=null)  user.getOrders().remove(order);
             ordersRepository.deleteById(id);
             return true;
         }

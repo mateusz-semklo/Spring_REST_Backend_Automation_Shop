@@ -70,7 +70,7 @@ public class User implements Serializable{
     public List<String> authorities=new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private List<Order> orders=new ArrayList<>();
 
 }
