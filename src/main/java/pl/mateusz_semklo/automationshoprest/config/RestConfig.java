@@ -14,6 +14,5 @@ public class RestConfig {
                  .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
        // .setMatchingStrategy(MatchingStrategies.LOOSE);
         return mapper;
-
     }
 }
