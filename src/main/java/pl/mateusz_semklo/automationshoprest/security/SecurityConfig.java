@@ -94,6 +94,9 @@ public class SecurityConfig {
                         }
                 )
                 .headers((headers)->headers.frameOptions((frame)->frame.sameOrigin()))
+                .sessionManagement((session)->{
+                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                })
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
