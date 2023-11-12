@@ -79,8 +79,7 @@ public class SecurityConfig {
                 .csrf((csrf)->csrf.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests((request)-> {
-                            request.requestMatchers(new MvcRequestMatcher(introspector, "/")).permitAll()
-                                    .requestMatchers(new MvcRequestMatcher(introspector, "/authenticate")).permitAll()
+                            request.requestMatchers(new MvcRequestMatcher(introspector, "/authenticate")).permitAll()
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/products**")).permitAll()
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/products/**")).permitAll()
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/categories**")).permitAll()
@@ -90,6 +89,7 @@ public class SecurityConfig {
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/orders**")).permitAll()
                                     .requestMatchers(new MvcRequestMatcher(introspector, "/orders/**")).permitAll()
                                     .requestMatchers(new AntPathRequestMatcher("/console**")).permitAll()
+                                    .requestMatchers(new MvcRequestMatcher(introspector, "/")).permitAll()
                                     .anyRequest().authenticated();
                         }
                 )
@@ -97,7 +97,6 @@ public class SecurityConfig {
                 .sessionManagement((session)->{
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
-                .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
